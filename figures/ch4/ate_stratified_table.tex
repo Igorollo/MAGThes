@@ -1,0 +1,29 @@
+\begin{table}[htbp]
+    \centering
+    \caption{Stratified Average Treatment Effects by Market Capitalization}
+    \label{tab:stratified_ate}
+    \small
+    \begin{tabular}{l l l r r r}
+    \toprule
+    Outcome & Stratum & Treatment & N & Coefficient (RF) & P-value \\
+    \midrule
+    post\_log\_ret\_10 & Micro (<$10M) & hype\_intensity & 289 & 0.0034 & 0.2200 \\
+post\_log\_ret\_10 & Micro (<$10M) & urgency\_index & 289 & -0.0104 & 0.3600 \\
+post\_log\_ret\_10 & Micro (<$10M) & instruction\_density & 289 & 0.0002 & 0.1800 \\
+post\_log\_ret\_10 & Small ($10M-$100M) & hype\_intensity & 1182 & 0.0028 & 0.0600 \\
+post\_log\_ret\_10 & Small ($10M-$100M) & urgency\_index & 1182 & 0.0301*** & 0.0000 \\
+post\_log\_ret\_10 & Small ($10M-$100M) & instruction\_density & 1182 & 0.0002* & 0.0400 \\
+post\_log\_ret\_10 & Mid ($100M-$1B) & hype\_intensity & 967 & -0.0007 & 0.1000 \\
+post\_log\_ret\_10 & Mid ($100M-$1B) & urgency\_index & 967 & -0.0081*** & 0.0000 \\
+post\_log\_ret\_10 & Mid ($100M-$1B) & instruction\_density & 967 & 0.0001 & 0.0800 \\
+post\_log\_ret\_10 & Large (>$1B) & hype\_intensity & 479 & -0.0004*** & 0.0000 \\
+post\_log\_ret\_10 & Large (>$1B) & urgency\_index & 479 & -0.0024*** & 0.0000 \\
+post\_log\_ret\_10 & Large (>$1B) & instruction\_density & 479 & -0.0001* & 0.0400 \\
+\bottomrule
+    \end{tabular}
+    \vspace{2mm}
+    \footnotesize
+    \textit{Notes:} Stratified DML estimates (Random Forest). 
+    Statistical significance: $^{***}p<0.001$, $^{**}p<0.01$, $^{*}p<0.05$.
+    \end{table}
+    

@@ -1,0 +1,18 @@
+\begin{tabular}{lllrlrrrrrrrr}
+\toprule
+Outcome & Target Used & Market Cap Stratum & N & Treatment & RF Coefficient & Lasso Coefficient & Diff (Robustness) & P-value & Significant & CI Lower & CI Upper & Sigma \\
+\midrule
+post_log_ret_10 & post_log_ret_10_winsorized & Micro (<$10M) & 289 & hype_intensity & 0.0034 & 0.0020 & 0.0015 & 0.2200 & False & -0.0033 & 0.0090 & 0.0649 \\
+post_log_ret_10 & post_log_ret_10_winsorized & Micro (<$10M) & 289 & urgency_index & -0.0104 & 0.0171 & 0.0274 & 0.3600 & False & -0.0468 & 0.0269 & 0.0649 \\
+post_log_ret_10 & post_log_ret_10_winsorized & Micro (<$10M) & 289 & instruction_density & 0.0002 & 0.0001 & 0.0001 & 0.1800 & False & -0.0002 & 0.0007 & 0.0649 \\
+post_log_ret_10 & post_log_ret_10_winsorized & Small ($10M-$100M) & 1182 & hype_intensity & 0.0028 & 0.0039 & 0.0011 & 0.0600 & False & -0.0011 & 0.0045 & 0.0777 \\
+post_log_ret_10 & post_log_ret_10_winsorized & Small ($10M-$100M) & 1182 & urgency_index & 0.0301 & 0.0276 & 0.0025 & 0.0000 & True & 0.0216 & 0.0412 & 0.0777 \\
+post_log_ret_10 & post_log_ret_10_winsorized & Small ($10M-$100M) & 1182 & instruction_density & 0.0002 & 0.0003 & 0.0002 & 0.0400 & True & -0.0001 & 0.0003 & 0.0777 \\
+post_log_ret_10 & post_log_ret_10_winsorized & Mid ($100M-$1B) & 967 & hype_intensity & -0.0007 & -0.0003 & 0.0003 & 0.1000 & False & -0.0013 & 0.0001 & 0.0218 \\
+post_log_ret_10 & post_log_ret_10_winsorized & Mid ($100M-$1B) & 967 & urgency_index & -0.0081 & -0.0103 & 0.0021 & 0.0000 & True & -0.0147 & -0.0019 & 0.0218 \\
+post_log_ret_10 & post_log_ret_10_winsorized & Mid ($100M-$1B) & 967 & instruction_density & 0.0001 & -0.0000 & 0.0002 & 0.0800 & False & -0.0001 & 0.0003 & 0.0218 \\
+post_log_ret_10 & post_log_ret_10_winsorized & Large (>$1B) & 479 & hype_intensity & -0.0004 & 0.0000 & 0.0004 & 0.0000 & True & -0.0010 & -0.0002 & 0.0082 \\
+post_log_ret_10 & post_log_ret_10_winsorized & Large (>$1B) & 479 & urgency_index & -0.0024 & -0.0038 & 0.0013 & 0.0000 & True & -0.0041 & -0.0008 & 0.0082 \\
+post_log_ret_10 & post_log_ret_10_winsorized & Large (>$1B) & 479 & instruction_density & -0.0001 & -0.0001 & 0.0000 & 0.0400 & True & -0.0001 & -0.0000 & 0.0082 \\
+\bottomrule
+\end{tabular}

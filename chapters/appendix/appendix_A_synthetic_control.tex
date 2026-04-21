@@ -1,0 +1,98 @@
+\chapter{SYNTHETIC CONTROL CONSTRUCTION METHODOLOGY}
+\phantomsection
+\label{app:synthetic-control}
+
+The fundamental challenge in causal inference is the unobservability of counterfactual outcomes. The synthetic control method addresses this by constructing a weighted combination of control assets that tracks the target coin's pre-pump behavior, then using this synthetic control as the counterfactual benchmark. This appendix details the technical evaluation of this theoretical framework for micro-cap pump-and-dump events.
+
+\section{Control Basket Composition}
+\label{sec:app-control-basket}
+
+The default macro-market control basket consists of eight major cryptocurrency assets selected to represent broad market movements natively decoupled from specific micro-cap pump manipulation influences.
+
+\begin{table}[htbp]
+\centering
+\caption{Synthetic Control Macro-Market Basket Composition}
+\label{tab:app-control-basket}
+\begin{tabular}{@{}llp{6.5cm}@{}}
+\toprule
+\multicolumn{1}{@{}c}{\textbf{Asset}} & \multicolumn{1}{c}{\textbf{Ticker}} & \multicolumn{1}{c@{}}{\textbf{Selection Rationale}} \\
+\midrule
+Bitcoin & BTC & Market benchmark, high liquidity \\
+Ethereum & ETH & Smart contract platform leader \\
+Binance Coin & BNB & Exchange token, Binance ecosystem \\
+Ripple & XRP & Cross-border payments focus \\
+Cardano & ADA & Proof-of-stake platform \\
+Solana & SOL & High-throughput blockchain \\
+Litecoin & LTC & Legacy altcoin, long history \\
+Chainlink & LINK & Oracle network, DeFi infrastructure \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Weight Optimization via Constrained Least Squares}
+
+The methodology theoretically constructs the counterfactual as a weighted average of control unit returns implementing a Constrained Least Squares (CLS) logic that optimizes direct return-matching across strictly defined prior validation windows.
+
+To systematically prevent data contamination and arbitrary overfitting, testing utilizes discrete trailing periods anchored prior to the $T_0$ signal event:
+\begin{itemize}
+    \item \textbf{Training Window}: $[min(T_0 - 84\text{h}), T_0 - 36\text{h}]$ (optimizing CLS control array alignments)
+    \item \textbf{Hold-Out Window}: $[T_0 - 36\text{h}, T_0 - 12\text{h}]$ (out-of-sample parametric $R^2$ validation tracking evaluation)
+\end{itemize}
+
+A formal 12-hour gap directly preceding explicit manifestation at $T_0$ preemptively prevents potential preliminary internal coordination leaks from corrupting empirical baseline assessments.
+
+The weight vector $\boldsymbol{\omega}$ strictly ensures that synthesized baseline evaluations hypothetically represent a physically viable, fully-subscribed longitudinal portfolio through explicit convexity restraints.
+
+\begin{equation}
+    \min_{\boldsymbol{\omega}} \| \mathbf{y} - \mathbf{X}\boldsymbol{\omega} \|_2^2
+    \quad \text{subject to} \quad
+    \sum_{k} \omega_k = 1, \quad \boldsymbol{\omega} \geq 0
+\end{equation}
+
+Logarithmic returns drive the optimization natively due to longitudinal absolute price non-stationarity—even fractional discrepancies across drift vectors dramatically decouple macro-tracked paths during multiday evaluations.
+
+\section{Hold-Out Validation Discrepancies}
+\label{sec:app-hold-out-validation}
+
+Empirical out-of-sample validation tests evaluating the explicit predictive mapping capacity strictly underscore the highly localized divergence existing between micro-capital market architecture and broader macroeconomic flow.
+
+\begin{table}[htbp]
+\centering
+\caption{Distribution of Hold-Out Tracking Validation Metrics (N=3,320 Events)}
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+\multicolumn{1}{@{}c}{\textbf{Metric}} & \multicolumn{1}{c}{\textbf{Mean}} & \multicolumn{1}{c}{\textbf{Median}} & \multicolumn{1}{c}{\textbf{P25}} & \multicolumn{1}{c}{\textbf{P75}} & \multicolumn{1}{c@{}}{\textbf{Std Dev}} \\
+\midrule
+$R^2_{\text{holdout}}$ & 0.092 & $-$0.003 & $-$0.031 & 0.200 & 0.227 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+An inherently flat median correlation approximation intrinsically signals that generalized micro-cap pump operations structurally lack associative alignment scalable against trailing macroeconomic variables. 
+
+\section{Limitations of Cumulative Abnormal Returns (CAR)}
+\label{sec:app-car-limitations}
+
+Early architectural iterations of this study deployed Cumulative Abnormal Returns (CAR) to enforce a rigid macroeconomic isolation gap on the outcome variable:
+\begin{equation}
+CAR_{i,\Delta} = r_{target,i}^{[0,\Delta]} - r_{control,i}^{[0,\Delta]}
+\label{eq:car-original}
+\end{equation}
+where $r_{target}^{[0,\Delta]}$ structurally bounded the real log-return and $r_{control}^{[0,\Delta]}$ applied a synthetic approximation mapping established market drift.
+
+However, applying this synthetic control method to the sample proved ineffective. The average $R^2$ between the synthetic controls and actual pre-pump prices was close to zero, explicitly mapped in Figure~\ref{fig:app-r2-distribution}. Within the micro-cap and small-cap domains natively prioritized by manipulation syndicates, the predictive fits collapsed.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/ch4/r2_distribution_by_mcap.png}
+\caption{Distribution of $R^2$ scores across market capitalization strata. The fits remain universally depressed ($R^2 \approx 0$), indicating extreme tracking error in applying synthetic abstractions over micro-scale assets.}
+\label{fig:app-r2-distribution}
+\end{figure}
+
+Because the synthetic controls did not actually track the target coins, using CAR made the problem worse. Instead of reducing market noise, subtracting an uncorrelated control variable simply increases the total sample variance:
+\begin{equation}
+\text{Var}(CAR) = \text{Var}(r_{target}) + \text{Var}(r_{control}) - 2\text{Cov}(r_{target}, r_{control})
+\end{equation}
+When the covariance matrix $\text{Cov}(r_{target}, r_{control})$ anchors to absolute zero, CAR inherently registers higher overall variance than isolated target returns, artificially masking true statistical influence beneath expanded noise.
+
+Filtering the sample to only include valid synthetic controls (e.g., $R^2 > 0.25$) would discard over 75\% of the observed tracking events. Worse, this rejection logic would disproportionately remove low-liquidity coins, completely eliminating the entire micro-cap tier ($<$\$10M market capitalization). Such a maneuver forcibly limits the analytical purview exclusively toward large-cap, efficiently traded assets—the exact ecosystem fraction categorically hostile to Telegram coordinated manipulation. Consequently, the primary analysis structurally abandons CAR in favor of standard logarithmic returns natively mapped through Double Machine Learning models properly interacting the pre-event macroeconomic conditions without artificial subtraction.

@@ -1,0 +1,29 @@
+\begin{table}[htbp]
+    \centering
+    \caption{Stratified Average Treatment Effects by Market Capitalization}
+    \label{tab:stratified_ate}
+    \small
+    \begin{tabular}{l l l r r r}
+    \toprule
+    Outcome & Stratum & Treatment & N & Coefficient (RF) & P-value \\
+    \midrule
+    car\_10 min & Micro (<$10M) & hype\_intensity & 136 & 0.0011 & 0.2000 \\
+car\_10 min & Micro (<$10M) & urgency\_index & 136 & 0.0127* & 0.0200 \\
+car\_10 min & Micro (<$10M) & instruction\_density & 136 & 0.0002* & 0.0400 \\
+car\_10 min & Small ($10M-$100M) & hype\_intensity & 558 & 0.0003 & 0.2600 \\
+car\_10 min & Small ($10M-$100M) & urgency\_index & 558 & -0.0030*** & 0.0000 \\
+car\_10 min & Small ($10M-$100M) & instruction\_density & 558 & -0.0002*** & 0.0000 \\
+car\_10 min & Mid ($100M-$1B) & hype\_intensity & 515 & -0.0007 & 0.0600 \\
+car\_10 min & Mid ($100M-$1B) & urgency\_index & 515 & -0.0040*** & 0.0000 \\
+car\_10 min & Mid ($100M-$1B) & instruction\_density & 515 & -0.0000 & 0.3000 \\
+car\_10 min & Large (>$1B) & hype\_intensity & 231 & -0.0002 & 0.3000 \\
+car\_10 min & Large (>$1B) & urgency\_index & 231 & -0.0026* & 0.0400 \\
+car\_10 min & Large (>$1B) & instruction\_density & 231 & -0.0000 & 0.1000 \\
+\bottomrule
+    \end{tabular}
+    \vspace{2mm}
+    \footnotesize
+    \textit{Notes:} Stratified DML estimates (Random Forest). 
+    Statistical significance: $^{***}p<0.001$, $^{**}p<0.01$, $^{*}p<0.05$.
+    \end{table}
+    

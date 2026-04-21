@@ -1,0 +1,7 @@
+Placebo Outcome,Treatment,Coefficient,P-value,Significant
+Pre-Event Volatility,hype_intensity,0.024918549444654065,0.418179026759237,False
+Pre-Event Volatility,urgency_index,6.259916953463218e-06,0.07538389342276725,False
+Pre-Event Volatility,instruction_density,0.00029335993380715935,0.3618166573555116,False
+Pre-Event Volume Z-Score,hype_intensity,-1577.8452822905112,0.12682282151969967,False
+Pre-Event Volume Z-Score,urgency_index,-0.6675357628318611,0.023908209084153722,True
+Pre-Event Volume Z-Score,instruction_density,-14.886337421021498,0.15658514723168968,False
