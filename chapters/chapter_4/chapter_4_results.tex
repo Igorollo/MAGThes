@@ -139,9 +139,9 @@ The E-value for the small-cap Urgency Index effect (2.20) suggests that an unmea
 \section{Predictive Modeling of Pump Success}
 \label{sec:prediction-results}
 
-This section addresses H3 by testing whether observable pre-event market and signal features predict pump success, defined as a positive 10-minute log return. The predictive performance was evaluated using an XGBoost model \cite{xgboost2016}. To ensure robust theoretical validation, the primary specification utilized a rigorous 80/20 data split. Crucially, the training and test sets were explicitly grouped by channel, meaning the 20\% holdout portion consists of exclusively unseen organizers, guaranteeing independence from the hyperparameter tuning phase.
+This section reports the H3 predictive results for pump success, defined in Chapter~\ref{ch:methodology} as a positive 10-minute log return. Predictive performance is evaluated using the no-channel XGBoost specification and grouped holdout protocol described in Section~\ref{sec:predictive-modeling}.
 
-Table~\ref{tab:classification-with-channel} presents the rigorous test set performance for this no-channel specification.
+Table~\ref{tab:classification-with-channel} presents the test set performance for this no-channel specification.
 
 \begin{table}[htbp]
 \centering

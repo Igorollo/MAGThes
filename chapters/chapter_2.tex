@@ -133,9 +133,9 @@ Two key variables used later as pre-reveal covariates are Coin Age and Market Ca
     \label{fig:market-cap-volume-scatter}
 \end{figure}
 
-Analyzing micro-cap altcoins introduces significant data challenges because many targeted projects later fail or are delisted. In this sample, over 54\% of the manipulated tokens were later removed from major exchanges (not accessible through CCXT). Restricting the analysis to currently active listings would therefore create survivorship risk in the final sample. To reduce this problem, the study uses historical exchange data accessed via CCXT \cite{ccxt2023} so that tokens no longer actively listed can still be retained when data are available.
+Many targeted projects later fail or are delisted, creating a data-availability problem for historical analysis. In this sample, over 54\% of the manipulated tokens were later removed from major exchanges (not accessible through CCXT). Restricting the analysis to currently active listings would therefore create survivorship risk in the final sample. To reduce this problem, the study uses historical exchange data accessed via CCXT \cite{ccxt2023} so that tokens no longer actively listed can still be retained when data are available.
 
-Furthermore, micro-cap tokens operate in especially thin markets. For coins below \$10 million in market capitalization, over 68\% of the 1-minute intervals before the pump recorded zero trading volume. For that reason, subsequent volatility metrics are computed only across intervals with non-zero trading volume.
+The metadata also reveal severe trading sparsity among the lowest-cap observations. For coins below \$10 million in market capitalization, over 68\% of the 1-minute intervals before the pump recorded zero trading volume. For that reason, subsequent volatility metrics are computed only across intervals with non-zero trading volume.
 
 \section{Variable Construction and Formal Specifications}
 \label{sec:feature-selection}

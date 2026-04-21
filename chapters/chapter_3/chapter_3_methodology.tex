@@ -5,7 +5,7 @@ This chapter presents the methodological framework used to estimate the effect o
 \section{Theoretical Framework}
 \label{sec:theory-framework}
 
-The empirical strategy is grounded in a causal identification framework for estimating the effect of Telegram pump signals on cryptocurrency prices. The main challenge in measuring the true impact of a pump signal is that it is impossible to observe what would have happened if the signal had never been sent. For any given event $i$, only the realized price return is observable. To address this, the potential outcomes framework \cite{rubin1974estimating} is utilized, which theoretically defines two possible price trajectories for the exact same asset during the exact same time window:
+As Section~\ref{sec:detection-to-causal-measurement} motivates, the empirical strategy is grounded in a causal identification framework for estimating how Telegram pump signals affect short-horizon cryptocurrency prices. For any given event $i$, only the realized price return is observable, while the counterfactual price path is not. The potential outcomes framework \cite{rubin1974estimating} formalizes this problem as two possible price trajectories for the same asset during the same time window:
 \begin{align}
 Y_i(1) &= \text{Price return under treatment (pump signal sent)} \\
 Y_i(0) &= \text{Price return under control (no targeted signal sent)}
@@ -17,7 +17,7 @@ The individual causal effect is structurally defined as the delta between these 
 \label{eq:ate}
 \end{equation}
 
-Rather than using a binary indicator, treatment is measured using continuous variables that capture the intensity of the Telegram signal. As derived through the feature engineering pipeline specified in Chapter~\ref{ch:data-description}, three distinct variables quantify the targeted coordination: Hype Intensity, capturing the aggressive acceleration of messaging immediately prior to announcement; Urgency Index, measuring visual cues designed to create urgency; and Instruction Density, which simply captures the length and complexity of the signal's instructions. 
+Rather than using a binary pump indicator, treatment is measured through continuous signal characteristics derived from the feature engineering pipeline in Chapter~\ref{ch:data-description}. The retained treatment vector contains Hype Intensity, Urgency Index, and Instruction Density.
 
 An initial candidate, Hype Volume, was excluded after preliminary collinearity screening. Restricting the model to the three retained treatment variables ensured that all Variance Inflation Factors (VIF) remained below 1.2, thereby reducing instability in the treatment effect estimates.
 
@@ -58,9 +58,9 @@ Channel ID & Telegram channel fixed effects (81 channels) \\
 \section{The Outcome Variable: Logarithmic Returns}
 \label{sec:outcome-variable}
 
-To measure short-run pump effectiveness, the final specification uses 10-minute logarithmic returns rather than Cumulative Abnormal Returns (CAR) based on synthetic controls \cite{abadie2010synthetic}. CAR was initially preferred because, in principle, it could net out broader market movements. In practice, however, empirical testing showed that the synthetic controls had almost no hold-out explanatory power over pre-pump price variation ($R^2 \approx 0$). With fit this weak, subtracting the synthetic control mainly adds noise instead of producing a cleaner manipulation signal. As documented in Appendix~\ref{app:synthetic-control}, applying fit thresholds strict enough to justify a CAR design would also remove more than 75\% of the observations and disproportionately eliminate the micro-cap and small-cap assets that are crucial to the research question.
+Following the short-horizon logic developed in Section~\ref{sec:detection-to-causal-measurement}, the final specification uses 10-minute logarithmic returns rather than Cumulative Abnormal Returns (CAR) based on synthetic controls \cite{abadie2010synthetic}. Appendix~\ref{app:synthetic-control} documents why the synthetic-control fits were too weak to support CAR as the primary outcome.
 
-For these reasons, the final estimation outcome is the 10-minute logarithmic return, winsorized at the 1st and 99th percentiles, calculated over the strict window from $T_0$ to $T_0+10$. This choice preserves the observed event distribution in the most manipulation-prone asset segments while keeping the analysis focused on the immediate price response.
+The final estimation outcome is therefore the 10-minute logarithmic return, winsorized at the 1st and 99th percentiles, calculated over the strict window from $T_0$ to $T_0+10$. This choice preserves the observed event distribution in the most manipulation-prone asset segments while keeping the analysis focused on the immediate price response.
 \begin{equation}
 Y_{i,\Delta} = \log\left(\frac{P_{T_0 + \Delta}}{P_{T_0}}\right)
 \label{eq:log-return}
