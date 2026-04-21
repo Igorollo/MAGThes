@@ -142,7 +142,7 @@ Furthermore, micro-cap tokens operate in especially thin markets. For coins belo
 
 Following data integration, features were engineered to support the causal analysis. To keep pre-reveal covariates separate from post-signal outcomes, all feature construction strictly respected the $T_0$ temporal threshold \cite{angrist2009mostly}.
 
-Telegram signal features quantify the scale and intensity of social coordination (Table~\ref{tab:telegram-variables}). In the causal specification, the treatment vector contains Hype Intensity, Urgency Index, Instruction Density, and Hype Volume.
+Telegram signal features quantify the scale and intensity of social coordination (Table~\ref{tab:telegram-variables}). The engineered feature set includes Hype Intensity, Urgency Index, Instruction Density, and Hype Volume. In the final causal specification described in Chapter~\ref{ch:methodology}, Hype Volume is excluded after collinearity screening, so the retained treatment vector contains Hype Intensity, Urgency Index, and Instruction Density.
 
 \begin{table}[H]
 \centering
