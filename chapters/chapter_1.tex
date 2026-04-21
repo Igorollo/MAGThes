@@ -23,7 +23,7 @@ The literature also suggests that participating in a pump is not always the resu
 
 Market size plays a fundamental role in this process. Larger assets can usually absorb significant buying volume without experiencing sharp price swings. In contrast, smaller assets with limited trading depth are much more sensitive to coordinated demand. This relationship is closely tied to the concept of illiquidity: in a thin market, every individual trade has a larger impact on the price \cite{amihud2002illiquidity}. While market capitalization is not a perfect measure of liquidity, it serves as a reliable proxy for how resistant an asset is likely to be to sudden, organized shifts in demand.
 
-This logic connects the existing literature to the empirical design of this study. Organizers need coins that are visible yet "moveable." Very large coins are often too liquid for a coordinated group to influence significantly, while the smallest coins may lack the data coverage needed for analysis. Consequently, this thesis treats Market Capitalization as a primary factor in determining how effective a manipulation attempt will be, with a detailed analysis of different market-cap segments appearing in later chapters.
+This logic connects the existing literature to the empirical design of this study. Organizers need coins that are visible yet "moveable." Very large coins are often too liquid for a coordinated group to influence significantly, while the smallest coins may lack the data coverage needed for analysis. For this reason, this thesis treats Market Capitalization as a factor that may shape how strongly pump signals affect returns, with a detailed analysis of different market-cap segments appearing in later chapters.
 
 \section{Messaging Platform Signals and Social Coordination}
 \label{sec:telegram-social-coordination}
@@ -65,7 +65,7 @@ The 10-minute window is also short enough to limit the influence of unrelated ma
 
 Even though the 10-minute window reduces later market noise, it does not fully remove the influence of what was happening to the coin before the pump began. That is why the study still needs to control for the market conditions just before the signal was posted. The aim is not to eliminate all randomness, but to compare events that started from similar conditions.
 
-Predictive modeling serves a different role. Instead of asking what caused the outcome, it asks whether the available information can accurately predict if a pump will lead to a positive return. A model like this can use variables that are useful for prediction even if they are not the actual drivers of the market reaction, such as the strategy used by a specific organizer. For this reason, the thesis treats causal analysis and prediction as two separate tasks, so that each is examined with the method that fits it best.
+Predictive modeling serves a different role. Instead of asking what caused the outcome, it asks whether the available information can accurately predict if a pump will lead to a positive return. Tree-based models can use variables that are useful for prediction even if they are not the actual drivers of the market reaction, such as the strategy used by a specific organizer. For this reason, the thesis treats causal analysis and prediction as two separate tasks, so that each is examined with the method that fits it best.
 
 \section{Theoretical Expectations and Hypotheses}
 \label{sec:theoretical-expectations-hypotheses}
@@ -78,17 +78,17 @@ The first hypothesis focuses on how coordinated messages facilitate group action
 
 It is important to note that urgency may not be effective in every market environment. If a signal does have a measurable impact, that response is expected to occur rapidly, before the initial momentum fades or sellers begin to exit their positions.
 
-The second hypothesis focuses on the characteristics of the targeted asset. The same signal is unlikely to produce identical results across different coins. While a large, liquid market can absorb significant trading volume with minimal price disruption, a thin market is much more sensitive. This logic is well-supported by literature on market manipulation and illiquidity \cite{amihud2002illiquidity, dhawan2023new}.
+The second hypothesis focuses on how the targeted asset changes the effect of the signal. The same signal is unlikely to produce identical results across different coins. A large, liquid market can absorb strong buying pressure with limited price movement, while a thin market is much more sensitive. This logic is well-supported by literature on market manipulation and illiquidity \cite{amihud2002illiquidity, dhawan2023new}.
 
-\textbf{H2:} Short-term pump returns are expected to be lower as Market Capitalization increases, with the strongest impacts expected in lower-cap and especially small-cap assets where liquidity is limited but trading is still active.
+\textbf{H2:} Signals that create urgency and coordination are expected to have stronger estimated effects in lower-cap assets, especially small-cap assets. These estimated effects are expected to become weaker as Market Capitalization increases.
 
-This does not imply that all low-cap assets are easily manipulated; rather, it suggests a broader trend where an asset's resistance to organized demand increases alongside its market size.
+This does not imply that all low-cap assets are easily manipulated. Rather, it suggests that market size may change how strong the signal effect is.
 
 The final hypothesis addresses predictability. If the success of a pump depends on a combination of signal style and pre-event market states, then those variables should contain meaningful information before the outcome is realized.
 
 \textbf{H3:} Observable market patterns before the event, combined with signal characteristics, contain information that can help predict whether the manipulation will succeed.
 
-While H1 and H2 focus on isolating causal drivers, H3 is concerned with forecasting. A model might predict success by combining many subtle signals, such as coin age or pre-event anomalies, even if it does not provide a direct causal explanation for each individual feature.
+While H1 and H2 focus on isolating causal drivers, H3 is concerned with forecasting. A model might identify success by combining many subtle signals, such as coin age or pre-event anomalies, even if it does not provide a direct causal explanation for each individual feature.
 
 \section{Causal and Predictive Framework}
 \label{sec:causal-predictive-framework}
@@ -98,7 +98,7 @@ To address these complexities, the empirical framework combines causal estimatio
 \section{Contribution and Thesis Structure}
 \label{sec:chapter-one-contribution}
 
-This thesis makes three primary contributions to the study of cryptocurrency manipulation. First, it establishes a formal link between social coordination signals and short-horizon market reactions, treating the message and the price response as parts of a single integrated process. Second, it shifts the focus from simple detection to the estimation of direct causal effects for specific signal characteristics. Finally, it explores how manipulation success is influenced by Market Capitalization and whether these events can be forecasted using information available at the time of the reveal.
+This thesis makes three primary contributions to the study of cryptocurrency manipulation. First, it establishes a formal link between social coordination signals and short-horizon market reactions, treating the message and the price response as parts of a single integrated process. Second, it shifts the focus from simple detection to the estimation of direct causal effects for specific signal characteristics. Finally, it explores how signal effects vary with Market Capitalization and whether these events can be forecasted using information available at the time of the reveal.
 
 Central to this work is the framing of coordinated messages as tools for coordination rather than sources of fundamental information. This perspective bridges the literature on financial manipulation with research on digital communication and high-frequency trading. It also provides a clear rationale for treating causal estimation and predictive modeling as distinct tasks.
 

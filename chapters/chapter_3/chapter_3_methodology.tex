@@ -149,6 +149,7 @@ A single average effect can hide significant differences between coins of variou
 \item Large-cap: Assets exceeding the foundational threshold of \$1 billion.
 \end{itemize}
 Running the DML pipeline independently across these segments ensures that extreme volatility from tiny micro-cap coins does not artificially contaminate the effect estimates for the more stable mid-cap coins.
+Together with the CATE analysis below, this design tests H2 by asking whether market size changes the estimated signal effects.
 
 \section{Heterogeneous Treatment Effects}
 \label{sec:causal-forests}
@@ -182,4 +183,4 @@ The final phase evaluates whether observable pre-signal market variables and sig
 \text{Success}_i = \mathbf{1}\left[Y_{i,10} > 0\right]
 \end{equation}
 
-The primary predictive model focuses on the relationship between observable pre-signal market variables and signal characteristics. Channel identity is excluded from this core analysis to ensure the findings generalize across different pump groups. Reported predictive performance is evaluated on a grouped 80/20 holdout split in which the test set contains only unseen channels, while grouped 5-fold cross-validation is used only for hyperparameter tuning within the training split. Chapter 4 reports the results from the organizer-agnostic XGBoost model \cite{xgboost2016} as the primary evidence, with secondary comparisons including Channel ID.
+The predictive modeling stage focuses on the relationship between observable pre-signal market variables and signal characteristics. Channel identity is excluded from this core analysis to ensure the findings generalize across different pump groups. XGBoost, LightGBM, and Random Forest were tested as tree-based candidates, and Optuna (an automated tool for choosing suitable hyperparameters) was used to tune them inside the grouped training folds \cite{xgboost2016, lightgbm2017, breiman2001random, optuna2019}. Reported predictive performance is evaluated on a grouped 80/20 holdout split in which the test set contains only unseen channels. Chapter 4 reports the selected Channel ID-agnostic XGBoost model as the primary evidence, with secondary comparisons including Channel ID.

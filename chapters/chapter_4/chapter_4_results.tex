@@ -29,7 +29,7 @@ The DML estimator relies on nuisance models to residualize both the outcome and 
 \section{Average Treatment Effect Estimation}
 \label{sec:ate-results}
 
-Table~\ref{tab:stratified-ate-results} reports the stratified Average Treatment Effect estimates for each treatment variable across the Market Capitalization strata defined in Section~\ref{sec:stratified-estimation}. These estimates speak directly to H1 and H2.
+Table~\ref{tab:stratified-ate-results} reports the stratified Average Treatment Effect estimates for each treatment variable across the Market Capitalization strata defined in Section~\ref{sec:stratified-estimation}. These estimates speak directly to H1 and test H2 by comparing treatment effects across market-cap groups.
 
 \begin{table}[htbp]
 \centering
@@ -65,15 +65,15 @@ Table~\ref{tab:stratified-ate-results} reports the stratified Average Treatment 
 \source{Winsorized outcomes at 1\% and 99\%. Statistical significance: $^{***}p<0.1\%$, $^{**}p<1\%$, $^{*}p<5\%$.}
 \end{table}
 
-The stratified estimates show a clear market-cap gradient, especially for Urgency Index. The pattern is consistent with H2: the positive effect is concentrated in lower-valued assets and weakens or turns negative as Market Capitalization increases.
+The stratified estimates show a clear market-cap gradient in treatment effects, especially for Urgency Index. The pattern is consistent with H2: the positive urgency effect is concentrated in lower-valued assets and weakens or turns negative as Market Capitalization increases.
 
-In the small-cap stratum, the Urgency Index coefficient is 0.0301 (p $<$ 0.1\%), which indicates a positive relationship between higher message urgency and 10-minute log returns. This is the strongest evidence in line with H1, but only within the small-cap segment. Instruction Density is also positive and statistically significant, although the coefficient is small.
+In the small-cap stratum, the Urgency Index coefficient is 0.0301 (p $<$ 0.1\%), which indicates a positive relationship between higher message urgency and 10-minute log returns. This gives partial support for H1, mainly within the small-cap segment. Instruction Density is also positive and statistically significant, although the coefficient is small.
 
-In the mid-cap stratum, the Urgency Index coefficient turns negative ($-$0.0081, p $<$ 0.1\%). The positive urgency effect observed for small-cap assets therefore does not extend to larger market segments. Relative to H2, this estimate is directionally consistent with declining manipulation efficiency as Market Capitalization rises.
+In the mid-cap stratum, the Urgency Index coefficient turns negative ($-$0.0081, p $<$ 0.1\%). The positive urgency effect observed for small-cap assets therefore does not extend to larger market segments. Relative to H2, this estimate is consistent with weaker signal effects as Market Capitalization rises.
 
-The negative coefficients in the large-cap stratum point in the same direction. The Urgency Index estimate of $-$0.0024 (p $<$ 0.1\%) suggests that stronger urgency is associated with lower short-term returns in the largest assets. This is also consistent with H2.
+The negative coefficients in the large-cap stratum point in the same direction. The Urgency Index estimate of $-$0.0024 (p $<$ 0.1\%) suggests that the urgency treatment effect is negative in the largest assets. This is also consistent with H2.
 
-No treatment effect reaches conventional significance in the micro-cap stratum. Given the small sample size (N = 289) and the high degree of illiquidity in this group, H1 is not supported there. Taken together, the stratified estimates support H2 and show that the positive urgency effect proposed in H1 is concentrated in the small-cap segment rather than the full sample.
+No treatment effect reaches conventional significance in the micro-cap stratum. Given the small sample size (N = 289) and the high degree of illiquidity in this group, H1 is not supported there. Taken together, the stratified estimates support H2 and provide partial support for H1, with the positive urgency effect concentrated in the small-cap segment rather than the full sample.
 
 \section{Heterogeneous Treatment Effects}
 \label{sec:hte-results}
@@ -139,13 +139,13 @@ The E-value for the small-cap Urgency Index effect (2.20) suggests that an unmea
 \section{Predictive Modeling of Pump Success}
 \label{sec:prediction-results}
 
-This section reports the H3 predictive results for pump success, defined in Chapter~\ref{ch:methodology} as a positive 10-minute log return. Predictive performance is evaluated using the no-channel XGBoost specification and grouped holdout protocol described in Section~\ref{sec:predictive-modeling}.
+This section reports the H3 predictive results for pump success, defined in Chapter~\ref{ch:methodology} as a positive 10-minute log return. After testing the candidate tree-based models described in Section~\ref{sec:predictive-modeling}, the XGBoost specification was selected as the best performing model and evaluated with the grouped holdout protocol.
 
 Table~\ref{tab:classification-with-channel} presents the test set performance for this no-channel specification.
 
 \begin{table}[htbp]
 \centering
-\caption{Primary Predictive Performance: No-Channel ID XGBoost (Grouped Wait-Out Test Set)}
+\caption{Predictive Performance: No-Channel ID XGBoost (Grouped Wait-Out Test Set)}
 \label{tab:classification-with-channel}
 \begin{tabular}{lcccc}
 \toprule
@@ -167,7 +167,7 @@ An additional evaluation was conducted to test whether formally including Channe
 
 \begin{table}[htbp]
 \centering
-\caption{Decision-Threshold Sensitivity for the No Channel ID, Test-Set XGBoost Model}
+\caption{Decision-Threshold Sensitivity for the No Channel ID XGBoost Model}
 \label{tab:threshold-optimization}
 \begin{tabular}{lcccc}
 \toprule
@@ -188,7 +188,7 @@ An additional evaluation was conducted to test whether formally including Channe
 
 The threshold results show the expected precision-recall trade-off: higher thresholds improve precision at the cost of recall and overall trade frequency. Raising the threshold to 0.90 bolsters precision to 88.7\%, ensuring that almost 9 in 10 signals execute successfully while retaining a solid 256 predicted events on the held-out dataset. Overall, the rigorous grouped specification provides direct support for H3: observable pre-event market conditions and signal characteristics contain substantial predictive value even under strict out-of-sample evaluation limits.
 
-To understand which features explicitly drive these predictive results, Figure~\ref{fig:feature-importance-no-channel} presents the top feature importances for the XGBoost model. The results show that a pump's success is mainly driven by the signal's characteristics, the age of the coin, and the market conditions at the time. Notably, \textit{instruction\_density} and \textit{hype\_volume} emerge as leading signal characteristics, highlighting the importance of the organizer's communication strategy. Temporal dynamics form another critical component, with the \textit{is\_weekend} feature demonstrating substantial predictive weight, suggesting that organizers may exploit structural shifts in market liquidity or retail attention during non-business days. Furthermore, the asset's overall maturity, captured by coin age, plays a significant role. Finally, the model heavily relies on immediate and baseline market thinness indicators. Both the target asset's prior illiquidity (\textit{pre\_amihud\_illiq}, \textit{pre\_amihud\_log\_30m}, short-run relative volume) and the comparative behavior of the synthetic control (\textit{pre\_zero\_ret\_ratio\_30m\_control}, \textit{pre\_roll\_measure\_30m\_control}, \textit{pre\_amihud\_illiq\_control}) serve as strong predictors, confirming that for a pump to succeed, the coin's price must be easy to "move" or displace through coordinated buying. Although these variables are analyzed individually, they may all reflect a common underlying factor, such as the specific strategy or hidden profile of the organizing channel. Nevertheless, these findings confirm that observable market patterns and signal properties provide enough information to predict manipulation outcomes with significant accuracy, offering strong empirical support for H3.
+To understand which features explicitly drive these predictive results, Figure~\ref{fig:feature-importance-no-channel} presents the top feature importances for the XGBoost model. The results show that a pump's success is mainly driven by the signal's characteristics, the age of the coin, and the market conditions at the time. Notably, \textit{instruction\_density} and \textit{hype\_volume} emerge as leading signal characteristics, highlighting the importance of the organizer's communication strategy. Temporal dynamics form another critical component, with the \textit{is\_weekend} feature demonstrating substantial predictive weight, suggesting that organizers may exploit structural shifts in market liquidity or retail attention during non-business days. Furthermore, the asset's overall maturity, captured by coin age, plays a significant role. Finally, the model heavily relies on immediate and baseline market thinness indicators. Both the target asset's prior illiquidity (\textit{pre\_amihud\_illiq}, \textit{pre\_amihud\_log\_30m}, short-run relative volume) and the comparative behavior of the synthetic control (\textit{pre\_zero\_ret\_ratio\_30m}, \textit{pre\_roll\_measure\_30m}, \textit{pre\_amihud\_illiq}) serve as strong predictors, confirming that for a pump to succeed, the coin's price must be easy to "move" or displace through coordinated buying. Although these variables are analyzed individually, they may all reflect a common underlying factor, such as the specific strategy or hidden profile of the organizing channel. Nevertheless, these findings confirm that observable market patterns and signal properties provide enough information to predict manipulation outcomes with significant accuracy, offering strong empirical support for H3.
 
 \begin{figure}[htbp]
 \centering
