@@ -23,10 +23,11 @@
 }
 
 @misc{econml,
-  author       = {{Microsoft Research}},
-  title        = {{EconML}},
-  howpublished = {\url{https://www.microsoft.com/en-us/research/project/econml/}},
-  note         = {Accessed: 2026-04-19}
+  author       = {Battocchi, Keith and Dillon, Eleanor and Hei, Maggie and Lewis, Greg and Oka, Paul and Oprescu, Miruna and Syrgkanis, Vasilis},
+  title        = {{EconML}: {A Python Package for ML-Based Heterogeneous Treatment Effects Estimation}},
+  howpublished = {\url{https://github.com/py-why/EconML}},
+  note         = {Version 0.x},
+  year         = {2019}
 }
 
 @article{obrien2007,
@@ -71,6 +72,10 @@
   author    = {Barab{\'a}si, Albert-L{\'a}szl{\'o} and Albert, R{\'e}ka},
   journal   = {Science},
   year      = {1999},
+  volume    = {286},
+  number    = {5439},
+  pages     = {509--512},
+  doi       = {10.1126/science.286.5439.509},
   publisher = {American Association for the Advancement of Science}
 }
 
@@ -191,6 +196,9 @@
   author    = {Gandal, Neil and Hamrick, JT and Moore, Tyler and Oberman, Tali},
   journal   = {Journal of Monetary Economics},
   year      = {2018},
+  volume    = {95},
+  pages     = {86--96},
+  doi       = {10.1016/j.jmoneco.2017.12.004},
   publisher = {Elsevier}
 }
 
@@ -207,9 +215,13 @@
 
 @article{liu2021risks,
   title     = {{Risks and Returns of Cryptocurrency}},
-  author    = {Liu, Yukun and Tsyvinski, Oleg},
+  author    = {Liu, Yukun and Tsyvinski, Aleh},
   journal   = {The Review of Financial Studies},
   year      = {2021},
+  volume    = {34},
+  number    = {6},
+  pages     = {2689--2727},
+  doi       = {10.1093/rfs/hhaa113},
   publisher = {Oxford University Press}
 }
 
@@ -255,25 +267,25 @@
 }
 
 @article{makarov2020trading,
-  title     = {Trading and arbitrage in cryptocurrency markets},
-  author    = {Makarov, Igor and Schoar, Antoinette},
-  journal   = {Journal of Financial Economics},
-  volume    = {135},
-  number    = {2},
-  pages     = {293--319},
-  year      = {2020},
-  doi       = {10.1016/j.jfineco.2019.07.001}
+  title   = {Trading and arbitrage in cryptocurrency markets},
+  author  = {Makarov, Igor and Schoar, Antoinette},
+  journal = {Journal of Financial Economics},
+  volume  = {135},
+  number  = {2},
+  pages   = {293--319},
+  year    = {2020},
+  doi     = {10.1016/j.jfineco.2019.07.001}
 }
 
 @article{roll1984simple,
-  title     = {A simple implicit measure of the effective bid-ask spread in an efficient market},
-  author    = {Roll, Richard},
-  journal   = {The Journal of Finance},
-  year      = {1984},
-  volume    = {39},
-  number    = {4},
-  pages     = {1127--1139},
-  doi       = {10.1111/j.1540-6261.1984.tb03897.x}
+  title   = {A simple implicit measure of the effective bid-ask spread in an efficient market},
+  author  = {Roll, Richard},
+  journal = {The Journal of Finance},
+  year    = {1984},
+  volume  = {39},
+  number  = {4},
+  pages   = {1127--1139},
+  doi     = {10.1111/j.1540-6261.1984.tb03897.x}
 }
 
 @book{arms1994volume,
@@ -284,18 +296,18 @@
 }
 
 @article{parkinson1980extreme,
-  title     = {The extreme value method for estimating the variance of the rate of return},
-  author    = {Parkinson, Michael},
-  journal   = {The Journal of Business},
-  year      = {1980},
-  volume    = {53},
-  number    = {1},
-  pages     = {61--65},
-  doi       = {10.1086/296071}
+  title   = {The extreme value method for estimating the variance of the rate of return},
+  author  = {Parkinson, Michael},
+  journal = {The Journal of Business},
+  year    = {1980},
+  volume  = {53},
+  number  = {1},
+  pages   = {61--65},
+  doi     = {10.1086/296071}
 }
 
 @article{vanderweele2017sensitivity,
-  title   = {Sensitivity analysis in observational research: Introducing the {E}-value},
+  title   = {Sensitivity Analysis in Observational Research: Introducing the {E}-Value},
   author  = {VanderWeele, Tyler J. and Ding, Peng},
   journal = {Annals of Internal Medicine},
   year    = {2017},
@@ -316,21 +328,28 @@
 }
 
 @inproceedings{lightgbm2017,
-  title     = {{LightGBM}: A highly efficient gradient boosting decision tree},
+  title     = {{LightGBM}: A Highly Efficient Gradient Boosting Decision Tree},
   author    = {Ke, Guolin and Meng, Qi and Finley, Thomas and Wang, Taifeng and Chen, Wei and Ma, Weidong and Ye, Qiwei and Liu, Tie-Yan},
   booktitle = {Advances in Neural Information Processing Systems},
+  editor    = {Guyon, I. and von Luxburg, U. and Bengio, S. and Wallach, H. and Fergus, R. and Vishwanathan, S. and Garnett, R.},
+  volume    = {30},
+  pages     = {3146--3154},
+  publisher = {Curran Associates, Inc.},
   year      = {2017},
-  volume    = {30}
+  url       = {https://proceedings.neurips.cc/paper_files/paper/2017/hash/6449f44a102fde848669bdd9eb6b76fa-Abstract.html}
 }
 
 @inproceedings{optuna2019,
-  title     = {{Optuna}: A next-generation hyperparameter optimization framework},
+  title     = {{Optuna}: A Next-generation Hyperparameter Optimization Framework},
   author    = {Akiba, Takuya and Sano, Shotaro and Yanase, Toshihiko and Ohta, Takeru and Koyama, Masanori},
-  booktitle = {Proceedings of the 25th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining},
+  booktitle = {Proceedings of the 25th ACM SIGKDD International Conference on Knowledge Discovery \& Data Mining},
+  series    = {KDD '19},
   year      = {2019},
+  month     = jul,
   pages     = {2623--2631},
   publisher = {ACM},
-  doi       = {10.1145/3292500.3330701}
+  doi       = {10.1145/3292500.3330701},
+  url       = {https://dl.acm.org/doi/10.1145/3292500.3330701}
 }
 
 @article{allen1992stock,
@@ -378,7 +397,7 @@
 }
 
 @article{sabherwal2011internet,
-  title   = {Do internet stock message boards influence trading? Evidence from heavily discussed stocks with no fundamental news},
+  title   = {Do {Internet} stock message boards influence trading? Evidence from heavily discussed stocks with no fundamental news},
   author  = {Sabherwal, Sanjiv and Sarkar, Salil K. and Zhang, Ying},
   journal = {Journal of Business Finance \& Accounting},
   year    = {2011},
@@ -422,12 +441,12 @@
 }
 
 @misc{fu2025perseus,
-  title        = {{PERSEUS}: Tracing the masterminds behind cryptocurrency pump-and-dump schemes},
-  author       = {Fu, Honglin and Feng, Yebo and Wu, Cong and Xu, Jiahua},
-  year         = {2025},
-  howpublished = {arXiv preprint arXiv:2503.01686},
-  eprint       = {2503.01686},
-  archivePrefix = {arXiv},
-  primaryClass = {cs.CY},
-  doi          = {10.48550/arXiv.2503.01686}
+  title         = {{PERSEUS}: Tracing the masterminds behind cryptocurrency pump-and-dump schemes},
+  author        = {Fu, Honglin and Feng, Yebo and Wu, Cong and Xu, Jiahua},
+  year          = {2025},
+  howpublished  = {arXiv preprint arXiv:2503.01686},
+  eprint        = {2503.01686},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CY},
+  doi           = {10.48550/arXiv.2503.01686}
 }

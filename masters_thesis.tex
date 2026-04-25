@@ -20,6 +20,7 @@
 \usepackage{amsmath, amssymb, amsthm}
 \usepackage[english]{babel}
 \usepackage{subcaption}
+\usepackage{url}           % Safe URL handling in apacite bibliography entries
 \usepackage{apacite}
 \usepackage{multirow}
 \usepackage{listings}
@@ -37,49 +38,28 @@
 % 3. Chapter Heading Formatting
 % Chapters should start on a new page, bold, uppercase
 \titleformat{\chapter}[display]
-{\normalfont\bfseries\raggedright} % Bold and left-aligned
+{\normalfont\bfseries\centering} % Bold and centered
 {\MakeUppercase{\chaptertitlename} \thechapter} % "CHAPTER 1"
-{6pt} % Spacing between label and title
-{\large\singlespacing} % 14pt (large) and single spacing (Zalacznik B)
+{12pt} % Spacing between label and title
+{\Large} % Title size
 
-% 4. Section & Subsection Heading Formatting
+% 4. Section Heading Formatting
 \titleformat{\section}
 {\normalfont\bfseries}
-{\thesection}
+{\thesection.}
 {1em}
 {}
 
-\titleformat{\subsection}
-{\normalfont\bfseries}
-{\thesubsection}
-{1em}
-{}
-\titlespacing*{\chapter}{0pt}{12pt}{18pt}
-\titlespacing*{\section}{0pt}{12pt}{18pt}
-\titlespacing*{\subsection}{0pt}{10pt}{18pt}
+% 5. Caption Formatting
+\captionsetup{font=small, labelfont=bf}
 
-% 5. Caption Formatting (WNE UW Standards)
-% Label in Bold, Period separator, Left aligned, Single spaced.
-\captionsetup{
-  font={normalsize, stretch=1}, % 12pt (normalsize) for captions (Zalacznik B)
-  labelfont=bf,
-  labelsep=period,
-  justification=raggedright, % Left-aligned (Zalacznik B)
-  singlelinecheck=false
-}
-
-% 6. Float Spacing (Standardizing distance between text and tables/figures)
-\setlength{\textfloatsep}{20pt plus 2pt minus 4pt}
-\setlength{\intextsep}{20pt plus 2pt minus 4pt}
-\setlength{\floatsep}{20pt plus 2pt minus 4pt}
-
-% 7. Custom command for "Note" under figures/tables (WNE UW Standard: 10pt/single spaced)
+% 6. Custom command for "Source" under figures/tables
 \newcommand{\source}[1]{%
-  \vspace{5pt}
+  \vspace{-5pt}
   \begin{flushleft}
-    \singlespacing
-    \footnotesize \textit{Note.} #1
+    \footnotesize \textit{Source:} #1
   \end{flushleft}
+  \vspace{10pt}
 }
 
 % --- SECTIONING STYLE (Kept from original but adapted) ---
@@ -110,12 +90,12 @@
 
   \vspace{1cm}
 
-  {\textbf{\thesisAuthor} \par} % 12pt bold (Zalacznik B)
+  {\large \textbf{\thesisAuthor} \par}
   {Student's book no.: \studentID \par}
 
   \vspace{1cm}
 
-  {\huge \textbf{\thesisTitle} \par} % 18-24pt bold (Zalacznik B)
+  {\Huge \textbf{\thesisTitle} \par}
 
   \vspace{1cm}
 
@@ -186,26 +166,27 @@
 \noindent % Abstract placeholder
 This thesis investigates the effectiveness of coordinated cryptocurrency pump-and-dump signals across major Telegram channels, utilizing a Double Machine Learning framework to isolate causal effects... [Abstract text continue...]
 
-\vspace{0.5cm}
+\vspace{1cm}
 \noindent \textbf{Keywords:} Causality, Machine Learning, Cryptocurrency, Pump and Dump, Time-Series Analysis
 
-\vspace{1.5cm}
+\begin{center}
+  (\textbf{Słowa kluczowe:} Przyczynowość, Uczenie maszynowe, Kryptowaluty, Pump and Dump, Analiza Szeregów Czasowych)
+\end{center}
+
+\vspace{0.5cm}
+\noindent \textbf{Tytuł pracy w języku polskim:}
+\vspace{0.2cm} \\
+Sztuczna inteligencja oparta na przyczynowości w wykrywaniu manipulacji na rynku kryptowalut
 
 % -------------------------------------------------------------------
 % POLISH ABSTRACT (STRESZCZENIE)
 % -------------------------------------------------------------------
+\vspace{0.5cm}
 \begin{center}
   \textbf{Streszczenie}
 \end{center}
 
-\noindent \textbf{Tytuł pracy po polsku:} \\
-Sztuczna inteligencja oparta na przyczynowości w wykrywaniu manipulacji na rynku kryptowalut
-
-\vspace{0.3cm}
 \noindent Niniejsza praca bada skuteczność skoordynowanych sygnałów typu pump-and-dump na rynku kryptowalut... [Polish abstract text continue...]
-
-\vspace{0.4cm}
-\noindent \textbf{Słowa kluczowe:} Przyczynowość, Uczenie maszynowe, Kryptowaluty, Pump and Dump, Analiza Szeregów Czasowych
 
 \newpage
 
@@ -215,8 +196,7 @@ Sztuczna inteligencja oparta na przyczynowości w wykrywaniu manipulacji na rynk
 \tableofcontents
 \newpage
 
-\chapter*{INTRODUCTION}
-\addcontentsline{toc}{chapter}{Introduction}
+\input{chapters/introduction}
 
 \chapter{LITERATURE REVIEW AND THEORETICAL FRAMEWORK}
 \label{ch:literature-framework}
@@ -241,9 +221,13 @@ Sztuczna inteligencja oparta na przyczynowości w wykrywaniu manipulacji na rynk
 
 % --- PART 4: INTERPRETATION ---
 \chapter{INTERPRETATION}
+\label{ch:interpretation}
+\input{chapters/chapter_5/chapter_5_interpretation}
 
 % --- PART 5: CONCLUSIONS ---
-\chapter{CONCLUSION}
+\chapter{CONCLUSIONS}
+\label{ch:conclusions}
+\input{chapters/conclusions}
 
 \bibliographystyle{apacite}
 \bibliography{references}

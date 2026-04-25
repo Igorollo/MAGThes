@@ -48,17 +48,17 @@ Table~\ref{tab:stratified-ate-results} reports the stratified Average Treatment 
 \multicolumn{5}{l}{\textit{Small (\$10M--\$100M)}} \\
  & Hype Intensity & 1,182 & 0.0028 & 6.0 \\
  & Urgency Index & 1,182 & 0.0301$^{***}$ & $<$0.1 \\
- & Instruction Density & 1,182 & 0.0002$^{*}$ & 4.0 \\
+ & Instruction Density & 1,182 & 0.0002 & 8.2 \\
 \midrule
 \multicolumn{5}{l}{\textit{Mid (\$100M--\$1B)}} \\
  & Hype Intensity & 967 & $-$0.0007 & 10.0 \\
- & Urgency Index & 967 & $-$0.0081$^{***}$ & $<$0.1 \\
+ & Urgency Index & 967 & $-$0.0081$^{*}$ & 1.4 \\
  & Instruction Density & 967 & 0.0001 & 8.0 \\
 \midrule
 \multicolumn{5}{l}{\textit{Large ($>$\$1B)}} \\
- & Hype Intensity & 479 & $-$0.0004$^{***}$ & $<$0.1 \\
- & Urgency Index & 479 & $-$0.0024$^{***}$ & $<$0.1 \\
- & Instruction Density & 479 & $-$0.0001$^{*}$ & 4.0 \\
+ & Hype Intensity & 479 & $-$0.0004$^{**}$ & 0.8 \\
+ & Urgency Index & 479 & $-$0.0024$^{*}$ & 1.6 \\
+ & Instruction Density & 479 & $-$0.0001$^{*}$ & 1.0 \\
 \bottomrule
 \end{tabular}
 
@@ -67,11 +67,11 @@ Table~\ref{tab:stratified-ate-results} reports the stratified Average Treatment 
 
 The stratified estimates show a clear market-cap gradient in treatment effects, especially for Urgency Index. The pattern is consistent with H2: the positive urgency effect is concentrated in lower-valued assets and weakens or turns negative as Market Capitalization increases.
 
-In the small-cap stratum, the Urgency Index coefficient is 0.0301 (p $<$ 0.1\%), which indicates a positive relationship between higher message urgency and 10-minute log returns. This gives partial support for H1, mainly within the small-cap segment. Instruction Density is also positive and statistically significant, although the coefficient is small.
+In the small-cap stratum, the Urgency Index coefficient is 0.0301 (p $<$ 0.1\%), which indicates a positive relationship between higher message urgency and 10-minute log returns. This gives partial support for H1, mainly within the small-cap segment.
 
-In the mid-cap stratum, the Urgency Index coefficient turns negative ($-$0.0081, p $<$ 0.1\%). The positive urgency effect observed for small-cap assets therefore does not extend to larger market segments. Relative to H2, this estimate is consistent with weaker signal effects as Market Capitalization rises.
+In the mid-cap stratum, the Urgency Index coefficient turns negative ($-$0.0081, p = 1.4\%). The positive urgency effect observed for small-cap assets therefore does not extend to larger market segments. Relative to H2, this estimate is consistent with weaker signal effects as Market Capitalization rises.
 
-The negative coefficients in the large-cap stratum point in the same direction. The Urgency Index estimate of $-$0.0024 (p $<$ 0.1\%) suggests that the urgency treatment effect is negative in the largest assets. This is also consistent with H2.
+The negative coefficients in the large-cap stratum point in the same direction. The Urgency Index estimate of $-$0.0024 (p = 1.6\%) suggests that the urgency treatment effect is negative in the largest assets. This is also consistent with H2.
 
 No treatment effect reaches conventional significance in the micro-cap stratum. Given the small sample size (N = 289) and the high degree of illiquidity in this group, H1 is not supported there. Taken together, the stratified estimates support H2 and provide partial support for H1, with the positive urgency effect concentrated in the small-cap segment rather than the full sample.
 
@@ -95,7 +95,7 @@ Instruction Density & 0.0001 & 0.0002 & $-$0.001 & 0.001 \\
 \end{tabular}
 \end{table}
 
-Figure~\ref{fig:hte-market-cap} shows the relationship between Market Capitalization and the heterogeneous effect of Urgency Index. Each point represents an event-level CATE estimate. The smoothed trend indicates that the strongest positive effects appear in the lower small-cap range (about \$7M--\$40M), while effects decline and turn negative for larger assets.
+Figure~\ref{fig:hte-market-cap} shows the relationship between Market Capitalization and the heterogeneous effect of Urgency Index. Each point represents an event-level CATE estimate. The smoothed trend indicates that the strongest positive effects appear in the lower market-cap range (about \$7M--\$40M), while effects decline and turn negative for larger assets.
 
 \begin{figure}[htbp]
 \centering
@@ -123,7 +123,6 @@ These results assess whether the main urgency pattern reported for H1 and H2 is 
 \multicolumn{1}{c}{\textbf{Stratum}} & \multicolumn{1}{c}{\textbf{Treatment}} & \multicolumn{1}{c}{\textbf{E-value}} & \multicolumn{1}{c}{\textbf{E-value (CI)}} \\
 \midrule
 Small (\$10M--\$100M) & Urgency Index & 2.20 & 1.90 \\
-Small (\$10M--\$100M) & Instruction Density & 1.04 & 1.00 \\
 Mid (\$100M--\$1B) & Urgency Index & 2.16 & 1.38 \\
 Large ($>$\$1B) & Hype Intensity & 1.26 & 1.18 \\
 Large ($>$\$1B) & Urgency Index & 1.95 & 1.41 \\
@@ -139,7 +138,7 @@ The E-value for the small-cap Urgency Index effect (2.20) suggests that an unmea
 \section{Predictive Modeling of Pump Success}
 \label{sec:prediction-results}
 
-This section reports the H3 predictive results for pump success, defined in Chapter~\ref{ch:methodology} as a positive 10-minute log return. After testing the candidate tree-based models described in Section~\ref{sec:predictive-modeling}, the XGBoost specification was selected as the best performing model and evaluated with the grouped holdout protocol.
+This section reports the H3 predictive results for pump success, defined in Chapter~\ref{ch:methodology} as a positive 10-minute log return. After testing the candidate tree-based models described in Section~\ref{sec:predictive-modeling}, the XGBoost specification was selected as the best performing model and evaluated with the grouped holdout protocol. This unseen-channel evaluation is important because Figure~\ref{fig:channel-returns-distribution} shows that outcomes differ descriptively across channels.
 
 Table~\ref{tab:classification-with-channel} presents the test set performance for this no-channel specification.
 

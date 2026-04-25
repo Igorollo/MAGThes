@@ -1,0 +1,56 @@
+\section{Main Conclusion}
+\label{sec:conclusions-main}
+
+This thesis examined whether Telegram pump-and-dump signals help explain immediate cryptocurrency price reactions. The main conclusion is that signal characteristics do matter, but their effect is conditional. Urgency is not a general force that raises returns in every market segment. It works most clearly as a short-lived coordination trigger in the part of the market where assets are small enough to move but still active enough for the reaction to be measured.
+
+The analysis was based on a final complete-case sample of 2,917 pump events, and the main outcome was the 10-minute logarithmic return after the public coin reveal.
+
+The evidence shows that the market response cannot be explained by message style alone. The same type of urgent signal does not have the same estimated effect across all coins, because Market Capitalization changes how easily coordinated buying can move the price.
+
+In this sense, the findings support the broader argument developed in the thesis. Pump messages should be understood as coordination tools rather than as sources of new financial information. Their role is to concentrate attention and speed up action around the reveal time. However, this coordination only translates into a measurable price reaction when the market structure allows it.
+
+\section{Findings in Relation to the Hypotheses}
+\label{sec:conclusions-hypotheses}
+
+The first hypothesis stated that urgent pump signals should have a positive effect on short-term returns. The results provide only partial support for this claim. The strongest positive evidence appears in the small-cap stratum, where the Urgency Index coefficient is 0.0301 and statistically significant at p $<$ 0.1\%. This means that, among assets in the \$10M--\$100M market-cap range, more urgent reveal messages are associated with higher 10-minute returns after adjustment for observed pre-event conditions.
+
+This result should not be generalized to the whole sample. In the micro-cap stratum, no treatment effect reaches conventional significance, and in the mid- and large-cap strata the urgency estimates weaken and turn negative. Therefore, H1 is supported only in a limited sense: urgent signals can increase short-term returns, but the evidence is strongest for small-cap assets and not for all low-valued coins.
+
+The second hypothesis stated that signal effects should be stronger in lower-cap assets and weaker as Market Capitalization increases. This hypothesis receives the clearest support. The stratified DML estimates and the heterogeneous-effect analysis both show that market size is a central boundary condition. The positive urgency effect is concentrated in smaller assets, while larger markets appear more resistant to this type of coordination.
+
+At the same time, the evidence does not support a simple rule that the smallest assets are always the easiest to pump. Chapter~\ref{ch:interpretation} explains that the most visible positive effect appears around the lower market-cap range, approximately \$7M--\$40M. The strongest conclusion for H2 is therefore that market size shapes the signal effect, but not in a perfectly linear way.
+
+The third hypothesis stated that pump success should be predictable using information available before or at the signal. The predictive results support this hypothesis. The no-channel XGBoost model reaches a macro F1-score of about 0.76 on a grouped holdout test set with unseen channels. It also reaches about 0.89 recall for successful pumps, showing that pre-event market variables and signal characteristics contain useful information for identifying positive 10-minute outcomes.
+
+This predictive finding must remain separate from the causal findings. The XGBoost model shows that success can be classified with meaningful accuracy, but not that every important feature caused the return. For this reason, H3 is supported as a forecasting result, not as causal evidence.
+
+\section{Contribution of the Study}
+\label{sec:conclusions-contribution}
+
+The study contributes to the analysis of cryptocurrency manipulation in four main ways. First, it links the wording and timing of pump signals to immediate price changes. Instead of treating pump events only as abnormal price movements, it connects the message itself with the market reaction that follows.
+
+Second, the thesis moves beyond detection. Prior work has shown that pump-and-dump schemes can be found in market and messaging data. This thesis instead asks whether specific signal features, especially urgency, help explain the strength of the short-term response. This makes the analysis closer to a causal question, while still recognizing the limits of observational data.
+
+Third, the study shows that Market Capitalization is not only a background control but a key boundary condition. The effect of urgency depends on the size and trading activity of the target asset. This helps explain why the same communication strategy may appear effective in one part of the market and weak or unclear in another.
+
+Fourth, the thesis keeps causal estimation and prediction as separate tasks. The DML analysis estimates the effect of signal characteristics after adjusting for observed pre-event conditions. The predictive model asks whether available information can classify successful pumps. Keeping these tasks separate avoids treating predictive accuracy as proof of causality and gives a clearer view of what each method can and cannot show.
+
+\section{Limitations and Future Research}
+\label{sec:conclusions-limitations-future}
+
+The first limitation is that the study is observational. Pump signals were not randomly assigned to assets. The DML framework adjusts for observed pre-reveal conditions, and the sensitivity analysis helps assess robustness, but unmeasured confounding cannot be fully ruled out.
+
+The second limitation is the short outcome window. The 10-minute return is suitable for measuring the immediate reaction to a pump signal, but it does not describe the full life of the event. It does not show whether prices reverse later, whether late participants lose money, or whether an individual trader could profit after fees, slippage, and execution delays.
+
+The third limitation concerns data quality in the smallest assets. Micro-cap coins often have sparse trading, many zero-volume intervals, and unstable price measurements. This makes their estimated effects hard to interpret. The thesis therefore treats the micro-cap results as inconclusive rather than as evidence that urgency has no effect in that segment.
+
+The fourth limitation is that channel and organizer patterns may still influence the data. The main predictive model excludes Channel ID to test whether performance generalizes across unseen channels, but observable variables can still carry traces of organizer strategy.
+
+Future research could improve on these limits in several ways. Richer liquidity data, especially order-book depth and execution information, would make it easier to measure how much buying pressure is needed to move different assets. Longer post-event windows could show how quickly pump effects reverse and whether short-term gains survive realistic trading costs. Studies using later market periods or different exchanges could test whether the same market-cap pattern remains stable. Finally, stronger research designs could help separate organizer selection from the independent effect of signal wording.
+
+\section{Final Remarks}
+\label{sec:conclusions-final}
+
+The thesis shows that urgency can matter in cryptocurrency pump-and-dump schemes, but only within clear limits. Its effect depends on whether message design, timing, and market conditions align.
+
+The final lesson is therefore conditional rather than absolute. Understanding manipulation in cryptocurrency markets requires attention to both sides of this process: the social design of the signal and the market conditions that decide whether the signal can actually move the price.

@@ -23,7 +23,7 @@ An initial candidate, Hype Volume, was excluded after preliminary collinearity s
 
 Confounders are underlying variables that can skew the estimates by simultaneously affecting the intensity of the pump signal and the coin's subsequent price return. For example, coins with low trading volume tend to be highly volatile. This baseline volatility might make them attractive targets for organizers to issue very aggressive pump instructions, while simultaneously causing the coin's price to swing wildly on its own. If these factors are not controlled for, the model might mistakenly attribute normal market noise to the impact of the pump signal.
 
-To ensure the causal estimates are unbiased, these pre-existing baseline differences must be mathematically controlled for. Table~\ref{tab:confounder-list} lists the covariates constructed using only pre-reveal information available up to $T_0 - 1$, before the public coin reveal at $T_0$. The model controls for baseline asset fundamentals, high-frequency microstructure metrics (from Chapter~\ref{ch:data-description}), and channel fixed effects to account for unobserved differences between the 81 Telegram channels.
+To ensure the causal estimates are unbiased, these pre-existing baseline differences must be mathematically controlled for. Table~\ref{tab:confounder-list} lists the covariates constructed using only pre-reveal information available up to $T_0 - 1$, before the public coin reveal at $T_0$. The model controls for baseline asset fundamentals, high-frequency microstructure metrics (from Chapter~\ref{ch:data-description}), and channel fixed effects to account for unobserved differences between the 81 Telegram channels. This is important because Figure~\ref{fig:channel-returns-distribution} shows descriptive differences in median outcomes across channels.
 
 \begin{table}[htbp]
 \centering
@@ -65,14 +65,14 @@ The final estimation outcome is therefore the 10-minute logarithmic return, wins
 Y_{i,\Delta} = \log\left(\frac{P_{T_0 + \Delta}}{P_{T_0}}\right)
 \label{eq:log-return}
 \end{equation}
-Broader pre-reveal market conditions are then handled through the control set and the Double Machine Learning framework.
+Broader pre-reveal market conditions are then handled through the Double Machine Learning framework.
 
 \section{Double Machine Learning}
 \label{sec:dml}
 
 Standard linear models are not well suited to this setting because the relationship between returns and pre-reveal market conditions may be non-linear. At the same time, purely predictive machine learning models are designed to maximize forecast accuracy rather than to recover interpretable causal effects. Double Machine Learning (DML) \cite{chernozhukov2018double} bridges these two approaches. In the first stage, machine learning models predict the outcome and the treatments from the confounders. In the second stage, the treatment effect is estimated from the residual variation that remains after conditioning on those confounders. With cross-fitting, this approach supports valid inference without requiring the nuisance relationships themselves to be linear.
 
-The residual extraction process maps parallel paths for outcome unconfounding and treatment filtering:
+To isolate the causal effect, this process calculates residuals in two parallel steps, removing the influence of background confounders from both the outcome and the treatment, as follows:
 \begin{enumerate}
 \item Train a machine learning model to predict the price return using only the confounders:
 \begin{equation}
@@ -105,7 +105,7 @@ The residual extraction process maps parallel paths for outcome unconfounding an
 \end{equation}
 \end{enumerate}
 
-Figure~\ref{fig:dml-schematic} illustrates the two-stage DML workflow: confounders are first used to partial out predictable variation from both the outcome and the treatment vector, and the causal effect is then estimated from the remaining residual variation.
+Figure~\ref{fig:dml-schematic} illustrates this two-stage DML workflow: confounders are first used to partial out predictable variation from both the outcome and the treatment vector, and the causal effect is then estimated from the remaining residual variation.
 
 \begin{figure}[htbp]
 \centering
@@ -116,7 +116,7 @@ Figure~\ref{fig:dml-schematic} illustrates the two-stage DML workflow: confounde
 
 To avoid finite-sample bias, the data is split into 5 folds ($K=5$) for cross-fitting. This ensures that residuals are always generated using models trained on out-of-sample data, preventing overfitting.
 
-Random Forests \cite{breiman2001random} serve as the fundamental algorithm for both stages of the DML process. To smoothly integrate this dual-stage approach, the \texttt{LinearDML} estimator from the \texttt{econml} library is employed \cite{econml}. The nuisance models use Random Forest specifications tuned separately for the full-sample estimator and for the market-cap-stratified estimators. All calculations follow the exact influence functions mathematically outlined in \cite{chernozhukov2018double}.
+Random Forests \cite{breiman2001random} serve as the fundamental algorithm for both stages of the DML process. To smoothly integrate this dual-stage approach, the \texttt{LinearDML} estimator from the \texttt{econml} python library is employed \cite{econml}. The nuisance models use Random Forest specifications tuned separately for the full-sample estimator and for the market-cap-stratified estimators. All calculations follow the exact influence functions mathematically outlined in \cite{chernozhukov2018double}.
 
 \section{Model Validation}
 \label{sec:model-validation}
@@ -136,7 +136,7 @@ Finally, because unmeasured confounding cannot be ruled out mechanically, the ro
 
 To determine the average marginal effect of each signal characteristic, the model analyzes all three treatment variables simultaneously by regressing the outcome residuals directly onto the treatment residuals (Equation \ref{eq:final_causal_effect}). This simultaneous estimation isolates the impact of each characteristic---such as hype intensity---by automatically accounting for the presence of the other signal features, ensuring their specific effects are not confounded.
 
-Because standard formulas for calculating standard errors often fail when using complex machine learning ensembles, statistical uncertainty is measured using bootstrap-based inference. In the implemented specification, the DML procedure is paired with \texttt{BootstrapInference} using 100 bootstrap samples, and the resulting bootstrap confidence intervals summarize coefficient precision in the reported results.
+Because standard analytical formulas for calculating standard errors often fail or rely on strict parametric assumptions when using complex machine learning ensembles, statistical uncertainty is measured using bootstrap-based inference. Bootstrapping is a resampling technique that works by repeatedly drawing random samples (with replacement) from the original dataset to create hundreds of simulated datasets. The entire DML estimation process is then re-run on each of these simulated samples, generating an empirical distribution of the estimated treatment effects. This empirical distribution provides a more reliable way to calculate standard errors without assuming a specific underlying probability distribution. In the implemented specification, the DML procedure is paired with the \texttt{BootstrapInference} module from the \texttt{econml} python library using 500 iterations. The variance across these 500 runs is used to construct confidence intervals and summarize coefficient precision in the reported results.
 
 \section{Stratified Estimation by Market Capitalization}
 \label{sec:stratified-estimation}
