@@ -23,7 +23,7 @@ An initial candidate, Hype Volume, was excluded after preliminary collinearity s
 
 Confounders are underlying variables that can skew the estimates by simultaneously affecting the intensity of the pump signal and the coin's subsequent price return. For example, coins with low trading volume tend to be highly volatile. This baseline volatility might make them attractive targets for organizers to issue very aggressive pump instructions, while simultaneously causing the coin's price to swing wildly on its own. If these factors are not controlled for, the model might mistakenly attribute normal market noise to the impact of the pump signal.
 
-To ensure the causal estimates are unbiased, these pre-existing baseline differences must be mathematically controlled for. Table~\ref{tab:confounder-list} lists the covariates constructed using only pre-reveal information available up to $T_0 - 1$, before the public coin reveal at $T_0$. The model controls for baseline asset fundamentals, high-frequency microstructure metrics (from Chapter~\ref{ch:data-description}), and channel fixed effects to account for unobserved differences between the 81 Telegram channels. This is important because Figure~\ref{fig:channel-returns-distribution} shows descriptive differences in median outcomes across channels.
+To reduce bias from observed baseline differences, these pre-existing factors must be controlled for in the estimation. Table~\ref{tab:confounder-list} lists the covariates constructed using only pre-reveal information available up to $T_0 - 1$, before the public coin reveal at $T_0$. The model controls for baseline asset fundamentals, high-frequency microstructure metrics (from Chapter~\ref{ch:data-description}), and channel fixed effects to account for unobserved differences between the 81 Telegram channels. This is important because Figure~\ref{fig:channel-returns-distribution} shows descriptive differences in median outcomes across channels.
 
 \begin{table}[htbp]
 \centering
@@ -116,7 +116,7 @@ Figure~\ref{fig:dml-schematic} illustrates this two-stage DML workflow: confound
 
 To avoid finite-sample bias, the data is split into 5 folds ($K=5$) for cross-fitting. This ensures that residuals are always generated using models trained on out-of-sample data, preventing overfitting.
 
-Random Forests \cite{breiman2001random} serve as the fundamental algorithm for both stages of the DML process. To smoothly integrate this dual-stage approach, the \texttt{LinearDML} estimator from the \texttt{econml} python library is employed \cite{econml}. The nuisance models use Random Forest specifications tuned separately for the full-sample estimator and for the market-cap-stratified estimators. All calculations follow the exact influence functions mathematically outlined in \cite{chernozhukov2018double}.
+Random Forests \cite{breiman2001random} serve as the fundamental algorithm for both stages of the DML process. To smoothly integrate this dual-stage approach, the \texttt{LinearDML} estimator from the \texttt{econml} python library is employed \cite{econml}. The nuisance models use Random Forest specifications tuned separately for the full-sample estimator and for the market-cap-stratified estimators. The estimation follows the DML orthogonalization and inference framework of \cite{chernozhukov2018double}, implemented through the \texttt{LinearDML} estimator in \texttt{econml}.
 
 \section{Model Validation}
 \label{sec:model-validation}
@@ -127,14 +127,14 @@ Multicollinearity between the continuous treatment variables is also rigorously 
 \begin{equation}
 VIF_k = \frac{1}{1 - R^2_k}
 \end{equation}
-As a rule of thumb, VIF values below 5 indicate limited multicollinearity concerns \cite{obrien2007}. In the present specification, all VIF scores remain well below that benchmark, indicating that the retained treatment variables are distinct enough to be measured jointly.
+Following \cite{obrien2007}, VIF thresholds should be interpreted as contextual guidelines rather than fixed rules. In the present specification, all VIF scores remain below 1.2, indicating that the retained treatment variables are distinct enough to be measured jointly.
 
-Finally, because unmeasured confounding cannot be ruled out mechanically, the robustness of statistically significant estimates is quantified using E-values \cite{vanderweele2017sensitivity}. Larger E-values indicate that a stronger hidden confounder would be needed to explain away the estimated association. These diagnostics are treated as specification and sensitivity checks that help assess model stability and robustness.
+Finally, because unmeasured confounding cannot be ruled out mechanically, statistically significant estimates are accompanied by E-value sensitivity diagnostics \cite{vanderweele2017sensitivity}. In this thesis, these values are used only as approximate sensitivity checks for unmeasured confounding. They contribute to the interpretation by showing how strong an omitted factor would need to be to explain away the significant DML estimates.
 
 \section{Average Treatment Effect Estimation}
 \label{sec:ate-estimation}
 
-To determine the average marginal effect of each signal characteristic, the model analyzes all three treatment variables simultaneously by regressing the outcome residuals directly onto the treatment residuals (Equation \ref{eq:final_causal_effect}). This simultaneous estimation isolates the impact of each characteristic---such as hype intensity---by automatically accounting for the presence of the other signal features, ensuring their specific effects are not confounded.
+To determine the average marginal effect of each signal characteristic, the model analyzes all three treatment variables simultaneously by regressing the outcome residuals directly onto the treatment residuals (Equation \ref{eq:final_causal_effect}). This simultaneous estimation estimates the association for each characteristic---such as hype intensity---while adjusting for the other signal features included in the treatment vector.
 
 Because standard analytical formulas for calculating standard errors often fail or rely on strict parametric assumptions when using complex machine learning ensembles, statistical uncertainty is measured using bootstrap-based inference. Bootstrapping is a resampling technique that works by repeatedly drawing random samples (with replacement) from the original dataset to create hundreds of simulated datasets. The entire DML estimation process is then re-run on each of these simulated samples, generating an empirical distribution of the estimated treatment effects. This empirical distribution provides a more reliable way to calculate standard errors without assuming a specific underlying probability distribution. In the implemented specification, the DML procedure is paired with the \texttt{BootstrapInference} module from the \texttt{econml} python library using 500 iterations. The variance across these 500 runs is used to construct confidence intervals and summarize coefficient precision in the reported results.
 
