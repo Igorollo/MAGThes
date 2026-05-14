@@ -70,7 +70,7 @@
 \newcommand{\thesisTitle}{Causal AI for Detecting Crypto Market Manipulation}
 \newcommand{\thesisAuthor}{Igor Kołodziej}
 \newcommand{\studentID}{440239}
-\newcommand{\supervisor}{Dr. Hab. Stanisław Cichocki, Prof. UW}
+\newcommand{\supervisor}{Dr Hab. Stanisław Cichocki, Prof. UW}
 \newcommand{\fieldOfStudy}{Data Science and Business Analytics}
 \newcommand{\submissionPlace}{Warsaw}
 \newcommand{\submissionYear}{2026}
@@ -163,14 +163,13 @@
 \begin{center}
   \textbf{Abstract}
 \end{center}
-\noindent % Abstract placeholder
-This thesis investigates the effectiveness of coordinated cryptocurrency pump-and-dump signals across major Telegram channels, utilizing a Double Machine Learning framework to isolate causal effects... [Abstract text continue...]
+\noindent This thesis studies cryptocurrency pump-and-dump schemes coordinated through Telegram channels. It examines whether the wording and timing of pump signals help explain the immediate market reaction after a target coin is revealed. The analysis combines Telegram messages, 1-minute exchange OHLCV data, and historical asset metadata into a final sample of 2,917 complete pump events. The main outcome is the 10-minute logarithmic return after the reveal. The causal part uses Double Machine Learning to estimate the effects of Hype Intensity, Urgency Index, and Instruction Density while controlling for pre-event market conditions and channel fixed effects. Heterogeneity is examined across market-capitalization groups and with Causal Forests. A separate XGBoost model tests whether pump success can be predicted from information available at the time of the signal. The predictive results also show that pump success can be classified with meaningful accuracy on unseen Telegram channels. The results show that urgency does not increase returns in every market segment. Its clearest positive effect appears for small-cap assets, while the estimated effects are smaller and negative in larger segments and inconclusive for micro-cap assets. Overall, the thesis shows that pump signals work mainly as short-term coordination tools, and that their effect depends strongly on market conditions.
 
 \vspace{1cm}
-\noindent \textbf{Keywords:} Causality, Machine Learning, Cryptocurrency, Pump and Dump, Time-Series Analysis
+\noindent \textbf{Keywords:} causal machine learning, cryptocurrency market manipulation, pump-and-dump schemes, Telegram signals, Double Machine Learning, market capitalization, short-term returns
 
 \begin{center}
-  (\textbf{Słowa kluczowe:} Przyczynowość, Uczenie maszynowe, Kryptowaluty, Pump and Dump, Analiza Szeregów Czasowych)
+  (\textbf{Słowa kluczowe:} przyczynowe uczenie maszynowe, manipulacja na rynku kryptowalut, schematy pump-and-dump, sygnały Telegram, Double Machine Learning, kapitalizacja rynkowa, krótkoterminowe stopy zwrotu)
 \end{center}
 
 \vspace{0.5cm}
@@ -186,7 +185,7 @@ Sztuczna inteligencja oparta na przyczynowości w wykrywaniu manipulacji na rynk
   \textbf{Streszczenie}
 \end{center}
 
-\noindent Niniejsza praca bada skuteczność skoordynowanych sygnałów typu pump-and-dump na rynku kryptowalut... [Polish abstract text continue...]
+\noindent Niniejsza praca bada schematy typu pump-and-dump na rynku kryptowalut, koordynowane za pomocą kanałów Telegram. Głównym celem jest sprawdzenie, czy treść i forma sygnału wpływają na natychmiastową reakcję rynku po ogłoszeniu wybranej monety. Analiza łączy wiadomości z Telegrama, minutowe dane OHLCV z giełd kryptowalut oraz historyczne metadane aktywów. Ostateczna próba obejmuje 2 917 kompletnych zdarzeń. Zmienną objaśnianą jest 10-minutowa logarytmiczna stopa zwrotu po ujawnieniu celu. W części przyczynowej zastosowano Double Machine Learning, aby oszacować wpływ intensywności hype'u, indeksu pilności oraz gęstości instrukcji, przy kontroli wcześniejszych warunków rynkowych i efektów stałych kanałów. Zróżnicowanie efektów badane jest według kapitalizacji rynkowej oraz za pomocą Causal Forests. Oddzielny model XGBoost sprawdza, czy można przewidzieć sukces pompy na podstawie informacji dostępnych w momencie sygnału. Wyniki predykcyjne pokazują również, że sukces pompy można klasyfikować z sensowną skutecznością dla wcześniej niewidzianych kanałów Telegram. Wyniki pokazują, że pilność komunikatu nie zwiększa stóp zwrotu we wszystkich segmentach rynku. Najwyraźniejszy pozytywny efekt występuje dla aktywów o małej kapitalizacji, natomiast w większych segmentach oszacowane efekty są mniejsze i ujemne, a dla mikroaktywów pozostają niejednoznaczne. Praca pokazuje, że sygnały pump-and-dump działają głównie jako krótkoterminowe narzędzia koordynacji, a ich skuteczność silnie zależy od warunków rynkowych.
 
 \newpage
 

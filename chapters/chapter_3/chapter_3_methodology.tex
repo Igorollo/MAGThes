@@ -1,8 +1,8 @@
 % Chapter 3: Methodology
-This chapter presents the methodological framework used to estimate the effect of Telegram pump signals on cryptocurrency prices. It defines the outcome and treatment variables, explains the Double Machine Learning design and the heterogeneous-effect strategy, also describes the validation, stratification, and predictive procedures applied in the empirical analysis.
+This chapter presents the methodological framework used to estimate the effect of Telegram pump signals on cryptocurrency prices. It defines the outcome and treatment variables, explains the Double Machine Learning design and the heterogeneous-effect strategy, and also describes the validation, stratification, and predictive procedures applied in the empirical analysis.
 
 \label{ch:methodology}
-\section{Theoretical Framework}
+\section{Causal Identification Framework}
 \label{sec:theory-framework}
 
 As Section~\ref{sec:detection-to-causal-measurement} motivates, the empirical strategy is grounded in a causal identification framework for estimating how Telegram pump signals affect short-horizon cryptocurrency prices. For any given event $i$, only the realized price return is observable, while the counterfactual price path is not. The potential outcomes framework \cite{rubin1974estimating} formalizes this problem as two possible price trajectories for the same asset during the same time window:
@@ -72,40 +72,40 @@ Broader pre-reveal market conditions are then handled through the Double Machine
 
 Standard linear models are not well suited to this setting because the relationship between returns and pre-reveal market conditions may be non-linear. At the same time, purely predictive machine learning models are designed to maximize forecast accuracy rather than to recover interpretable causal effects. Double Machine Learning (DML) \cite{chernozhukov2018double} bridges these two approaches. In the first stage, machine learning models predict the outcome and the treatments from the confounders. In the second stage, the treatment effect is estimated from the residual variation that remains after conditioning on those confounders. With cross-fitting, this approach supports valid inference without requiring the nuisance relationships themselves to be linear.
 
-To isolate the causal effect, this process calculates residuals in two parallel steps, removing the influence of background confounders from both the outcome and the treatment, as follows:
+To isolate the causal effect, this process calculates residuals in two parallel steps, removing the influence of background confounders from both the outcome and the treatment, as follows.
 \begin{enumerate}
-\item Train a machine learning model to predict the price return using only the confounders:
+\item Train a machine learning model to predict the price return using only the confounders.
 \begin{equation}
 \widehat{\mu}(X) = \mathbb{E}[Y \mid X]
 \label{eq:outcome_model}
 \end{equation}
 
-\item Calculate the unexplained outcome residual:
+\item Calculate the unexplained outcome residual.
 \begin{equation}
 \widetilde{Y} = Y - \widehat{\mu}(X)
 \label{eq:outcome_residual}
 \end{equation}
 
-\item Train another machine learning model to predict the three-variable treatment (pump signal's characteristics) vector using only the confounders:
+\item Train another machine learning model to predict the three-variable treatment (pump signal's characteristics) vector using only the confounders.
 \begin{equation}
 \widehat{e}(X) = \mathbb{E}[T \mid X]
 \label{eq:treatment_model}
 \end{equation}
 
-\item Calculate the unexplained treatment residual:
+\item Calculate the unexplained treatment residual.
 \begin{equation}
 \widetilde{T} = T - \widehat{e}(X)
 \label{eq:treatment_residual}
 \end{equation}
 
-\item Estimate the final causal effect, where $T$ denotes the three-variable treatment vector and $\theta$ contains one coefficient for each treatment dimension, by regressing the outcome residuals directly onto the treatment residuals:
+\item Estimate the final causal effect, where $T$ denotes the three-variable treatment vector and $\theta$ contains one coefficient for each treatment dimension, by regressing the outcome residuals directly onto the treatment residuals.
 \begin{equation}
 \widetilde{Y} = \theta^{\top} \widetilde{T} + \varepsilon
 \label{eq:final_causal_effect}
 \end{equation}
 \end{enumerate}
 
-Figure~\ref{fig:dml-schematic} illustrates this two-stage DML workflow: confounders are first used to partial out predictable variation from both the outcome and the treatment vector, and the causal effect is then estimated from the remaining residual variation.
+Figure~\ref{fig:dml-schematic} illustrates this two-stage DML workflow. Confounders are first used to partial out predictable variation from both the outcome and the treatment vector, and the causal effect is then estimated from the remaining residual variation.
 
 \begin{figure}[htbp]
 \centering
@@ -118,7 +118,7 @@ To avoid finite-sample bias, the data is split into 5 folds ($K=5$) for cross-fi
 
 Random Forests \cite{breiman2001random} serve as the fundamental algorithm for both stages of the DML process. To smoothly integrate this dual-stage approach, the \texttt{LinearDML} estimator from the \texttt{econml} python library is employed \cite{econml}. The nuisance models use Random Forest specifications tuned separately for the full-sample estimator and for the market-cap-stratified estimators. The estimation follows the DML orthogonalization and inference framework of \cite{chernozhukov2018double}, implemented through the \texttt{LinearDML} estimator in \texttt{econml}.
 
-\section{Model Validation}
+\section{Validation and Sensitivity Checks}
 \label{sec:model-validation}
 
 The cross-validated $R^2$ scores of the nuisance models are used as a practical check of model behavior. If the treatment model achieved an extremely high $R^2$, it would suggest that the observed confounders almost fully determine treatment intensity, leaving little independent variation for effect estimation. Lower treatment predictability is therefore preferable in this setting.
@@ -134,19 +134,19 @@ Finally, because unmeasured confounding cannot be ruled out mechanically, statis
 \section{Average Treatment Effect Estimation}
 \label{sec:ate-estimation}
 
-To determine the average marginal effect of each signal characteristic, the model analyzes all three treatment variables simultaneously by regressing the outcome residuals directly onto the treatment residuals (Equation \ref{eq:final_causal_effect}). This simultaneous estimation estimates the association for each characteristic---such as hype intensity---while adjusting for the other signal features included in the treatment vector.
+To determine the average marginal effect of each signal characteristic, the model analyzes all three treatment variables simultaneously by regressing the outcome residuals directly onto the treatment residuals (Equation \ref{eq:final_causal_effect}). This simultaneous estimation estimates the association for each characteristic, such as hype intensity, while adjusting for the other signal features included in the treatment vector.
 
 Because standard analytical formulas for calculating standard errors often fail or rely on strict parametric assumptions when using complex machine learning ensembles, statistical uncertainty is measured using bootstrap-based inference. Bootstrapping is a resampling technique that works by repeatedly drawing random samples (with replacement) from the original dataset to create hundreds of simulated datasets. The entire DML estimation process is then re-run on each of these simulated samples, generating an empirical distribution of the estimated treatment effects. This empirical distribution provides a more reliable way to calculate standard errors without assuming a specific underlying probability distribution. In the implemented specification, the DML procedure is paired with the \texttt{BootstrapInference} module from the \texttt{econml} python library using 500 iterations. The variance across these 500 runs is used to construct confidence intervals and summarize coefficient precision in the reported results.
 
 \section{Stratified Estimation by Market Capitalization}
 \label{sec:stratified-estimation}
 
-A single average effect can hide significant differences between coins of various sizes. Because highly liquid markets naturally resist simple manipulation, the causal estimation is performed separately across four distinct market capitalization groups:
+A single average effect can hide significant differences between coins of various sizes. Because highly liquid markets naturally resist simple manipulation, the causal estimation is performed separately across four distinct market capitalization groups.
 \begin{itemize}
-\item Micro-cap: Total asset capitalization remaining strictly beneath \$10 million.
-\item Small-cap: Asset valuation established between \$10 million and \$100 million.
-\item Mid-cap: Cap volumes stabilizing between \$100 million and \$1 billion.
-\item Large-cap: Assets exceeding the foundational threshold of \$1 billion.
+\item Micro-cap assets have total asset capitalization remaining strictly beneath \$10 million.
+\item Small-cap assets have asset valuation established between \$10 million and \$100 million.
+\item Mid-cap assets have cap volumes stabilizing between \$100 million and \$1 billion.
+\item Large-cap assets exceed the foundational threshold of \$1 billion.
 \end{itemize}
 Running the DML pipeline independently across these segments ensures that extreme volatility from tiny micro-cap coins does not artificially contaminate the effect estimates for the more stable mid-cap coins.
 Together with the CATE analysis below, this design tests H2 by asking whether market size changes the estimated signal effects.
@@ -169,16 +169,16 @@ To keep the system computationally efficient without losing accuracy, the underl
 \section{Sample Construction}
 \label{sec:sample-selection}
 
-The final complete-case causal sample consists of 2,917 pump events, constructed using the following criteria:
+The final complete-case causal sample consists of 2,917 pump events, constructed using the following criteria.
 \begin{enumerate}
-    \item Complete Covariate Data: To ensure a consistent baseline environment, observations are strictly excluded if they are missing any pre-reveal covariates (the background market conditions, such as baseline volatility or market capitalization, measured right before the pump).
-    \item Outcome Preprocessing: The 10-minute logarithmic returns ($Y_{i,10}$ defined in Equation~\ref{eq:log-return}) are winsorized at the 1st and 99th percentiles to limit the analytical contamination caused by extreme price outliers.
+    \item Complete Covariate Data. To ensure a consistent baseline environment, observations are strictly excluded if they are missing any pre-reveal covariates (the background market conditions, such as baseline volatility or market capitalization, measured right before the pump).
+    \item Outcome Preprocessing. The 10-minute logarithmic returns ($Y_{i,10}$ defined in Equation~\ref{eq:log-return}) are winsorized at the 1st and 99th percentiles to limit the analytical contamination caused by extreme price outliers.
 \end{enumerate}
 
 \section{Predictive Modeling}
 \label{sec:predictive-modeling}
 
-The final phase evaluates whether observable pre-signal market variables and signal-message characteristics can predict a pump success. A ``successful'' pump event is defined as one that results in a positive 10-minute logarithmic return:
+The final phase evaluates whether observable pre-signal market variables and signal-message characteristics can predict a pump success. A ``successful'' pump event is defined as one that results in a positive 10-minute logarithmic return.
 \begin{equation}
 \text{Success}_i = \mathbf{1}\left[Y_{i,10} > 0\right]
 \end{equation}

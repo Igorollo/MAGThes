@@ -1,13 +1,13 @@
 % Chapter 4: Experimental Results
-% This chapter reports the numerical results from the causal inference framework
-% developed in Chapter 3 and interprets their implications for pump-and-dump dynamics.
+% This chapter reports the numerical results from the causal inference and
+% predictive frameworks developed in Chapter 3.
 
-This chapter reports the empirical results obtained from the methodology developed in Chapter 3. It first presents estimation diagnostics, then reports the main treatment effect estimates, heterogeneous-effect patterns, robustness checks, and predictive results used to assess the thesis hypotheses.
+This chapter reports the empirical results obtained from the methodology developed in Chapter 3. It first presents estimation diagnostics and then reports the main treatment effect estimates, heterogeneous-effect patterns, robustness checks, and predictive results.
 
 \section{Estimation Diagnostics}
 \label{sec:sample-description}
 
-Before estimation, multicollinearity among the three treatment variables was assessed using Variance Inflation Factors (VIF). All three variables have very low VIF values. Since \cite{obrien2007} warns against rigid threshold rules, these values are interpreted as evidence of limited collinearity in this specification. Table~\ref{tab:vif-results} shows that Hype Intensity, Urgency Index, and Instruction Density all have VIF values below 1.2.
+Before estimation, multicollinearity among the three treatment variables was assessed using Variance Inflation Factors (VIF). All three variables have very low VIF values. Since \cite{obrien2007} warns against rigid threshold rules, these values are interpreted as evidence of limited collinearity in this model. Table~\ref{tab:vif-results} shows that Hype Intensity, Urgency Index, and Instruction Density all have VIF values below 1.2.
 
 \begin{table}[htbp]
 \centering
@@ -24,12 +24,12 @@ Instruction Density & 1.126 \\
 \end{tabular}
 \end{table}
 
-The DML estimator relies on nuisance models to residualize both the outcome and the treatment. The treatment model has a mean cross-validated $R^2$ of $-0.20$ with a range from $-0.29$ to $-0.06$, which indicates low predictive power of the observed confounders for treatment intensity in this sample rather than a close fit of the treatment model. The outcome model has a mean cross-validated $R^2$ of 0.39 for the 10-minute logarithmic return, which suggests moderate predictive power of the confounders for the outcome and supports the residualization step in the DML procedure. Taken together, these diagnostics indicate that the specification is estimable and that the residualization step captures useful outcome variation.
+The DML estimator relies on nuisance models to residualize both the outcome and the treatment. The treatment model has a mean cross-validated $R^2$ of $-0.12$ with a range from $-0.29$ to $-0.06$, which indicates low predictive power of the observed confounders for treatment intensity in this sample rather than a close fit of the treatment model. The outcome model has a mean cross-validated $R^2$ of 0.39 for the 10-minute logarithmic return, which suggests moderate predictive power of the confounders for the outcome and supports the residualization step in the DML procedure. By residualizing the treatment as well, the estimator ensures that the resulting causal coefficients remain orthogonal to observed market factors, protecting the validity of the effect even when treatment intensity is difficult to predict. Taken together, these diagnostics indicate that the model setup is estimable and that the residualization step captures useful outcome variation.
 
-\section{Average Treatment Effect Estimation}
+\section{Stratified Average Treatment Effects}
 \label{sec:ate-results}
 
-Table~\ref{tab:stratified-ate-results} reports the stratified Average Treatment Effect estimates for each treatment variable across the Market Capitalization strata defined in Section~\ref{sec:stratified-estimation}. These estimates speak directly to H1 and test H2 by comparing treatment effects across market-cap groups.
+Table~\ref{tab:stratified-ate-results} reports the stratified Average Treatment Effect estimates for each treatment variable across the Market Capitalization strata defined in Section~\ref{sec:stratified-estimation}. These estimates compare treatment effects across market-cap groups.
 
 \begin{table}[htbp]
 \centering
@@ -65,19 +65,14 @@ Table~\ref{tab:stratified-ate-results} reports the stratified Average Treatment 
 \source{Winsorized outcomes at 1\% and 99\%. Statistical significance: $^{***}p<0.1\%$, $^{**}p<1\%$, $^{*}p<5\%$.}
 \end{table}
 
-The stratified estimates show a clear market-cap gradient in treatment effects, especially for Urgency Index. The pattern is consistent with H2: the positive urgency effect is concentrated in lower-valued assets and weakens or turns negative as Market Capitalization increases.
+The stratified estimates show a market-cap gradient in treatment effects, especially for Urgency Index. The clearest positive coefficient appears in the small-cap stratum, where the Urgency Index estimate is 0.0301 (p $<$ 0.1\%). The corresponding estimate turns negative in the mid-cap stratum ($-$0.0081, p = 1.4\%) and remains negative in the large-cap stratum ($-$0.0024, p = 1.6\%).
 
-In the small-cap stratum, the Urgency Index coefficient is 0.0301 (p $<$ 0.1\%), which indicates a positive relationship between higher message urgency and 10-minute log returns. This gives partial support for H1, mainly within the small-cap segment.
-
-In the mid-cap stratum, the Urgency Index coefficient turns negative ($-$0.0081, p = 1.4\%). The positive urgency effect observed for small-cap assets therefore does not extend to larger market segments. Relative to H2, this estimate is consistent with weaker signal effects as Market Capitalization rises.
-The negative coefficients in the large-cap stratum point in the same direction. The Urgency Index estimate of $-$0.0024 (p = 1.6\%) suggests that the urgency treatment effect is negative in the largest assets, though its magnitude is multiple times lower than the effect observed in the small-cap segment. This change is also consistent with H2.
-
-No treatment effect reaches conventional significance in the micro-cap stratum. Given the small sample size (N = 289) and the high degree of illiquidity in this group, H1 is not supported there. Taken together, the stratified estimates support H2 and provide partial support for H1, with the positive urgency effect concentrated in the small-cap segment rather than the full sample.
+The micro-cap stratum has no treatment coefficient that reaches conventional significance. This stratum also has the smallest number of observations (N = 289), while the small- and mid-cap strata contain 1,182 and 967 observations, respectively. In the small-cap stratum, Hype Intensity and Instruction Density show smaller positive coefficients than Urgency Index, while all three treatment variables have negative significant estimates in the large-cap stratum.
 
 \section{Heterogeneous Treatment Effects}
 \label{sec:hte-results}
 
-The Causal Forest results refine H2 by showing how treatment effects vary continuously with Market Capitalization. Following Section~\ref{sec:causal-forests}, the analysis uses the market-cap measure as the effect modifier. Table~\ref{tab:cate-summary} reports the distribution of Conditional Average Treatment Effects (CATEs) across the sample for each treatment variable.
+The Causal Forest results show how treatment effects vary continuously with Market Capitalization. Following Section~\ref{sec:causal-forests}, the analysis uses the market-cap measure as the effect modifier. Table~\ref{tab:cate-summary} reports the distribution of Conditional Average Treatment Effects (CATEs) across the sample for each treatment variable.
 
 \begin{table}[htbp]
 \centering
@@ -94,7 +89,7 @@ Instruction Density & 0.0001 & 0.0002 & $-$0.001 & 0.001 \\
 \end{tabular}
 \end{table}
 
-Figure~\ref{fig:hte-market-cap} shows the relationship between Market Capitalization and the heterogeneous effect of Urgency Index. Each point represents an event-level CATE estimate. The smoothed trend indicates that the strongest positive effects appear in the lower market-cap range (about \$7M--\$40M), while effects decline and turn negative for larger assets.
+Figure~\ref{fig:hte-market-cap} shows the relationship between Market Capitalization and the heterogeneous effect of Urgency Index. Each point represents an event-level CATE estimate. The smoothed trend indicates that the strongest positive effects appear in the lower market-cap range (about \$7M to \$40M), while effects decline and turn negative for larger assets.
 
 \begin{figure}[htbp]
 \centering
@@ -106,12 +101,12 @@ Figure~\ref{fig:hte-market-cap} shows the relationship between Market Capitaliza
 \label{fig:hte-market-cap}
 \end{figure}
 
-This continuous pattern is consistent with the stratified estimates and shows the same market-cap gradient highlighted in the stratified DML results.
+This continuous pattern is consistent with the stratified estimates, with higher positive CATE values concentrated in the lower market-cap range.
 
 \section{Sensitivity Analysis}
 \label{sec:robustness}
 
-These results assess whether the main urgency pattern reported for H1 and H2 is sensitive to unmeasured confounding. For statistically significant estimates, Table~\ref{tab:evalue-results} reports approximate E-value sensitivity diagnostics based on \cite{vanderweele2017sensitivity}.
+These results assess whether the statistically significant estimates reported above are sensitive to unmeasured confounding. Table~\ref{tab:evalue-results} reports approximate E-value sensitivity diagnostics based on \cite{vanderweele2017sensitivity}.
 
 \begin{table}[htbp]
 \centering
@@ -130,20 +125,20 @@ Large ($>$\$1B) & Instruction Density & 1.08 & 1.01 \\
 \end{tabular}
 \end{table}
 
-Approximate E-value diagnostics are reported as sensitivity checks for unmeasured confounding. Higher values suggest that a stronger unmeasured confounder would be needed to explain away the estimate, under the reported calculation. Specifically, the E-value for the small-cap Urgency Index effect (2.20) suggests that an unmeasured confounder would need a moderately strong association with both treatment and outcome to fully explain away the estimate. The sensitivity analysis therefore gives some support to the small-cap urgency result, but it should be read as an approximate check rather than definitive proof of robustness.
+Approximate E-value diagnostics are reported as sensitivity checks for unmeasured confounding. Higher values suggest that a stronger unmeasured confounder would be needed to explain away the estimate, under the reported calculation. Specifically, the E-value for the small-cap Urgency Index effect (2.20) suggests that an unmeasured confounder would need a moderately strong association with both treatment and outcome to fully explain away the estimate. This sensitivity result should be read as an approximate diagnostic rather than definitive proof of robustness.
 
 
 \section{Predictive Modeling of Pump Success}
 \label{sec:prediction-results}
 
-This section reports the H3 predictive results for pump success, defined in Chapter~\ref{ch:methodology} as a positive 10-minute log return. After testing the candidate tree-based models described in Section~\ref{sec:predictive-modeling}, the XGBoost specification was selected as the best performing model and evaluated with the grouped holdout protocol. This unseen-channel evaluation is important because Figure~\ref{fig:channel-returns-distribution} shows that outcomes differ descriptively across channels.
+This section reports the predictive results for pump success, defined in Chapter~\ref{ch:methodology} as a positive 10-minute log return. After testing the candidate tree-based models described in Section~\ref{sec:predictive-modeling}, the XGBoost model was selected as the best performing model and evaluated with the grouped holdout protocol. This unseen-channel evaluation is important because Figure~\ref{fig:channel-returns-distribution} shows that outcomes differ descriptively across channels.
 
-Table~\ref{tab:classification-with-channel} presents the test set performance for this no-channel specification.
+Table~\ref{tab:classification-no-channel} presents the test set performance for this no-channel model.
 
 \begin{table}[htbp]
 \centering
-\caption{Predictive Performance: No-Channel ID XGBoost (Grouped Wait-Out Test Set)}
-\label{tab:classification-with-channel}
+\caption{Predictive Performance: No-Channel ID XGBoost (Grouped Holdout Test Set)}
+\label{tab:classification-no-channel}
 \begin{tabular}{lcccc}
 \toprule
 \multicolumn{1}{c}{\textbf{Metric}} & \multicolumn{1}{c}{\textbf{Precision}} & \multicolumn{1}{c}{\textbf{Recall}} & \multicolumn{1}{c}{\textbf{F1-Score}} & \multicolumn{1}{c}{\textbf{Support}} \\
@@ -158,9 +153,9 @@ Macro Avg & 0.78 & 0.77 & 0.76 & 822 \\
 \vspace{2mm}
 \end{table}
 
-The strictly held-out model reaches a macro F1-score of 0.76, which indicates that pre-event market anomalies and signal characteristics contain useful predictive information in this sample. The model achieves 0.89 recall for pump successes, showing that it identifies many positive outcomes even when observing completely unseen channels. Consequently, the results provide direct support for H3 through asset and signal features rather than through a channel-history benchmark.
+The strictly held-out model reaches a macro F1-score of 0.76. The model achieves 0.89 recall for pump successes, showing that it identifies many positive outcomes even when observing completely unseen channels.
 
-An additional evaluation was conducted to test whether formally including Channel ID could improve predictive performance. Such configuration didn't yield better results across test cases. However, even though channel names were removed, the data might still reflect the organizers' habits. Since different groups often follow specific patterns when picking coins or timing their signals, the model might naturally learn to recognize certain channels based on these unique signatures.
+An additional evaluation was conducted to test whether formally including Channel ID could improve predictive performance. That setup did not yield better results across test cases.
 
 \begin{table}[htbp]
 \centering
@@ -183,9 +178,9 @@ An additional evaluation was conducted to test whether formally including Channe
 \end{tabular}
 \end{table}
 
-The threshold results show the expected precision-recall trade-off: higher thresholds improve precision at the cost of recall and overall trade frequency. Raising the threshold to 0.90 increases precision to 88.7\%, meaning that almost 9 in 10 predicted positive events are positive-return events in the held-out dataset, while retaining 256 predicted events. Overall, the rigorous grouped specification provides direct support for H3: observable pre-event market conditions and signal characteristics contain substantial predictive value even under strict out-of-sample evaluation limits.
+The threshold results show the expected precision-recall trade-off. Higher thresholds improve precision at the cost of recall and overall trade frequency. Raising the threshold to 0.90 increases precision to 88.7\%, meaning that almost 9 in 10 predicted positive events are positive-return events in the held-out dataset, while retaining 256 predicted events.
 
-To understand which features the model relies on for these predictive results, Figure~\ref{fig:feature-importance-no-channel} presents the top feature importances for the XGBoost model. The results show that the model mainly relies on the signal's characteristics, the age of the coin, and the market conditions at the time. Notably, \textit{instruction\_density} and \textit{hype\_volume} emerge as leading signal characteristics in the model. Temporal dynamics form another important predictive component, with the \textit{is\_weekend} feature receiving substantial weight. Furthermore, the asset's overall maturity, captured by coin age, contributes to the model's classification. Finally, the model heavily relies on immediate and baseline market thinness indicators. Both the target asset's prior illiquidity (\textit{pre\_amihud\_illiq}, \textit{pre\_amihud\_log\_30m}, short-run relative volume) and the comparative behavior of the synthetic control (\textit{pre\_zero\_ret\_ratio\_30m}, \textit{pre\_roll\_measure\_30m}, \textit{pre\_amihud\_illiq}) serve as strong predictors. Although these variables are analyzed individually, they may all reflect a common underlying factor, such as the specific strategy or hidden profile of the organizing channel. Nevertheless, these findings show that observable market patterns and signal properties provide enough information to predict manipulation outcomes with significant accuracy, offering strong empirical support for H3.
+To understand which features the model relies on for these predictive results, Figure~\ref{fig:feature-importance-no-channel} presents the top feature importances for the XGBoost model. The leading groups include signal characteristics such as \textit{instruction\_density} and \textit{hype\_volume}, temporal indicators such as \textit{is\_weekend}, asset maturity captured by coin age, and immediate or baseline market thinness indicators such as \textit{pre\_amihud\_illiq}, \textit{pre\_amihud\_log\_30m}, short-run relative volume, \textit{pre\_zero\_ret\_ratio\_30m}, and \textit{pre\_roll\_measure\_30m}.
 
 \begin{figure}[htbp]
 \centering

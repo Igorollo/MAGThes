@@ -2,12 +2,12 @@
 \phantomsection
 \label{app:synthetic-control}
 
-The fundamental challenge in causal inference is the unobservability of counterfactual outcomes. The synthetic control method addresses this by constructing a weighted combination of control assets that tracks the target coin's pre-pump behavior, then using this synthetic control as the counterfactual benchmark. This appendix details the technical evaluation of this theoretical framework for micro-cap pump-and-dump events.
+The fundamental challenge in causal inference is the unobservability of counterfactual outcomes. The synthetic control method addressed this by constructing a weighted combination of control assets that tracked the target coin's pre-pump behavior, then using this synthetic control as the counterfactual benchmark. This appendix detailed the technical evaluation of this theoretical framework.
 
 \section{Control Basket Composition}
 \label{sec:app-control-basket}
 
-The default macro-market control basket consists of eight major cryptocurrency assets selected to represent broad market movements natively decoupled from specific micro-cap pump manipulation influences.
+The default macro-market control basket consisted of eight major cryptocurrency assets selected to represent broad market movements natively decoupled from specific micro-cap pump manipulation influences.
 
 \begin{table}[htbp]
 \centering
@@ -31,17 +31,17 @@ Chainlink & LINK & Oracle network, DeFi infrastructure \\
 
 \section{Weight Optimization via Constrained Least Squares}
 
-The methodology theoretically constructs the counterfactual as a weighted average of control unit returns implementing a Constrained Least Squares (CLS) logic that optimizes direct return-matching across strictly defined prior validation windows.
+The methodology theoretically constructed the counterfactual as a weighted average of control unit returns implementing a Constrained Least Squares (CLS) logic that optimized direct return-matching across defined prior validation windows.
 
-To systematically prevent data contamination and arbitrary overfitting, testing utilizes discrete trailing periods anchored prior to the $T_0$ signal event:
+To systematically prevent data contamination and arbitrary overfitting, testing utilized discrete trailing periods anchored prior to the $T_0$ signal event.
 \begin{itemize}
-    \item \textbf{Training Window}: $[min(T_0 - 84\text{h}), T_0 - 36\text{h}]$ (optimizing CLS control array alignments)
-    \item \textbf{Hold-Out Window}: $[T_0 - 36\text{h}, T_0 - 12\text{h}]$ (out-of-sample parametric $R^2$ validation tracking evaluation)
+    \item \textbf{Training Window}. $[min(T_0 - 84\text{h}), T_0 - 36\text{h}]$ (optimized CLS control array alignments)
+    \item \textbf{Hold-Out Window}. $[T_0 - 36\text{h}, T_0 - 12\text{h}]$ (out-of-sample parametric $R^2$ validation tracking evaluation)
 \end{itemize}
 
-A formal 12-hour gap directly preceding explicit manifestation at $T_0$ preemptively prevents potential preliminary internal coordination leaks from corrupting empirical baseline assessments.
+A formal 12-hour gap directly preceding explicit manifestation at $T_0$ prevented potential preliminary internal coordination leaks from corrupting empirical baseline assessments.
 
-The weight vector $\boldsymbol{\omega}$ strictly ensures that synthesized baseline evaluations hypothetically represent a physically viable, fully-subscribed longitudinal portfolio through explicit convexity restraints.
+The weight vector $\boldsymbol{\omega}$ ensured that synthesized baseline evaluations hypothetically represented a realistic portfolio through standard weight constraints.
 
 \begin{equation}
     \min_{\boldsymbol{\omega}} \| \mathbf{y} - \mathbf{X}\boldsymbol{\omega} \|_2^2
@@ -49,12 +49,14 @@ The weight vector $\boldsymbol{\omega}$ strictly ensures that synthesized baseli
     \sum_{k} \omega_k = 1, \quad \boldsymbol{\omega} \geq 0
 \end{equation}
 
-Logarithmic returns drive the optimization natively due to longitudinal absolute price non-stationarity—even fractional discrepancies across drift vectors dramatically decouple macro-tracked paths during multiday evaluations.
+where $\mathbf{y}$ is the vector of returns for the target coin during the training window, $\mathbf{X}$ is the matrix of returns for the macro-market control basket, and $\boldsymbol{\omega}$ is the vector of weights assigned to each control asset. The constraints ensure the synthetic control is a fully invested ($\sum \omega_k = 1$) and long-only ($\boldsymbol{\omega} \geq 0$) portfolio.
 
-\section{Hold-Out Validation Discrepancies}
+The optimization used logarithmic returns because absolute prices are not stationary over time. This approach prevented small discrepancies in price trends from causing the synthetic control and target coin paths to drift apart during multi-day evaluations.
+
+\section{Hold-Out Tracking Validation Results}
 \label{sec:app-hold-out-validation}
 
-Empirical out-of-sample validation tests evaluating the explicit predictive mapping capacity strictly underscore the highly localized divergence existing between micro-capital market architecture and broader macroeconomic flow.
+Out-of-sample validation tests showed that micro-cap markets often move independently from the broader economy.
 
 \begin{table}[htbp]
 \centering
@@ -68,31 +70,30 @@ $R^2_{\text{holdout}}$ & 0.092 & $-$0.003 & $-$0.031 & 0.200 & 0.227 \\
 \end{tabular}
 \end{table}
 
-An inherently flat median correlation approximation intrinsically signals that generalized micro-cap pump operations structurally lack associative alignment scalable against trailing macroeconomic variables. 
-
+The near-zero median correlation indicates that coins targeted by pump-and-dump groups are generally not driven by typical market-wide trends.
 \section{Limitations of Cumulative Abnormal Returns (CAR)}
 \label{sec:app-car-limitations}
 
-Early architectural iterations of this study deployed Cumulative Abnormal Returns (CAR) to enforce a rigid macroeconomic isolation gap on the outcome variable:
+Initially, this study used Cumulative Abnormal Returns (CAR) to try and isolate the coin's performance from broader market movements.
 \begin{equation}
 CAR_{i,\Delta} = r_{target,i}^{[0,\Delta]} - r_{control,i}^{[0,\Delta]}
 \label{eq:car-original}
 \end{equation}
-where $r_{target}^{[0,\Delta]}$ structurally bounded the real log-return and $r_{control}^{[0,\Delta]}$ applied a synthetic approximation mapping established market drift.
+where $r_{target}^{[0,\Delta]}$ is the actual log-return and $r_{control}^{[0,\Delta]}$ is the synthetic estimate of what the price would have been without the pump.
 
-However, applying this synthetic control method to the sample proved ineffective. The average $R^2$ between the synthetic controls and actual pre-pump prices was close to zero, explicitly mapped in Figure~\ref{fig:app-r2-distribution}. Within the micro-cap and small-cap domains natively prioritized by manipulation syndicates, the predictive fits collapsed.
+However, this method did not work well for our sample. As shown in Figure~\ref{fig:app-r2-distribution}, the average $R^2$ between synthetic controls and actual prices was close to zero. The model failed to predict prices accurately for the micro-cap and small-cap coins that pump-and-dump groups typically target.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.8\textwidth]{figures/ch4/r2_distribution_by_mcap.png}
-\caption{Distribution of $R^2$ scores across market capitalization strata. The fits remain universally depressed ($R^2 \approx 0$), indicating extreme tracking error in applying synthetic abstractions over micro-scale assets.}
+\caption{Distribution of $R^2$ scores across different market caps. The scores are consistently near zero, showing that synthetic controls cannot accurately track micro-cap assets.}
 \label{fig:app-r2-distribution}
 \end{figure}
 
-Because the synthetic controls did not actually track the target coins, using CAR made the problem worse. Instead of reducing market noise, subtracting an uncorrelated control variable simply increases the total sample variance:
+Because the synthetic controls failed to track the target coins, using CAR actually made the results less reliable. Instead of removing market noise, subtracting an unrelated control variable just added more variance to the data.
 \begin{equation}
 \text{Var}(CAR) = \text{Var}(r_{target}) + \text{Var}(r_{control}) - 2\text{Cov}(r_{target}, r_{control})
 \end{equation}
-When the covariance matrix $\text{Cov}(r_{target}, r_{control})$ anchors to absolute zero, CAR inherently registers higher overall variance than isolated target returns, artificially masking true statistical influence beneath expanded noise.
+When the two variables are completely unrelated (zero covariance), CAR results in higher variance than the original returns. This extra noise can hide the true statistical effects of the pump.
 
-Filtering the sample to only include valid synthetic controls (e.g., $R^2 > 0.25$) would discard over 75\% of the observed tracking events. Worse, this rejection logic would disproportionately remove low-liquidity coins, completely eliminating the entire micro-cap tier ($<$\$10M market capitalization). Such a maneuver forcibly limits the analytical purview exclusively toward large-cap, efficiently traded assets—the exact ecosystem fraction categorically hostile to Telegram coordinated manipulation. Consequently, the primary analysis structurally abandons CAR in favor of standard logarithmic returns natively mapped through Double Machine Learning models properly interacting the pre-event macroeconomic conditions without artificial subtraction.
+If we had filtered the sample to only include cases where the synthetic control worked (e.g., $R^2 > 0.25$), we would have lost over 75\% of our data. More importantly, this would have removed almost all low-liquidity and micro-cap coins. This would have shifted our focus entirely to large-cap assets that are rarely affected by these groups. For these reasons, it was decided not to use CAR. Instead, the standard logarithmic returns were used and market conditions were handled directly within the Double Machine Learning models.
