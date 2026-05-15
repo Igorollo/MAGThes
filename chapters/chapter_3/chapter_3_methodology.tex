@@ -5,7 +5,7 @@ This chapter presents the methodological framework used to estimate the effect o
 \section{Causal Identification Framework}
 \label{sec:theory-framework}
 
-As Section~\ref{sec:detection-to-causal-measurement} motivates, the empirical strategy is grounded in a causal identification framework for estimating how Telegram pump signals affect short-horizon cryptocurrency prices. For any given event $i$, only the realized price return is observable, while the counterfactual price path is not. The potential outcomes framework \cite{rubin1974estimating} formalizes this problem as two possible price trajectories for the same asset during the same time window:
+As Section~\ref{sec:detection-to-causal-measurement} motivates, the empirical strategy estimates how Telegram pump signals affect short-horizon cryptocurrency prices within a causal identification framework. For any given event $i$, only the realized price return is observable, while the counterfactual price path is not. The potential outcomes framework \cite{rubin1974estimating} formalizes this problem as two possible price trajectories for the same asset during the same time window:
 \begin{align}
 Y_i(1) &= \text{Price return under treatment (pump signal sent)} \\
 Y_i(0) &= \text{Price return under control (no targeted signal sent)}
@@ -17,9 +17,9 @@ The individual causal effect is structurally defined as the delta between these 
 \label{eq:ate}
 \end{equation}
 
-Rather than using a binary pump indicator, treatment is measured through continuous signal characteristics derived from the feature engineering pipeline in Chapter~\ref{ch:data-description}. The retained treatment vector contains Hype Intensity, Urgency Index, and Instruction Density.
+Rather than using a binary pump indicator, treatment is measured through continuous signal characteristics derived from the feature engineering pipeline in Chapter~\ref{ch:data-description}. The retained treatment vector contains \textit{Hype Intensity}, \textit{Urgency Index}, and \textit{Instruction Density}.
 
-An initial candidate, Hype Volume, was excluded after preliminary collinearity screening. Restricting the model to the three retained treatment variables ensured that all Variance Inflation Factors (VIF) remained below 1.2, thereby reducing instability in the treatment effect estimates.
+An initial candidate, \textit{Hype Volume}, was excluded after preliminary collinearity screening. Restricting the model to the three retained treatment variables ensured that all Variance Inflation Factors (VIF) remained below 1.2, thereby reducing instability in the treatment effect estimates.
 
 Confounders are underlying variables that can skew the estimates by simultaneously affecting the intensity of the pump signal and the coin's subsequent price return. For example, coins with low trading volume tend to be highly volatile. This baseline volatility might make them attractive targets for organizers to issue very aggressive pump instructions, while simultaneously causing the coin's price to swing wildly on its own. If these factors are not controlled for, the model might mistakenly attribute normal market noise to the impact of the pump signal.
 
@@ -29,19 +29,19 @@ To reduce bias from observed baseline differences, these pre-existing factors mu
 \centering
 \caption{Pre-Reveal Confounders}
 \label{tab:confounder-list}
-\begin{tabular}{ll}
+\begin{tabular}{|l|l|}
 \toprule
-\multicolumn{1}{c}{\textbf{Variable}} & \multicolumn{1}{c}{\textbf{Description ($\text{Eq.}$ Reference)}} \\
+\multicolumn{1}{|c|}{\textbf{Variable}} & \multicolumn{1}{c|}{\textbf{Description ($\text{Eq.}$ Reference)}} \\
 \midrule
-\multicolumn{2}{l}{\textit{Traditional Market Characteristics}} \\
+\multicolumn{2}{|l|}{\textit{Traditional Market Characteristics}} \\
 $\sigma_{\text{pre}}$ & Realized volatility (Equation \ref{eq:pre_vol}) \\
 $Z_V$ & Standardized trading volume (Equation \ref{eq:vol_z_score}) \\
 $\lambda_{\text{base}}$ & Baseline Amihud illiquidity ratio (Equation \ref{eq:baseline_illiq}) \\
-Coin Age & Target coin age in days at $T_0$ \\
-Market Capitalization & Historical market capitalization \\
-24h Volume & Historical 24-hour trading volume \\
+\textit{Coin Age} & Target coin age in days at $T_0$ \\
+\textit{Market Capitalization} & Historical market capitalization \\
+\textit{24h Volume} & Historical 24-hour trading volume \\
 \midrule
-\multicolumn{2}{l}{\textit{High-Frequency Microstructure Features}} \\
+\multicolumn{2}{|l|}{\textit{High-Frequency Microstructure Features}} \\
 $R_{\text{up}}$ & Pre-pump price run-up (Equation \ref{eq:pre_run_up}) \\
 $S_{\text{Roll}}$ & Roll spread estimator (Equation \ref{eq:roll_spread}) \\
 $\lambda_{\text{short}}$ & Log-transformed short-window Amihud (Equation \ref{eq:short_illiq}) \\
@@ -49,18 +49,19 @@ $\overline{\text{CLV}}$ & Close Location Value (Equation \ref{eq:clv}) \\
 $\sigma_{\text{Park}}$ & Parkinson high-low volatility (Equation \ref{eq:parkinson}) \\
 $\rho_0$ & Zero-return ratio (Equation \ref{eq:zero_ret}) \\
 \midrule
-\multicolumn{2}{l}{\textit{Fixed Effects}} \\
-Channel ID & Telegram channel fixed effects (81 channels) \\
+\multicolumn{2}{|l|}{\textit{Fixed Effects}} \\
+\textit{Channel ID} & Telegram channel fixed effects (81 channels) \\
 \bottomrule
 \end{tabular}
+\datasetsource
 \end{table}
 
-\section{The Outcome Variable: Logarithmic Returns}
+\section{The Outcome Variable: \textit{10-Minute Logarithmic Return}}
 \label{sec:outcome-variable}
 
-Following the short-horizon logic developed in Section~\ref{sec:detection-to-causal-measurement}, the final specification uses 10-minute logarithmic returns rather than Cumulative Abnormal Returns (CAR) based on synthetic controls \cite{abadie2010synthetic}. Appendix~\ref{app:synthetic-control} documents why the synthetic-control fits were too weak to support CAR as the primary outcome.
+Following the short-horizon logic developed in Section~\ref{sec:detection-to-causal-measurement}, the final specification uses the \textit{10-Minute Logarithmic Return} rather than Cumulative Abnormal Returns (CAR) based on synthetic controls \cite{abadie2010synthetic}. The appendix documents why the synthetic-control fits were too weak to support CAR as the primary outcome.
 
-The final estimation outcome is therefore the 10-minute logarithmic return, winsorized at the 1st and 99th percentiles, calculated over the strict window from $T_0$ to $T_0+10$. This choice preserves the observed event distribution in the most manipulation-prone asset segments while keeping the analysis focused on the immediate price response.
+The final estimation outcome is therefore the \textit{10-Minute Logarithmic Return}, winsorized at the 1st and 99th percentiles, calculated over the strict window from $T_0$ to $T_0+10$. This choice preserves the observed event distribution in the most manipulation-prone asset segments while keeping the analysis focused on the immediate price response.
 \begin{equation}
 Y_{i,\Delta} = \log\left(\frac{P_{T_0 + \Delta}}{P_{T_0}}\right)
 \label{eq:log-return}
@@ -109,9 +110,10 @@ Figure~\ref{fig:dml-schematic} illustrates this two-stage DML workflow. Confound
 
 \begin{figure}[htbp]
 \centering
-\makebox[\textwidth][c]{\includegraphics[width=1.04\textwidth]{figures/ch3/dml_schematic.png}}
 \caption{Double Machine Learning architecture. Random Forests are used to independently remove the influence of confounders from both the signal intensity and the price outcome.}
 \label{fig:dml-schematic}
+\makebox[\textwidth][c]{\includegraphics[width=1.04\textwidth]{figures/ch3/dml_schematic.png}}
+\datasetsource
 \end{figure}
 
 To avoid finite-sample bias, the data is split into 5 folds ($K=5$) for cross-fitting. This ensures that residuals are always generated using models trained on out-of-sample data, preventing overfitting.
@@ -134,19 +136,19 @@ Finally, because unmeasured confounding cannot be ruled out mechanically, statis
 \section{Average Treatment Effect Estimation}
 \label{sec:ate-estimation}
 
-To determine the average marginal effect of each signal characteristic, the model analyzes all three treatment variables simultaneously by regressing the outcome residuals directly onto the treatment residuals (Equation \ref{eq:final_causal_effect}). This simultaneous estimation estimates the association for each characteristic, such as hype intensity, while adjusting for the other signal features included in the treatment vector.
+To determine the average marginal effect of each signal characteristic, the model analyzes all three treatment variables simultaneously by regressing the outcome residuals directly onto the treatment residuals (Equation \ref{eq:final_causal_effect}). This simultaneous estimation estimates the association for each characteristic, such as \textit{Hype Intensity}, while adjusting for the other signal features included in the treatment vector.
 
 Because standard analytical formulas for calculating standard errors often fail or rely on strict parametric assumptions when using complex machine learning ensembles, statistical uncertainty is measured using bootstrap-based inference. Bootstrapping is a resampling technique that works by repeatedly drawing random samples (with replacement) from the original dataset to create hundreds of simulated datasets. The entire DML estimation process is then re-run on each of these simulated samples, generating an empirical distribution of the estimated treatment effects. This empirical distribution provides a more reliable way to calculate standard errors without assuming a specific underlying probability distribution. In the implemented specification, the DML procedure is paired with the \texttt{BootstrapInference} module from the \texttt{econml} python library using 500 iterations. The variance across these 500 runs is used to construct confidence intervals and summarize coefficient precision in the reported results.
 
-\section{Stratified Estimation by Market Capitalization}
+\section{Stratified Estimation by \textit{Market Capitalization}}
 \label{sec:stratified-estimation}
 
-A single average effect can hide significant differences between coins of various sizes. Because highly liquid markets naturally resist simple manipulation, the causal estimation is performed separately across four distinct market capitalization groups.
+A single average effect can hide significant differences between coins of various sizes. Because highly liquid markets naturally resist simple manipulation, the causal estimation is performed separately across four distinct \textit{Market Capitalization} groups.
 \begin{itemize}
-\item Micro-cap assets have total asset capitalization remaining strictly beneath \$10 million.
-\item Small-cap assets have asset valuation established between \$10 million and \$100 million.
-\item Mid-cap assets have cap volumes stabilizing between \$100 million and \$1 billion.
-\item Large-cap assets exceed the foundational threshold of \$1 billion.
+\item Micro-cap assets have total asset capitalization remaining strictly beneath 10 million USD.
+\item Small-cap assets have asset valuation established between 10 million USD and 100 million USD.
+\item Mid-cap assets have cap volumes stabilizing between 100 million USD and 1 billion USD.
+\item Large-cap assets exceed the foundational threshold of 1 billion USD.
 \end{itemize}
 Running the DML pipeline independently across these segments ensures that extreme volatility from tiny micro-cap coins does not artificially contaminate the effect estimates for the more stable mid-cap coins.
 Together with the CATE analysis below, this design tests H2 by asking whether market size changes the estimated signal effects.
@@ -154,7 +156,7 @@ Together with the CATE analysis below, this design tests H2 by asking whether ma
 \section{Heterogeneous Treatment Effects}
 \label{sec:causal-forests}
 
-However, simply dividing coins into broad market cap buckets throws away valuable continuous information. To understand exactly how pre-reveal characteristics, here market capitalization ($x$), influence a coin's response to a pump, the Conditional Average Treatment Effect (CATE) is estimated:
+However, simply dividing coins into broad market-cap buckets throws away valuable continuous information. To understand exactly how pre-reveal characteristics, here \textit{Market Capitalization} ($x$), influence a coin's response to a pump, the Conditional Average Treatment Effect (CATE) is estimated:
 \begin{equation}
 \tau(x) = \mathbb{E}[Y_i(1) - Y_i(0) \mid X_i = x]
 \label{eq:cate}
@@ -164,23 +166,23 @@ To map these localized treatment effects, Causal Forests \cite{athey2019generali
 
 The Causal Forest incorporates an ensemble of 2,000 trees, requiring a minimum of 20 observations per leaf. Because the Causal Forest analyzes one treatment dimension at a time, the other two signal features are added to the control matrix for that specific loop. This explicitly controls for their influence, ensuring that the heterogeneity analysis remains focused on the individual impact of the signal feature under investigation.
 
-To keep the system computationally efficient without losing accuracy, the underlying nuisance models inside the Causal Forest use smaller Random Forest structures capped at 100 trees and a maximum depth of 10. Ultimately, this modeling setup pinpoints how an asset's vulnerability to manipulation evolves as its market capitalization grows, showing where the impact of these organized signals begins to diminish.
+To keep the system computationally efficient without losing accuracy, the underlying nuisance models inside the Causal Forest use smaller Random Forest structures capped at 100 trees and a maximum depth of 10. Ultimately, this modeling setup pinpoints how an asset's vulnerability to manipulation evolves as its \textit{Market Capitalization} grows, showing where the impact of these organized signals begins to diminish.
 
 \section{Sample Construction}
 \label{sec:sample-selection}
 
 The final complete-case causal sample consists of 2,917 pump events, constructed using the following criteria.
 \begin{enumerate}
-    \item Complete Covariate Data. To ensure a consistent baseline environment, observations are strictly excluded if they are missing any pre-reveal covariates (the background market conditions, such as baseline volatility or market capitalization, measured right before the pump).
-    \item Outcome Preprocessing. The 10-minute logarithmic returns ($Y_{i,10}$ defined in Equation~\ref{eq:log-return}) are winsorized at the 1st and 99th percentiles to limit the analytical contamination caused by extreme price outliers.
+    \item Complete Covariate Data. To ensure a consistent baseline environment, observations are strictly excluded if they are missing any pre-reveal covariates (the background market conditions, such as baseline volatility or \textit{Market Capitalization}, measured right before the pump).
+    \item Outcome Preprocessing. The \textit{10-Minute Logarithmic Return} defined in Equation~\ref{eq:log-return} is winsorized at the 1st and 99th percentiles to limit the analytical contamination caused by extreme price outliers.
 \end{enumerate}
 
 \section{Predictive Modeling}
 \label{sec:predictive-modeling}
 
-The final phase evaluates whether observable pre-signal market variables and signal-message characteristics can predict a pump success. A ``successful'' pump event is defined as one that results in a positive 10-minute logarithmic return.
+The final phase tests whether pre-signal market variables and signal-message characteristics can predict pump \textit{Success}. A ``successful'' pump event is defined as one that results in a positive \textit{10-Minute Logarithmic Return}.
 \begin{equation}
-\text{Success}_i = \mathbf{1}\left[Y_{i,10} > 0\right]
+\mathit{Success}_i = \mathbf{1}\left[Y_{i,10} > 0\right]
 \end{equation}
 
-The predictive modeling stage focuses on the relationship between observable pre-signal market variables and signal characteristics. Channel identity is excluded from this core analysis to ensure the findings generalize across different pump groups. XGBoost, LightGBM, and Random Forest were tested as tree-based candidates, and Optuna (an automated tool for choosing suitable hyperparameters) was used to tune them inside the grouped training folds \cite{xgboost2016, lightgbm2017, breiman2001random, optuna2019}. Reported predictive performance is evaluated on a grouped 80/20 holdout split in which the test set contains only unseen channels. Chapter 4 reports the selected Channel ID-agnostic XGBoost model as the primary evidence, with secondary comparisons including Channel ID.
+The predictive modeling stage focuses on the relationship between observable pre-signal market variables and signal characteristics. Channel identity is excluded from this core analysis to ensure the findings generalize across different pump groups. XGBoost, LightGBM, and Random Forest were tested as tree-based candidates, and Optuna (an automated tool for choosing suitable hyperparameters) was used to tune them inside the grouped training folds \cite{xgboost2016, lightgbm2017, breiman2001random, optuna2019}. Reported predictive performance is evaluated on a grouped 80/20 holdout split in which the test set contains only unseen channels. Chapter 4 reports the selected \textit{Channel ID}-agnostic XGBoost model as the primary evidence, with secondary comparisons including \textit{Channel ID}.

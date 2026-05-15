@@ -1,8 +1,9 @@
-\chapter{SYNTHETIC CONTROL CONSTRUCTION METHODOLOGY}
+\chapter*{APPENDIX}
 \phantomsection
-\label{app:synthetic-control}
+\addcontentsline{toc}{chapter}{APPENDIX}
+\setcounter{secnumdepth}{0}
 
-The fundamental challenge in causal inference is the unobservability of counterfactual outcomes. The synthetic control method addressed this by constructing a weighted combination of control assets that tracked the target coin's pre-pump behavior, then using this synthetic control as the counterfactual benchmark. This appendix detailed the technical evaluation of this theoretical framework.
+This appendix documents the synthetic control construction methodology considered during the thesis design. It summarizes the control basket, weight construction, hold-out validation, and the reason Cumulative Abnormal Returns (CAR) was not retained as the main outcome.
 
 \section{Control Basket Composition}
 \label{sec:app-control-basket}
@@ -13,9 +14,9 @@ The default macro-market control basket consisted of eight major cryptocurrency 
 \centering
 \caption{Synthetic Control Macro-Market Basket Composition}
 \label{tab:app-control-basket}
-\begin{tabular}{@{}llp{6.5cm}@{}}
+\begin{tabular}{|l|l|p{6.5cm}|}
 \toprule
-\multicolumn{1}{@{}c}{\textbf{Asset}} & \multicolumn{1}{c}{\textbf{Ticker}} & \multicolumn{1}{c@{}}{\textbf{Selection Rationale}} \\
+\multicolumn{1}{|c|}{\textbf{Asset}} & \multicolumn{1}{c|}{\textbf{Ticker}} & \multicolumn{1}{c|}{\textbf{Selection Rationale}} \\
 \midrule
 Bitcoin & BTC & Market benchmark, high liquidity \\
 Ethereum & ETH & Smart contract platform leader \\
@@ -27,6 +28,7 @@ Litecoin & LTC & Legacy altcoin, long history \\
 Chainlink & LINK & Oracle network, DeFi infrastructure \\
 \bottomrule
 \end{tabular}
+\datasetsource
 \end{table}
 
 \section{Weight Optimization via Constrained Least Squares}
@@ -60,14 +62,15 @@ Out-of-sample validation tests showed that micro-cap markets often move independ
 
 \begin{table}[htbp]
 \centering
-\caption{Distribution of Hold-Out Tracking Validation Metrics (N=3,320 Events)}
-\begin{tabular}{@{}lrrrrr@{}}
+\caption{Distribution of \textit{Hold-Out $R^2$} Tracking Validation Metrics (N=3,320 Events)}
+\begin{tabular}{|l|r|r|r|r|r|}
 \toprule
-\multicolumn{1}{@{}c}{\textbf{Metric}} & \multicolumn{1}{c}{\textbf{Mean}} & \multicolumn{1}{c}{\textbf{Median}} & \multicolumn{1}{c}{\textbf{P25}} & \multicolumn{1}{c}{\textbf{P75}} & \multicolumn{1}{c@{}}{\textbf{Std Dev}} \\
+\multicolumn{1}{|c|}{\textbf{Metric}} & \multicolumn{1}{c|}{\textbf{Mean}} & \multicolumn{1}{c|}{\textbf{Median}} & \multicolumn{1}{c|}{\textbf{P25}} & \multicolumn{1}{c|}{\textbf{P75}} & \multicolumn{1}{c|}{\textbf{Std Dev}} \\
 \midrule
-$R^2_{\text{holdout}}$ & 0.092 & $-$0.003 & $-$0.031 & 0.200 & 0.227 \\
+\textit{Hold-Out $R^2$} & 0.092 & $-$0.003 & $-$0.031 & 0.200 & 0.227 \\
 \bottomrule
 \end{tabular}
+\datasetsource
 \end{table}
 
 The near-zero median correlation indicates that coins targeted by pump-and-dump groups are generally not driven by typical market-wide trends.
@@ -85,9 +88,10 @@ However, this method did not work well for our sample. As shown in Figure~\ref{f
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.8\textwidth]{figures/ch4/r2_distribution_by_mcap.png}
-\caption{Distribution of $R^2$ scores across different market caps. The scores are consistently near zero, showing that synthetic controls cannot accurately track micro-cap assets.}
+\caption{Distribution of $R^2$ scores across \textit{Market Capitalization} strata. The scores are consistently near zero, showing that synthetic controls cannot accurately track micro-cap assets.}
 \label{fig:app-r2-distribution}
+\includegraphics[width=0.8\textwidth]{figures/ch4/r2_distribution_by_mcap.png}
+\source{Own elaboration based on the thesis dataset. Note: \textdollar{} denotes USD; M denotes million; B denotes billion.}
 \end{figure}
 
 Because the synthetic controls failed to track the target coins, using CAR actually made the results less reliable. Instead of removing market noise, subtracting an unrelated control variable just added more variance to the data.

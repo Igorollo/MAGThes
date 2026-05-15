@@ -12,4 +12,5 @@
 !images/**/*.pdf
 *.synctex.gz
 *.toc
+*.xdv
 .DS_Store

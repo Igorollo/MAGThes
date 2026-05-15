@@ -23,7 +23,7 @@ The literature also suggests that participating in a pump is not always the resu
 
 Market size plays a fundamental role in this process. Larger assets can usually absorb significant buying volume without experiencing sharp price swings. In contrast, smaller assets with limited trading depth are much more sensitive to coordinated demand. This relationship is closely tied to the concept of illiquidity. In a thin market, every individual trade has a larger impact on the price \cite{amihud2002illiquidity}. While market capitalization is not a perfect measure of liquidity, this thesis uses it as a practical proxy for how resistant an asset is likely to be to sudden, organized shifts in demand.
 
-This logic connects the existing literature to the empirical design of this study. Organizers need coins that are visible yet "moveable." Very large coins are often too liquid for a coordinated group to influence significantly, while the smallest coins may lack the data coverage needed for analysis. For this reason, this thesis treats Market Capitalization as a factor that may shape how strongly pump signals affect returns, with a detailed analysis of different market-cap segments appearing in later chapters.
+This logic connects the existing literature to the empirical design of this study. Organizers need coins that are visible yet "moveable." Very large coins are often too liquid for a coordinated group to influence significantly, while the smallest coins may lack the data coverage needed for analysis. For this reason, this thesis treats \textit{Market Capitalization} as a factor that may shape how strongly pump signals affect returns, with a detailed analysis of different market-cap segments appearing in later chapters.
 
 \section{Messaging Platform Signals and Social Coordination}
 \label{sec:telegram-social-coordination}
@@ -80,7 +80,7 @@ It is important to note that urgency may not be effective in every market enviro
 
 The second hypothesis focuses on how the targeted asset changes the effect of the signal. The same signal is unlikely to produce identical results across different coins. A large, liquid market can absorb strong buying pressure with limited price movement, while a thin market is much more sensitive. This logic is motivated by literature on market manipulation and illiquidity \cite{amihud2002illiquidity, dhawan2023new}.
 
-\textbf{H2:} Signals that create urgency and coordination are expected to have stronger estimated effects in lower-cap assets, especially small-cap assets. These estimated effects are expected to become weaker as Market Capitalization increases.
+\textbf{H2:} Signals that create urgency and coordination are expected to have stronger estimated effects in lower-cap assets, especially small-cap assets. These estimated effects are expected to become weaker as \textit{Market Capitalization} increases.
 
 This does not imply that all low-cap assets are easily manipulated. Rather, it suggests that market size may change how strong the signal effect is.
 
@@ -88,12 +88,12 @@ The final hypothesis addresses predictability. If the success of a pump depends 
 
 \textbf{H3:} Observable market patterns before the event, combined with signal characteristics, contain information that can help predict whether the manipulation will succeed.
 
-While H1 and H2 focus on isolating causal drivers, H3 is concerned with forecasting. A model might identify success by combining many subtle signals, such as coin age or pre-event anomalies, even if it does not provide a direct causal explanation for each individual feature.
+While H1 and H2 focus on isolating causal drivers, H3 is concerned with forecasting. A model might identify \textit{Success} by combining many subtle signals, such as \textit{Coin Age} or pre-event anomalies, even if it does not provide a direct causal explanation for each individual feature.
 
 \section{Causal and Predictive Framework}
 \label{sec:causal-predictive-framework}
 
-To address these complexities, the empirical framework combines causal estimation with predictive modeling. The causal component asks whether signal characteristics are associated with short-horizon returns after accounting for relevant background conditions. The predictive component asks whether information available at the reveal can classify which events are likely to end successfully. Chapter~\ref{ch:methodology} presents the formal estimators and validation choices, while Appendix~\ref{app:synthetic-control} discusses the synthetic-control exercise considered during the design stage.
+To address these complexities, the empirical framework combines causal estimation with predictive modeling. The causal component asks whether signal characteristics are associated with short-horizon returns after accounting for relevant background conditions. The predictive component asks whether information available at the reveal can classify which events are likely to end successfully. Chapter~\ref{ch:methodology} presents the formal estimators and validation choices, while the appendix discusses the synthetic-control exercise considered during the design stage.
 
 \section{Research Goals and Thesis Structure}
 \label{sec:chapter-one-contribution}
@@ -102,4 +102,4 @@ This thesis contributes to the understanding of cryptocurrency market manipulati
 
 The core of this work is treating these messages as tools for organizing people rather than as sources of real financial news. This approach connects financial research with the study of digital communication and shows why it is important to treat causal analysis and prediction as two different tasks.
 
-The following chapters develop this argument in detail. Chapter~\ref{ch:data-description} focuses on data collection, event construction, and feature engineering. Chapter~\ref{ch:methodology} explains the formal causal framework, the heterogeneous-effect analysis, and the predictive design. Chapter~\ref{ch:results} then presents the empirical findings for each hypothesis, while Chapter~\ref{ch:interpretation} discusses their theoretical meaning and Chapter~\ref{ch:conclusions} summarizes the main conclusions. Finally, the appendix provides a detailed discussion of the synthetic-control experiments and explains their role in the broader analysis.
+The following chapters develop this argument in detail. Chapter~\ref{ch:data-description} focuses on data collection, event construction, and feature engineering. Chapter~\ref{ch:methodology} explains the formal causal framework, the heterogeneous-effect analysis, and the predictive design. Chapter~\ref{ch:results} then presents the empirical findings for each hypothesis, while Chapter~\ref{ch:interpretation} discusses their theoretical meaning. The conclusions summarize the main findings. Finally, the appendix provides a detailed discussion of the synthetic-control experiments and explains their role in the broader analysis.

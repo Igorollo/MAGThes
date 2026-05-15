@@ -1,25 +1,25 @@
 \section{Main Conclusion}
 \label{sec:conclusions-main}
 
-This thesis examined whether Telegram pump-and-dump signals help explain immediate cryptocurrency price reactions. Based on 2,917 complete pump events and a 10-minute logarithmic return outcome, the main conclusion is that signal characteristics matter, but their effect is conditional.
+This thesis examined whether Telegram pump-and-dump signals help explain immediate cryptocurrency price reactions. Based on 2,917 complete pump events and a \textit{10-Minute Logarithmic Return} outcome, the main conclusion is that signal characteristics matter, but their effect is conditional.
 
 Urgency works most clearly as a short-lived coordination trigger in the part of the market where assets are small enough to move but still active enough for the reaction to be measured. Pump messages should therefore be understood as coordination tools rather than as sources of new financial information, and their effect depends on the market structure around the target asset.
 
 \section{Findings in Relation to the Hypotheses}
 \label{sec:conclusions-hypotheses}
 
-H1 receives partial support. The strongest evidence appears in the small-cap stratum, where the Urgency Index coefficient is huge (compared to the altitude of other coefficients), at 0.0301 and statistically significant at p $<$ 0.1\%. This result should not be generalized to the whole sample, because the micro-cap, mid-cap, and large-cap strata do not show the same positive, important pattern.
+H1 receives partial support. The strongest evidence appears in the small-cap stratum, where the \textit{Urgency Index} coefficient is large relative to the other coefficients, at 0.0301 and statistically significant at p $<$ 0.1\%. This result should not be generalized to the whole sample, because the micro-cap, mid-cap, and large-cap strata do not show the same positive pattern.
 
-H2 receives the clearest support. The stratified DML estimates and the heterogeneous-effect analysis both show that Market Capitalization shapes the signal effect. The result is not a simple rule that the smallest assets are always easiest to pump. The most visible positive effect appears around the lower market-cap range discussed in Chapter~\ref{ch:interpretation}.
+H2 receives the clearest support. The stratified DML estimates and the heterogeneous-effect analysis both show that \textit{Market Capitalization} shapes the signal effect. The result is not a simple rule that the smallest assets are always easiest to pump. The most visible positive effect appears around the lower market-cap range discussed in Chapter~\ref{ch:interpretation}.
 
-H3 is supported as a forecasting result. The no-channel XGBoost model reaches a macro F1-score of about 0.76 on a grouped holdout test set with unseen channels and about 0.89 recall for successful pumps. This predictive result remains separate from the causal findings. It shows that success can be classified with meaningful accuracy, not that every important feature caused the return.
+H3 is supported as a forecasting result. The no-channel XGBoost model reaches a macro F1-score of about 0.76 on a grouped holdout test set with unseen channels and about 0.89 recall for \textit{Success} cases. This predictive result remains separate from the causal findings. It shows that \textit{Success} can be classified with meaningful accuracy, not that every important feature caused the return.
 
 \section{Contribution of the Study}
 \label{sec:conclusions-contribution}
 
 The study contributes to the analysis of cryptocurrency manipulation by linking pump-signal wording and timing to immediate market reactions. Instead of treating pump events only as abnormal price movements, it connects the message itself with the short-term return that follows.
 
-The thesis also moves beyond detection by asking whether specific signal features, especially urgency, help explain the strength of the response. It identifies Market Capitalization as a key boundary condition and keeps causal estimation separate from prediction, avoiding the treatment of predictive accuracy as proof of causality.
+The thesis also moves beyond detection by asking whether specific signal features, especially urgency, help explain the strength of the response. It identifies \textit{Market Capitalization} as a key boundary condition and keeps causal estimation separate from prediction, avoiding the treatment of predictive accuracy as proof of causality.
 
 \section{Limitations and Future Research}
 \label{sec:conclusions-limitations-future}

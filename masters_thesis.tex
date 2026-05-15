@@ -1,10 +1,22 @@
 \documentclass[12pt, a4paper]{report}
 
 % --- PACKAGES ---
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\renewcommand{\rmdefault}{ptm}      % Times New Roman text font (template uses mathptmx, but avoids rsfs10 missing metric crashes in mactex-basic)
-\usepackage[margin=2.5cm]{geometry} % 2.5cm on all sides (Zalacznik B)
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[utf8]{inputenc}
+  \usepackage[T1]{fontenc}
+  \renewcommand{\rmdefault}{ptm}
+\else
+  \usepackage{fontspec}
+  \setmainfont[
+    Path=/System/Library/Fonts/Supplemental/,
+    UprightFont={Times New Roman.ttf},
+    BoldFont={Times New Roman Bold.ttf},
+    ItalicFont={Times New Roman Italic.ttf},
+    BoldItalicFont={Times New Roman Bold Italic.ttf}
+  ]{Times New Roman}
+\fi
+\usepackage[margin=25mm]{geometry} % 25 mm on all sides (Annex B)
 \usepackage{setspace}       % For line spacing
 \usepackage{titlesec}       % To customize chapter headings
 \usepackage{graphicx}       % For images
@@ -15,6 +27,7 @@
 \usepackage{fancyhdr}      % For custom headers/footers
 \pagestyle{plain}          % Bottom-center page numbering (Zalacznik B)
 
+\usepackage{array}
 \usepackage{booktabs}
 \usepackage{float}
 \usepackage{amsmath, amssymb, amsthm}
@@ -34,33 +47,114 @@
 
 % 2. Paragraph Indentation: 1 cm
 \setlength{\parindent}{1cm}
+\setlength{\parskip}{0pt}
 
-% 3. Chapter Heading Formatting
-% Chapters should start on a new page, bold, uppercase
+% 3. Chapter and section heading formatting
+\renewcommand{\contentsname}{TABLE OF CONTENTS}
+\renewcommand{\bibname}{REFERENCES}
+\renewcommand{\refname}{REFERENCES}
+\addto\captionsenglish{%
+  \renewcommand{\contentsname}{TABLE OF CONTENTS}%
+  \renewcommand{\bibname}{REFERENCES}%
+  \renewcommand{\refname}{REFERENCES}%
+}
 \titleformat{\chapter}[display]
-{\normalfont\bfseries\centering} % Bold and centered
-{\MakeUppercase{\chaptertitlename} \thechapter} % "CHAPTER 1"
-{12pt} % Spacing between label and title
-{\Large} % Title size
+{\normalfont\normalsize\bfseries\centering}
+{CHAPTER \Roman{chapter}}
+{12pt}
+{\MakeUppercase}
+\titleformat{name=\chapter,numberless}[block]
+{\normalfont\normalsize\bfseries\centering}
+{}
+{0pt}
+{\MakeUppercase}
+\titlespacing*{\chapter}{0pt}{0pt}{1.5\baselineskip}
 
-% 4. Section Heading Formatting
 \titleformat{\section}
-{\normalfont\bfseries}
+{\normalfont\normalsize\bfseries}
 {\thesection.}
 {1em}
 {}
-
-% 5. Caption Formatting
-\captionsetup{font=small, labelfont=bf}
-
-% 6. Custom command for "Source" under figures/tables
-\newcommand{\source}[1]{%
-  \vspace{-5pt}
-  \begin{flushleft}
-    \footnotesize \textit{Source:} #1
-  \end{flushleft}
-  \vspace{10pt}
+\titleformat{\subsection}
+{\normalfont\normalsize\bfseries}
+{\thesubsection.}
+{1em}
+{}
+\titlespacing*{\section}{0pt}{1.5\baselineskip}{1.5\baselineskip}
+\titlespacing*{\subsection}{0pt}{1.5\baselineskip}{1.5\baselineskip}
+\renewcommand{\thechapter}{\Roman{chapter}}
+\renewcommand{\thesection}{\arabic{chapter}.\arabic{section}}
+\renewcommand{\thesubsection}{\arabic{chapter}.\arabic{section}.\arabic{subsection}}
+\renewcommand{\cfttoctitlefont}{\normalfont\normalsize\bfseries}
+\renewcommand{\cftaftertoctitle}{}
+\setlength{\cftbeforetoctitleskip}{0pt}
+\setlength{\cftaftertoctitleskip}{1.5\baselineskip}
+\makeatletter
+\renewcommand{\@cftmaketoctitle}{%
+  \addpenalty\@secpenalty
+  \vspace*{\cftbeforetoctitleskip}%
+  \@cftpagestyle
+  {\interlinepenalty\@M
+  \noindent\makebox[\linewidth][c]{\cfttoctitlefont\contentsname\cftaftertoctitle}%
+  \cftmarktoc
+  \par\nobreak
+  \vskip \cftaftertoctitleskip
+  \@afterheading}%
 }
+\makeatother
+\newcommand{\tocchapterprefix}{\renewcommand{\cftchappresnum}{CHAPTER~}}
+\tocchapterprefix
+\setlength{\cftchapnumwidth}{7em}
+\renewcommand{\cftchapfont}{\normalfont}
+\renewcommand{\cftchappagefont}{\normalfont}
+
+% 4. Captions, counters, equations, lists, and tables
+\makeatletter
+\@removefromreset{figure}{chapter}
+\@removefromreset{table}{chapter}
+\@removefromreset{equation}{chapter}
+\makeatother
+\renewcommand{\thefigure}{\arabic{figure}}
+\renewcommand{\thetable}{\arabic{table}}
+\renewcommand{\theequation}{[\arabic{equation}]}
+\captionsetup{
+  font={normalsize,stretch=1},
+  labelfont=bf,
+  labelsep=period,
+  justification=justified,
+  singlelinecheck=false,
+  skip=\baselineskip
+}
+\captionsetup[figure]{position=top}
+\captionsetup[table]{position=top}
+\setlist[itemize]{label=--, leftmargin=1cm, itemsep=0pt, topsep=0pt, parsep=0pt}
+\setlist[enumerate]{leftmargin=1cm, itemsep=0pt, topsep=0pt, parsep=0pt}
+\setlength{\arrayrulewidth}{0.4pt}
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.2}
+\renewcommand{\toprule}{\hline}
+\renewcommand{\midrule}{\hline}
+\renewcommand{\bottomrule}{\hline}
+
+% 5. Custom commands for source notes under figures/tables
+\newcommand{\source}[1]{%
+  \par\vspace{0.5\baselineskip}%
+  {\singlespacing\noindent\footnotesize\textit{Source:} #1\par}%
+  \vspace{0.5\baselineskip}%
+}
+\newcommand{\datasetsource}{\source{Own elaboration based on the thesis dataset.}}
+
+\makeatletter
+\newcommand{\combinedlistoftablesandfigures}{%
+  \chapter*{LIST OF TABLES AND FIGURES}%
+  \addcontentsline{toc}{chapter}{LIST OF TABLES AND FIGURES}%
+  \section*{Tables}%
+  \@starttoc{lot}%
+  \vspace{\baselineskip}%
+  \section*{Figures}%
+  \@starttoc{lof}%
+}
+\makeatother
 
 % --- SECTIONING STYLE (Kept from original but adapted) ---
 % \renewcommand*\thesection{\thechapter.\arabic{section}.}
@@ -73,6 +167,7 @@
 \newcommand{\supervisor}{Dr Hab. Stanisław Cichocki, Prof. UW}
 \newcommand{\fieldOfStudy}{Data Science and Business Analytics}
 \newcommand{\submissionPlace}{Warsaw}
+\newcommand{\submissionMonth}{May}
 \newcommand{\submissionYear}{2026}
 
 \begin{document}
@@ -81,58 +176,58 @@
 % 1. TITLE PAGE
 % ===================================================================
 \begin{titlepage}
+  \thispagestyle{empty}
+  \setcounter{page}{0}
   \centering
-  \includegraphics[width=3.5cm]{images/UW_logo.png}
+  {\normalsize University of Warsaw \par}
+  {\normalsize Faculty of Economic Sciences \par}
 
-  \vspace{0.5cm}
-  {\Large University of Warsaw \par}
-  {\large Faculty of Economic Sciences \par} % Change Faculty if needed
+  \vspace{2.5cm}
 
-  \vspace{1cm}
+  {\normalsize \thesisAuthor \par}
+  {\normalsize Student's book no.: \studentID \par}
 
-  {\large \textbf{\thesisAuthor} \par}
-  {Student's book no.: \studentID \par}
+  \vspace{1.8cm}
 
-  \vspace{1cm}
+  {\normalsize\bfseries \thesisTitle \par}
 
-  {\Huge \textbf{\thesisTitle} \par}
+  \vspace{1.8cm}
 
-  \vspace{1cm}
+  {\normalsize Master's thesis \par}
+  {\normalsize on the field of: \fieldOfStudy \par}
 
-  {\large Master's Thesis \par}
-  {on the field of: \fieldOfStudy \par}
-
-  \vspace{1cm}
+  \vspace{1.8cm}
 
   \begin{flushright}
-    The thesis written under supervision of \par
-    \textbf{\supervisor} \par
-    \textit{Faculty of Economic Sciences} \par
+    The thesis written under supervision of\par
+    \supervisor\par
+    Faculty of Economic Sciences\par
   \end{flushright}
 
   \vfill
 
-  {\submissionPlace, \submissionYear \par}
+  {\normalsize \submissionPlace, \submissionMonth\ \submissionYear \par}
 \end{titlepage}
+\setcounter{page}{1}
 
 % ===================================================================
 % 2. STATEMENTS
 % ===================================================================
-\thispagestyle{empty}
+\thispagestyle{plain}
 
-\noindent \textbf{\textit{Statement of the Supervisor on Submission of the Thesis}}
+\noindent \textbf{Statement of the Supervisor on Submission of the Thesis}
 
 \vspace{0.5cm}
 
 \noindent I hereby certify that the thesis submitted has been prepared under my supervision and I declare that it satisfies the requirements of submission in the proceedings for the award of a degree.
 
-\vspace{1.5cm}
+\vspace{1.8cm}
 
-\noindent Date \hspace{8cm} Signature of the Supervisor
+\noindent Date \hfill Signature of the Supervisor
 
-\vspace{2cm}
+\vspace{2.4cm}
 
-\noindent \textbf{\textit{Statement of the Author(s) on Submission of the Thesis}}
+\noindent \textbf{Statement of the Author on Submission of the Thesis}
 
 \vspace{0.5cm}
 
@@ -146,9 +241,9 @@
 
 \noindent Furthermore I certify that the submitted version of the thesis is identical with its attached electronic version.
 
-\vspace{1.5cm}
+\vspace{1.8cm}
 
-\noindent Date \hspace{8cm} Signature of the Author(s) of the thesis
+\noindent Date \hfill Signature of the Author of the thesis
 
 \newpage
 
@@ -157,35 +252,30 @@
 % ===================================================================
 \thispagestyle{plain}
 
-% -------------------------------------------------------------------
-% ENGLISH ABSTRACT
-% -------------------------------------------------------------------
 \begin{center}
   \textbf{Abstract}
 \end{center}
-\noindent This thesis studies cryptocurrency pump-and-dump schemes coordinated through Telegram channels. It examines whether the wording and timing of pump signals help explain the immediate market reaction after a target coin is revealed. The analysis combines Telegram messages, 1-minute exchange OHLCV data, and historical asset metadata into a final sample of 2,917 complete pump events. The main outcome is the 10-minute logarithmic return after the reveal. The causal part uses Double Machine Learning to estimate the effects of Hype Intensity, Urgency Index, and Instruction Density while controlling for pre-event market conditions and channel fixed effects. Heterogeneity is examined across market-capitalization groups and with Causal Forests. A separate XGBoost model tests whether pump success can be predicted from information available at the time of the signal. The predictive results also show that pump success can be classified with meaningful accuracy on unseen Telegram channels. The results show that urgency does not increase returns in every market segment. Its clearest positive effect appears for small-cap assets, while the estimated effects are smaller and negative in larger segments and inconclusive for micro-cap assets. Overall, the thesis shows that pump signals work mainly as short-term coordination tools, and that their effect depends strongly on market conditions.
+\noindent This thesis studies Telegram-coordinated cryptocurrency pump-and-dump events. It links message features, high-frequency exchange data, and asset metadata to estimate how signal style affects 10-minute post-reveal returns. Using Double Machine Learning and heterogeneity checks, it shows that urgency matters mainly for small-cap assets, while effects weaken or turn negative in larger markets. A separate XGBoost model tests whether \textit{Success} can be predicted before the reveal. The results show that pump signals work as short-term coordination tools whose impact depends on market depth.
 
 \vspace{1cm}
-\noindent \textbf{Keywords:} causal machine learning, cryptocurrency market manipulation, pump-and-dump schemes, Telegram signals, Double Machine Learning, market capitalization, short-term returns
-
 \begin{center}
-  (\textbf{Słowa kluczowe:} przyczynowe uczenie maszynowe, manipulacja na rynku kryptowalut, schematy pump-and-dump, sygnały Telegram, Double Machine Learning, kapitalizacja rynkowa, krótkoterminowe stopy zwrotu)
+  \textbf{Keywords}
+\end{center}
+\begin{center}
+  causal AI, cryptocurrency manipulation, pump-and-dump, Telegram signals, Double Machine Learning, market capitalization
 \end{center}
 
-\vspace{0.5cm}
-\noindent \textbf{Tytuł pracy w języku polskim:}
-\vspace{0.2cm} \\
-Sztuczna inteligencja oparta na przyczynowości w wykrywaniu manipulacji na rynku kryptowalut
-
-% -------------------------------------------------------------------
-% POLISH ABSTRACT (STRESZCZENIE)
-% -------------------------------------------------------------------
-\vspace{0.5cm}
 \begin{center}
-  \textbf{Streszczenie}
+  (\textbf{Słowa kluczowe:} przyczynowa AI, manipulacja kryptowalutami, pump-and-dump, sygnały Telegram, Double Machine Learning, kapitalizacja rynkowa)
 \end{center}
 
-\noindent Niniejsza praca bada schematy typu pump-and-dump na rynku kryptowalut, koordynowane za pomocą kanałów Telegram. Głównym celem jest sprawdzenie, czy treść i forma sygnału wpływają na natychmiastową reakcję rynku po ogłoszeniu wybranej monety. Analiza łączy wiadomości z Telegrama, minutowe dane OHLCV z giełd kryptowalut oraz historyczne metadane aktywów. Ostateczna próba obejmuje 2 917 kompletnych zdarzeń. Zmienną objaśnianą jest 10-minutowa logarytmiczna stopa zwrotu po ujawnieniu celu. W części przyczynowej zastosowano Double Machine Learning, aby oszacować wpływ intensywności hype'u, indeksu pilności oraz gęstości instrukcji, przy kontroli wcześniejszych warunków rynkowych i efektów stałych kanałów. Zróżnicowanie efektów badane jest według kapitalizacji rynkowej oraz za pomocą Causal Forests. Oddzielny model XGBoost sprawdza, czy można przewidzieć sukces pompy na podstawie informacji dostępnych w momencie sygnału. Wyniki predykcyjne pokazują również, że sukces pompy można klasyfikować z sensowną skutecznością dla wcześniej niewidzianych kanałów Telegram. Wyniki pokazują, że pilność komunikatu nie zwiększa stóp zwrotu we wszystkich segmentach rynku. Najwyraźniejszy pozytywny efekt występuje dla aktywów o małej kapitalizacji, natomiast w większych segmentach oszacowane efekty są mniejsze i ujemne, a dla mikroaktywów pozostają niejednoznaczne. Praca pokazuje, że sygnały pump-and-dump działają głównie jako krótkoterminowe narzędzia koordynacji, a ich skuteczność silnie zależy od warunków rynkowych.
+\vspace{1cm}
+\begin{center}
+  \textbf{Tytuł pracy w języku polskim}
+\end{center}
+\begin{center}
+  Sztuczna inteligencja oparta na przyczynowości w wykrywaniu manipulacji na rynku kryptowalut
+\end{center}
 
 \newpage
 
@@ -224,23 +314,24 @@ Sztuczna inteligencja oparta na przyczynowości w wykrywaniu manipulacji na rynk
 \input{chapters/chapter_5/chapter_5_interpretation}
 
 % --- PART 5: CONCLUSIONS ---
-\chapter{CONCLUSIONS}
+\chapter*{CONCLUSIONS}
+\addcontentsline{toc}{chapter}{CONCLUSIONS}
 \label{ch:conclusions}
+\begingroup
+\setcounter{secnumdepth}{0}
 \input{chapters/conclusions}
+\endgroup
 
 {\singlespacing
+\renewcommand{\bibname}{REFERENCES}
+\renewcommand{\refname}{REFERENCES}
 \setlength{\bibitemsep}{\baselineskip}
 \bibliographystyle{apacite}
 \bibliography{references}
 }
 
-\chapter*{LIST OF TABLES AND FIGURES}
-\addcontentsline{toc}{chapter}{List of Tables and Figures}
-\listoftables
-\listoffigures
+\combinedlistoftablesandfigures
 
-\appendix
-\phantomsection
 \input{chapters/appendix/appendix_A_synthetic_control}
 
 \end{document}

@@ -14,18 +14,19 @@ Filtering for inactive, non-English, and irrelevant groups reduced this list to 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{channel_distribution.pdf}
     \caption{Distribution of pump events across 81 Telegram channels. A long-tail pattern indicates high concentration among top coordinators.}
     \label{fig:channel-distribution}
+    \includegraphics[width=0.85\textwidth]{channel_distribution.pdf}
+    \datasetsource
 \end{figure}
 
 \begin{table}[H]
 \centering
 \caption{Top 10 Most Active Pump Channels}
 \label{tab:top-channels}
-\begin{tabular}{@{}clr@{}}
+\begin{tabular}{|c|l|r|}
 \toprule
-\multicolumn{1}{@{}c}{\textbf{Rank}} & \multicolumn{1}{c}{\textbf{Channel ID}} & \multicolumn{1}{c@{}}{\textbf{Event Count}} \\
+\multicolumn{1}{|c|}{\textbf{Rank}} & \multicolumn{1}{c|}{\textbf{\textit{Channel ID}}} & \multicolumn{1}{c|}{\textbf{Event Count}} \\
 \midrule
 1 & 1167785945 & 372 \\
 2 & 1195248520 & 354 \\
@@ -39,6 +40,7 @@ Filtering for inactive, non-English, and irrelevant groups reduced this list to 
 10 & 1123236170 & 102 \\
 \bottomrule
 \end{tabular}
+\datasetsource
 \end{table}
 
 \section{Message Classification and Event Aggregation}
@@ -52,15 +54,16 @@ A subset of these candidates was classified into three categories (Table~\ref{ta
 \centering
 \caption{Message Classification Categories}
 \label{tab:message-categories}
-\begin{tabular}{@{}llp{8.5cm}@{}}
+\begin{tabular}{|l|l|p{8.5cm}|}
 \toprule
-\multicolumn{1}{@{}c}{\textbf{Category}} & \multicolumn{1}{c}{\textbf{Label}} & \multicolumn{1}{c@{}}{\textbf{Description}} \\
+\multicolumn{1}{|c|}{\textbf{Category}} & \multicolumn{1}{c|}{\textbf{Label}} & \multicolumn{1}{c|}{\textbf{Description}} \\
 \midrule
 Explicit & 1 & The primary pump signal, containing the target coin symbol and execution instructions. \\
 Preparatory & 2 & Countdowns and promotional messages designed to build anticipation prior to the coin reveal. \\
 Noise & 0 & General discussion, market news, or unrelated spam. \\
 \bottomrule
 \end{tabular}
+\datasetsource
 \end{table}
 
 
@@ -71,9 +74,9 @@ After message-level scoring, individual messages were grouped into distinct pump
 \centering
 \caption{Example Pump Session: REQ/BTC Pump on March 27, 2021}
 \label{tab:session-example}
-\begin{tabular}{@{}lp{10cm}@{}}
+\begin{tabular}{|l|p{10cm}|}
 \toprule
-\multicolumn{1}{@{}c}{\textbf{Time}} & \multicolumn{1}{c@{}}{\textbf{Message Content}} \\
+\multicolumn{1}{|c|}{\textbf{Time}} & \multicolumn{1}{c|}{\textbf{Message Content}} \\
 \midrule
 18:25 & \texttt{[megaphone] THE PUMP STARTS IN 5 MINUTES!} \\
 18:28 & \texttt{[megaphone] 2 MINUTES - HAVE YOUR BTC READY ON BINANCE} \\
@@ -83,6 +86,7 @@ After message-level scoring, individual messages were grouped into distinct pump
 18:40 & \texttt{[warning] Peak reached SELLING NOW!} \\
 \bottomrule
 \end{tabular}
+\datasetsource
 \end{table}
 
 The primary temporal marker for each session is $T_0$, which denotes the exact minute of the target asset's reveal. Every candidate $T_0$ was contextually verified also using Gemini 2.5 Pro, as subsequent volatility and return calculations are highly sensitive to timing accuracy. This process identified the initial actionable signal, whether a scheduled launch, an explicit coin announcement, or a direct trading instruction, to establish a precise starting point. The validation procedure confirmed or corrected 3,793 of the 3,876 candidate events (97.9\%), with 83 cases excluded due to inadequate signal clarity. These 3,793 validated events formed the event set before the later complete-case restrictions described in Section~\ref{sec:data-integration-summary}.
@@ -98,9 +102,9 @@ The extraction window for each event spans from seven days prior to the signal u
 \centering
 \caption{Price and Volume Dynamics around NAS/BTC Pump ($T_0$ = 17:00 UTC)}
 \label{tab:ohlcv-example}
-\begin{tabular}{@{}llllll@{}}
+\begin{tabular}{|l|l|l|l|l|l|}
 \toprule
-\multicolumn{1}{@{}c}{\textbf{Time (UTC)}} & \multicolumn{1}{c}{\textbf{Open}} & \multicolumn{1}{c}{\textbf{High}} & \multicolumn{1}{c}{\textbf{Low}} & \multicolumn{1}{c}{\textbf{Close}} & \multicolumn{1}{c@{}}{\textbf{Volume}} \\
+\multicolumn{1}{|c|}{\textbf{Time (UTC)}} & \multicolumn{1}{c|}{\textbf{Open}} & \multicolumn{1}{c|}{\textbf{High}} & \multicolumn{1}{c|}{\textbf{Low}} & \multicolumn{1}{c|}{\textbf{Close}} & \multicolumn{1}{c|}{\textbf{Volume}} \\
 \midrule
 16:58 & 0.00001310 & 0.00001320 & 0.00001300 & 0.00001310 & 21,217 \\
 16:59 & 0.00001320 & 0.00001330 & 0.00001310 & 0.00001320 & 19,468 \\
@@ -108,6 +112,7 @@ The extraction window for each event spans from seven days prior to the signal u
 17:01 & 0.00002000 & 0.00002070 & 0.00001440 & 0.00001730 & 3,861,392 \\
 \bottomrule
 \end{tabular}
+\datasetsource
 \end{table}
 
 
@@ -117,9 +122,10 @@ Figure~\ref{fig:quote-currency-temporal} shows how the composition of these quot
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.95\textwidth]{quote_currency_temporal_v2.pdf}
     \caption{Quarterly share of pump events by quote currency (2019 to 2021). The figure is limited to these three years, as they contain the large majority of observed events.}
     \label{fig:quote-currency-temporal}
+    \includegraphics[width=0.95\textwidth]{quote_currency_temporal_v2.pdf}
+    \datasetsource
 \end{figure}
 
 \section{Enriched Asset Metadata and Thin Market Constraints}
@@ -127,47 +133,50 @@ Figure~\ref{fig:quote-currency-temporal} shows how the composition of these quot
 
 Each targeted token was additionally enriched with project metadata from CoinMarketCap \cite{coinmarketcap2024api}. To prevent the pump from distorting these attributes, the metadata was extracted from historical snapshots recorded on the Sunday preceding each event.
 
-Two key variables used later as pre-reveal covariates are Coin Age and Market Capitalization. Coin Age was computed from exchange listing dates, while Market Capitalization was taken from the historical CoinMarketCap snapshot. Figure~\ref{fig:coin-age-distribution} shows a bimodal distribution in Coin Age, with many targets around 1,000 days old. Figure~\ref{fig:market-cap-volume-scatter} shows that targets cluster most heavily in the \$10 million to \$100 million market-cap range.
+Two key variables used later as pre-reveal covariates are \textit{Coin Age} and \textit{Market Capitalization}. \textit{Coin Age} was computed from exchange listing dates, while \textit{Market Capitalization} was taken from the historical CoinMarketCap snapshot. Figure~\ref{fig:coin-age-distribution} shows a bimodal distribution in \textit{Coin Age}, with many targets around 1,000 days old. Figure~\ref{fig:market-cap-volume-scatter} shows that targets cluster most heavily in the 10 million USD to 100 million USD market-cap range.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{coin_age_distribution.pdf}
     \caption{Distribution of target coin age at $T_0$ (log scale), showing concentrations among very new and much older targets.}
     \label{fig:coin-age-distribution}
+    \includegraphics[width=0.85\textwidth]{coin_age_distribution.pdf}
+    \datasetsource
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{market_cap_volume_scatter.pdf}
     \caption{Clustering of pump targets across historical market capitalization and volume bounds.}
     \label{fig:market-cap-volume-scatter}
+    \includegraphics[width=0.9\textwidth]{market_cap_volume_scatter.pdf}
+    \source{Own elaboration based on the thesis dataset. Note: \textdollar{} denotes USD; M denotes million; B denotes billion.}
 \end{figure}
 
 Many of these targeted crypto projects fail or are delisted, creating a data-availability problem for historical analysis. Restricting the analysis to currently active listings would therefore create survivorship risk in the final sample. To reduce this problem, the study uses historical exchange data so that tokens no longer actively listed can still be retained when data is available.
 
-The metadata also reveals severe trading sparsity among the lowest-cap observations. For coins below \$10 million in market capitalization, over 68\% of the 1-minute intervals before the pump recorded zero trading volume. For that reason, subsequent volatility metrics are computed only across intervals with non-zero trading volume.
+The metadata also reveals severe trading sparsity among the lowest-cap observations. For coins below 10 million USD in market capitalization, over 68\% of the 1-minute intervals before the pump recorded zero trading volume. For that reason, subsequent volatility metrics are computed only across intervals with non-zero trading volume.
 
 \section{Variable Construction and Formal Specifications}
 \label{sec:feature-selection}
 
 Following data integration, features were engineered to support the causal analysis. To keep pre-reveal covariates separate from post-signal outcomes, all feature construction strictly respected the $T_0$ temporal threshold.
 
-Telegram signal features quantify the scale and intensity of social coordination (Table~\ref{tab:telegram-variables}). The engineered feature set includes Hype Intensity, Urgency Index, Instruction Density, and Hype Volume. In the final causal specification described in Chapter~\ref{ch:methodology}, Hype Volume is excluded after collinearity screening, so the retained treatment vector contains Hype Intensity, Urgency Index, and Instruction Density.
+Telegram signal features quantify the scale and intensity of social coordination (Table~\ref{tab:telegram-variables}). The engineered feature set includes \textit{Hype Intensity}, \textit{Urgency Index}, \textit{Instruction Density}, and \textit{Hype Volume}. In the final causal specification described in Chapter~\ref{ch:methodology}, \textit{Hype Volume} is excluded after collinearity screening, so the retained treatment vector contains \textit{Hype Intensity}, \textit{Urgency Index}, and \textit{Instruction Density}.
 
 \begin{table}[H]
 \centering
 \caption{Engineered Telegram Signal Features}
 \label{tab:telegram-variables}
-\begin{tabular}{@{}lp{11cm}@{}}
+\begin{tabular}{|l|p{11cm}|}
 \toprule
-\multicolumn{1}{@{}c}{\textbf{Variable}} & \multicolumn{1}{c@{}}{\textbf{Description}} \\
+\multicolumn{1}{|c|}{\textbf{Variable}} & \multicolumn{1}{c|}{\textbf{Description}} \\
 \midrule
-Hype Volume & The absolute number of preparatory messages broadcasted in the 20-minute window immediately preceding the coin reveal. \\
-Hype Intensity & The ratio of messages transmitted in the final 20 minutes prior to $T_0$ relative to all earlier preparatory messages in the session, capturing pre-reveal acceleration. \\
-Urgency Index & The ratio of uppercase characters in the primary signal message, used here as a simple proxy for urgency-style message framing. Prior work shows that pump organizers often rely on urgency and FOMO cues in their messages \cite{lamorgia2023doge}. \\
-Instruction Density & The word count of the signal message, reflecting the complexity of the trading instructions. \\
+\textit{Hype Volume} & The absolute number of preparatory messages broadcasted in the 20-minute window immediately preceding the coin reveal. \\
+\textit{Hype Intensity} & The ratio of messages transmitted in the final 20 minutes prior to $T_0$ relative to all earlier preparatory messages in the session, capturing pre-reveal acceleration. \\
+\textit{Urgency Index} & The ratio of uppercase characters in the primary signal message, used here as a simple proxy for urgency-style message framing. Prior work shows that pump organizers often rely on urgency and FOMO cues in their messages \cite{lamorgia2023doge}. \\
+\textit{Instruction Density} & The word count of the signal message, reflecting the complexity of the trading instructions. \\
 \bottomrule
 \end{tabular}
+\datasetsource
 \end{table}
 
 Pre-reveal market covariates capture the state of the market immediately before the public coin reveal at $T_0$. These metrics are computed over trailing intervals ending precisely at $T_0 - 1$ minute, ensuring they reflect strictly pre-reveal market conditions. Depending on the metric's theoretical purpose, the observation window spans the preceding 30 minutes for localized microstructure dynamics, 60 minutes for immediate run-up and abnormal volume detection, or 24 hours for baseline structural properties.
@@ -237,9 +246,9 @@ The zero return ratio captures the proportion of 1-minute intervals recording no
 \end{equation}
 where $\mathbf{1}[\cdot]$ is the indicator function, evaluating to 1 when the return $r_t$ is exactly zero and 0 otherwise. Higher values indicate more frequent price staleness and are interpreted here as evidence of thinner trading conditions.
 
-Beyond market metrics, temporal scheduling was encoded via an \textit{is\_weekend} indicator. This binary feature equals 1 if $T_0$ falls on a Saturday or Sunday, and 0 otherwise. It is included to absorb weekend-specific differences in market conditions and trading behavior.
+Beyond market metrics, temporal scheduling was encoded via the literal dataset column \texttt{is\_weekend}. This binary feature equals 1 if $T_0$ falls on a Saturday or Sunday, and 0 otherwise. It is included to absorb weekend-specific differences in market conditions and trading behavior.
 
-Finally, the preliminary synthetic-control stage, discussed in Appendix~\ref{app:synthetic-control}, produced two hold-out fit diagnostics per event, $R^2$ (\texttt{fit\_r2\_holdout}) and Root Mean Square Error (\texttt{fit\_rmse\_holdout}). These variables were originally used as quality checks to see how accurately the synthetic control matched the target coin's price path before the pump. However, they are also kept in the integrated dataset as extra features for the classification models. This helps test if pre-event price patterns contain information about post-signal pump success.
+Finally, the preliminary synthetic-control stage, discussed in the appendix, produced two hold-out fit diagnostics per event: \textit{Hold-Out $R^2$} and \textit{Root Mean Square Error}. These variables were originally used as quality checks to see how accurately the synthetic control matched the target coin's price path before the pump. However, they are also kept in the integrated dataset as extra features for the classification models. This helps test if pre-event price patterns contain information about post-signal pump \textit{Success}.
 
 \section{Integrated Sample and Exploratory Patterns}
 \label{sec:data-integration-summary}
@@ -248,13 +257,15 @@ The data compilation pipeline unifies unstructured Telegram chat logs, high-freq
 
 \begin{figure}[H]
     \centering
+    \caption{Systems architecture mapping raw informational streams into a synchronized matrix indexed uniformly across the pump trigger $T_0$.}
+    \label{fig:data-pipeline-overview}
     \begin{tikzpicture}[
         node distance=1.5cm,
         box/.style={rectangle, draw, rounded corners, minimum width=3cm, minimum height=1cm, align=center, font=\small},
         arrow/.style={-{Stealth[length=3mm]}, thick}
     ]
         % Source nodes
-        \node[box, fill=blue!20] (telegram) {Telegram\\Messages\\(12.4M raw)};
+        \node[box, fill=blue!20] (telegram) {Telegram\\Messages\\(12.4 million raw)};
         \node[box, fill=green!20, right=of telegram] (ohlcv) {Exchange\\OHLCV\\(4 exchanges)};
         \node[box, fill=orange!20, right=of ohlcv] (cmc) {CoinMarketCap\\API\\(historical)};
         
@@ -274,53 +285,53 @@ The data compilation pipeline unifies unstructured Telegram chat logs, high-freq
         \draw[arrow] (align) -- (integrate);
         \draw[arrow] (enrich) -- (integrate);
     \end{tikzpicture}
-    \caption{Systems architecture mapping raw informational streams into a synchronized matrix indexed uniformly across the pump trigger $T_0$.}
-    \label{fig:data-pipeline-overview}
+    \datasetsource
 \end{figure}
 
-The final analytical sample consists of 2,917 complete pump-event records (see Section~\ref{sec:sample-selection}). Table~\ref{tab:sample-distribution} shows the breakdown of this final sample across the four Market Capitalization strata used in the stratified estimation:
+The final analytical sample consists of 2,917 complete pump-event records (see Section~\ref{sec:sample-selection}). Table~\ref{tab:sample-distribution} shows the breakdown of this final sample across the four \textit{Market Capitalization} strata used in the stratified estimation:
 
 \begin{table}[H]
 \centering
-\caption{Sample Distribution by Market Capitalization}
+\caption{Sample Distribution by \textit{Market Capitalization}}
 \label{tab:sample-distribution}
-\begin{tabular}{lrr}
+\begin{tabular}{|l|r|r|}
 \toprule
-\multicolumn{1}{c}{\textbf{Market Capitalization Stratum}} & \multicolumn{1}{c}{\textbf{N}} & \multicolumn{1}{c}{\textbf{\%}} \\
+\multicolumn{1}{|c|}{\textbf{\textit{Market Capitalization Stratum}}} & \multicolumn{1}{c|}{\textbf{N}} & \multicolumn{1}{c|}{\textbf{\%}} \\
 \midrule
-Micro ($<$\$10M) & 289 & 9.9\% \\
-Small (\$10M--\$100M) & 1{,}182 & 40.5\% \\
-Mid (\$100M--\$1B) & 967 & 33.2\% \\
-Large ($>$\$1B) & 479 & 16.4\% \\
+Micro ($<$10M USD) & 289 & 9.9\% \\
+Small (10M USD--100M USD) & 1{,}182 & 40.5\% \\
+Mid (100M USD--1B USD) & 967 & 33.2\% \\
+Large ($>$1B USD) & 479 & 16.4\% \\
 \midrule
 Total & 2{,}917 & 100.0\% \\
 \bottomrule
 \end{tabular}
+\datasetsource
 \end{table}
 
-To illustrate what a single row in the integrated dataset looks like, Table~\ref{tab:sample-observations} presents four randomly sampled observations, one from each market capitalization stratum. Each coin represents a separate blockchain-based software project that has issued its own tradeable token. DOCK, for example, provides infrastructure for issuing and verifying digital credentials such as diplomas or professional certificates, reducing the need for direct contact with a central verifier \cite{dock2026dids}. RLC (iExec) is linked to a network where the token is used to access computing resources and related digital assets \cite{iexec2025tokenomics}. TRB (Tellor) acts as a data relay because blockchain applications cannot access information from the outside world on their own. Tellor lets reporters submit external data and uses staking and dispute mechanisms to discourage false reporting \cite{tellor2026fundamentals, tellor2026disputes}. RVN (Ravencoin) allows users to create custom digital assets that can represent real-world or digital assets, such as security tokens, art, or collectibles \cite{ravencoin2026assets}. More broadly, such token-based projects often issue tokens to finance platform development and to reward users or contributors who provide resources to the network \cite{cong2022tokenbased}. Each row in the table contains asset metadata, Telegram signal features, pre-reveal market covariates, the primary outcome, and synthetic control fit diagnostics.
+To illustrate what a single row in the integrated dataset looks like, Table~\ref{tab:sample-observations} presents four randomly sampled observations, one from each \textit{Market Capitalization Stratum}. Each coin represents a separate blockchain-based software project that has issued its own tradeable token. DOCK, for example, provides infrastructure for issuing and verifying digital credentials such as diplomas or professional certificates, reducing the need for direct contact with a central verifier \cite{dock2026dids}. RLC (iExec) is linked to a network where the token is used to access computing resources and related digital assets \cite{iexec2025tokenomics}. TRB (Tellor) acts as a data relay because blockchain applications cannot access information from the outside world on their own. Tellor lets reporters submit external data and uses staking and dispute mechanisms to discourage false reporting \cite{tellor2026fundamentals, tellor2026disputes}. RVN (Ravencoin) allows users to create custom digital assets that can represent real-world or digital assets, such as security tokens, art, or collectibles \cite{ravencoin2026assets}. More broadly, such token-based projects often issue tokens to finance platform development and to reward users or contributors who provide resources to the network \cite{cong2022tokenbased}. Each row in the table contains asset metadata, Telegram signal features, pre-reveal market covariates, the primary outcome, and synthetic control fit diagnostics.
 
 \begin{table}[H]
 \centering
 \caption{Sample Observations from the Integrated Event Matrix}
 \label{tab:sample-observations}
 \small
-\begin{tabular}{@{}lrrrr@{}}
+\begin{tabular}{|l|r|r|r|r|}
 \toprule
 \textbf{Variable} & \textbf{DOCK} & \textbf{RLC} & \textbf{TRB} & \textbf{RVN} \\
 \midrule
-\multicolumn{5}{@{}l}{\textit{Asset Metadata}} \\
-\quad Market Cap Stratum & Micro & Small & Mid & Large \\
-\quad Market Cap (USD) & \$3.9M & \$24.7M & \$73.2M & \$111.4M \\
-\quad Coin Age (days) & 518 & 829 & 483 & 417 \\
+\multicolumn{5}{|l|}{\textit{Asset Metadata}} \\
+\quad \textit{Market Capitalization Stratum} & Micro & Small & Mid & Large \\
+\quad \textit{Market Capitalization} & 3.9M USD & 24.7M USD & 73.2M USD & 111.4M USD \\
+\quad \textit{Coin Age} (days) & 518 & 829 & 483 & 417 \\
 \midrule
-\multicolumn{5}{@{}l}{\textit{Telegram Signal Features (Table~\ref{tab:telegram-variables})}} \\
-\quad Hype Volume & 0 & 1 & 2 & 0 \\
-\quad Hype Intensity & 0.000 & 0.500 & 2.000 & 0.000 \\
-\quad Urgency Index & 0.426 & 1.000 & 0.240 & 0.215 \\
-\quad Instruction Density & 48 & 9 & 8 & 24 \\
+\multicolumn{5}{|l|}{\textit{Telegram Signal Features (Table~\ref{tab:telegram-variables})}} \\
+\quad \textit{Hype Volume} & 0 & 1 & 2 & 0 \\
+\quad \textit{Hype Intensity} & 0.000 & 0.500 & 2.000 & 0.000 \\
+\quad \textit{Urgency Index} & 0.426 & 1.000 & 0.240 & 0.215 \\
+\quad \textit{Instruction Density} & 48 & 9 & 8 & 24 \\
 \midrule
-\multicolumn{5}{@{}l}{\textit{Pre-Reveal Market Covariates}} \\
+\multicolumn{5}{|l|}{\textit{Pre-Reveal Market Covariates}} \\
 \quad $\sigma_{\text{pre}}$ \scriptsize{(Eq.~\ref{eq:pre_vol})} & 0.0076 & 0.0021 & 0.0025 & 0.0045 \\
 \quad $Z_V$ \scriptsize{(Eq.~\ref{eq:vol_z_score})} & $-$0.023 & $-$0.284 & $-$0.299 & $-$0.734 \\
 \quad $\lambda_{\text{base}}$ \scriptsize{(Eq.~\ref{eq:baseline_illiq})} & 0.265 & 0.104 & 0.164 & 0.000 \\
@@ -331,35 +342,38 @@ To illustrate what a single row in the integrated dataset looks like, Table~\ref
 \quad $\sigma_{\text{Park}}$ \scriptsize{(Eq.~\ref{eq:parkinson})} & 0.0036 & 0.0012 & 0.0012 & 0.0048 \\
 \quad $\rho_0$ \scriptsize{(Eq.~\ref{eq:zero_ret})} & 0.516 & 0.742 & 0.645 & 0.387 \\
 \midrule
-\multicolumn{5}{@{}l}{\textit{Outcome (Eq.~\ref{eq:log-return})}} \\
-\quad $Y_{10}$ (10-min log return) & 0.011 & $-$0.017 & 0.001 & $-$0.011 \\
+\multicolumn{5}{|l|}{\textit{Outcome (Eq.~\ref{eq:log-return})}} \\
+\quad $Y_{10}$ (\textit{10-Minute Logarithmic Return}) & 0.011 & $-$0.017 & 0.001 & $-$0.011 \\
 \midrule
-\multicolumn{5}{@{}l}{\textit{Synthetic Control Diagnostics (Appendix~\ref{app:synthetic-control})}} \\
-\quad $R^2$ holdout & $-$0.001 & $-$0.066 & $-$0.024 & $-$0.048 \\
-\quad RMSE holdout & 0.008 & 0.002 & 0.001 & 0.002 \\
+\multicolumn{5}{|l|}{\textit{Synthetic Control Diagnostics (appendix)}} \\
+\quad \textit{Hold-Out $R^2$} & $-$0.001 & $-$0.066 & $-$0.024 & $-$0.048 \\
+\quad \textit{Root Mean Square Error} (hold-out) & 0.008 & 0.002 & 0.001 & 0.002 \\
 \bottomrule
 \end{tabular}
+\datasetsource
 \end{table}
 
-The sample is dominated by small- and mid-cap assets (73.7\% combined), but the strongest concentration is still in the \$10M to \$100M range discussed in Section~\ref{sec:metadata-constraints} and shown in Figure~\ref{fig:market-cap-volume-scatter}. Figure~\ref{fig:outcome-distribution-mcap} further illustrates how the 10-minute logarithmic return, the primary outcome variable defined in Section~\ref{sec:outcome-variable}, is distributed across these strata. The figure shows the central 95\% of observations. Micro- and small-cap assets display greater variance than the larger strata, which is consistent with the thin-market constraints discussed above.
+The sample is dominated by small- and mid-cap assets (73.7\% combined), but the strongest concentration is still in the 10 million USD to 100 million USD range discussed in Section~\ref{sec:metadata-constraints} and shown in Figure~\ref{fig:market-cap-volume-scatter}. Figure~\ref{fig:outcome-distribution-mcap} further illustrates how the \textit{10-Minute Logarithmic Return}, the primary outcome variable defined in Section~\ref{sec:outcome-variable}, is distributed across these strata. The figure shows the central 95\% of observations. Micro- and small-cap assets display greater variance than the larger strata, which is consistent with the thin-market constraints discussed above.
 
 \begin{figure}[H]
 \centering
+\caption{\textit{10-Minute Logarithmic Return} distribution by \textit{Market Capitalization Stratum} (central 95\% of observations).}
+\label{fig:outcome-distribution-mcap}
 \begin{tikzpicture}
     \node[inner sep=0] (img) {\includegraphics[width=\textwidth,trim=0 0 0 9mm,clip]{figures/ch4/outcome_distribution_by_mcap.png}};
     \fill[white] ([xshift=-2.9cm,yshift=0.02cm]img.north) rectangle ([xshift=2.9cm,yshift=-0.56cm]img.north);
 \end{tikzpicture}
-\caption{10-minute log-return distribution by Market Capitalization stratum (central 95\% of observations).}
-\label{fig:outcome-distribution-mcap}
+\source{Own elaboration based on the thesis dataset. Note: \textdollar{} denotes USD; M denotes million; B denotes billion.}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{channel_returns_distribution.png}
 \caption{Channel-level 10-minute return distribution with point size proportional to the number of events originating from the channel.}
 \label{fig:channel-returns-distribution}
+\includegraphics[width=\textwidth]{channel_returns_distribution.png}
+\datasetsource
 \end{figure}
 
-Figure~\ref{fig:channel-returns-distribution} adds the channel-level perspective. Channels are sorted by their median 10-minute log return, vertical lines show the interquartile range, colors mark whether the median is positive, and point size reflects the number of observed events. The chart shows that median outcomes differ across channels, but many high-volume channels remain close to zero. This suggests that channels differ in their typical outcomes, although the figure alone does not explain why these differences appear.
+Figure~\ref{fig:channel-returns-distribution} adds the channel-level perspective. Channels are sorted by their median \textit{10-Minute Logarithmic Return}, vertical lines show the interquartile range, colors mark whether the median is positive, and point size reflects the number of observed events. The chart shows that median outcomes differ across channels, but many high-volume channels remain close to zero. This suggests that channels differ in their typical outcomes, although the figure alone does not explain why these differences appear.
 
-Together, these records supply the treatment variables, confounders, and price data required for the causal analysis in Chapter~\ref{ch:methodology}, with Market Capitalization also serving as the stratification key in Section~\ref{sec:stratified-estimation}.
+Together, these records supply the treatment variables, confounders, and price data required for the causal analysis in Chapter~\ref{ch:methodology}, with \textit{Market Capitalization} also serving as the stratification key in Section~\ref{sec:stratified-estimation}.
