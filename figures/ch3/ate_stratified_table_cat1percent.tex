@@ -5,16 +5,16 @@
     \small
     \begin{tabular}{l l l r r r}
     \toprule
-    Outcome & Stratum & Treatment & N & Coefficient (RF) & P-value \\
+    Outcome & Stratum & Treatment & Number of Events & Random Forest Coefficient & $p$-value \\
     \midrule
     \textit{Cumulative Abnormal Return} (10 min) & Micro ($<$10M USD) & \textit{Hype Intensity} & 136 & 0.0011 & 0.2000 \\
 \textit{Cumulative Abnormal Return} (10 min) & Micro ($<$10M USD) & \textit{Urgency Index} & 136 & 0.0127* & 0.0200 \\
 \textit{Cumulative Abnormal Return} (10 min) & Micro ($<$10M USD) & \textit{Instruction Density} & 136 & 0.0002* & 0.0400 \\
 \textit{Cumulative Abnormal Return} (10 min) & Small (10M USD--100M USD) & \textit{Hype Intensity} & 558 & 0.0003 & 0.2600 \\
-\textit{Cumulative Abnormal Return} (10 min) & Small (10M USD--100M USD) & \textit{Urgency Index} & 558 & -0.0030*** & 0.0000 \\
-\textit{Cumulative Abnormal Return} (10 min) & Small (10M USD--100M USD) & \textit{Instruction Density} & 558 & -0.0002*** & 0.0000 \\
+\textit{Cumulative Abnormal Return} (10 min) & Small (10M USD--100M USD) & \textit{Urgency Index} & 558 & -0.0030*** & $<0.001$ \\
+\textit{Cumulative Abnormal Return} (10 min) & Small (10M USD--100M USD) & \textit{Instruction Density} & 558 & -0.0002*** & $<0.001$ \\
 \textit{Cumulative Abnormal Return} (10 min) & Mid (100M USD--1B USD) & \textit{Hype Intensity} & 515 & -0.0007 & 0.0600 \\
-\textit{Cumulative Abnormal Return} (10 min) & Mid (100M USD--1B USD) & \textit{Urgency Index} & 515 & -0.0040*** & 0.0000 \\
+\textit{Cumulative Abnormal Return} (10 min) & Mid (100M USD--1B USD) & \textit{Urgency Index} & 515 & -0.0040*** & $<0.001$ \\
 \textit{Cumulative Abnormal Return} (10 min) & Mid (100M USD--1B USD) & \textit{Instruction Density} & 515 & -0.0000 & 0.3000 \\
 \textit{Cumulative Abnormal Return} (10 min) & Large ($>$1B USD) & \textit{Hype Intensity} & 231 & -0.0002 & 0.3000 \\
 \textit{Cumulative Abnormal Return} (10 min) & Large ($>$1B USD) & \textit{Urgency Index} & 231 & -0.0026* & 0.0400 \\
@@ -23,6 +23,6 @@
     \end{tabular}
     \vspace{2mm}
     \footnotesize
-    \textit{Notes:} Stratified DML estimates (Random Forest). 
+    \textit{Notes:} Stratified DML (Double Machine Learning) estimates using Random Forest. 
     Statistical significance: $^{***}p<0.001$, $^{**}p<0.01$, $^{*}p<0.05$.
     \end{table}

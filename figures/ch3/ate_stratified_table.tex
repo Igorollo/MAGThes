@@ -5,13 +5,13 @@
     \small
     \begin{tabular}{l l l r r r}
     \toprule
-    Outcome & Stratum & Treatment & N & Coefficient (RF) & P-value \\
+    Outcome & Stratum & Treatment & Number of Events & Random Forest Coefficient & $p$-value \\
     \midrule
     \textit{10-Minute Logarithmic Return} & Micro ($<$10M USD) & \textit{Hype Intensity} & 289 & 0.0034 & 0.2200 \\
 \textit{10-Minute Logarithmic Return} & Micro ($<$10M USD) & \textit{Urgency Index} & 289 & -0.0104 & 0.3600 \\
 \textit{10-Minute Logarithmic Return} & Micro ($<$10M USD) & \textit{Instruction Density} & 289 & 0.0002 & 0.1800 \\
 \textit{10-Minute Logarithmic Return} & Small (10M USD--100M USD) & \textit{Hype Intensity} & 1182 & 0.0028 & 0.0600 \\
-\textit{10-Minute Logarithmic Return} & Small (10M USD--100M USD) & \textit{Urgency Index} & 1182 & 0.0301*** & 0.0000 \\
+\textit{10-Minute Logarithmic Return} & Small (10M USD--100M USD) & \textit{Urgency Index} & 1182 & 0.0301*** & $<0.001$ \\
 \textit{10-Minute Logarithmic Return} & Small (10M USD--100M USD) & \textit{Instruction Density} & 1182 & 0.0002 & 0.0820 \\
 \textit{10-Minute Logarithmic Return} & Mid (100M USD--1B USD) & \textit{Hype Intensity} & 967 & -0.0007 & 0.1000 \\
 \textit{10-Minute Logarithmic Return} & Mid (100M USD--1B USD) & \textit{Urgency Index} & 967 & -0.0081* & 0.0140 \\
@@ -23,7 +23,7 @@
     \end{tabular}
     \vspace{2mm}
     \footnotesize
-    \textit{Notes:} Stratified DML estimates (Random Forest). 
+    \textit{Notes:} Stratified DML (Double Machine Learning) estimates using Random Forest. 
     Statistical significance: $^{***}p<0.001$, $^{**}p<0.01$, $^{*}p<0.05$.
     \end{table}
     

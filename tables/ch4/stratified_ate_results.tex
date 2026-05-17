@@ -1,12 +1,12 @@
 \begin{tabular}{lllrlrrrrrrrr}
 \toprule
-Outcome & Target Used & \textit{Market Capitalization Stratum} & N & Treatment & RF Coefficient & Lasso Coefficient & Diff (Robustness) & P-value & Significant & CI Lower & CI Upper & Sigma \\
+Outcome & Target Used & \textit{Market Capitalization Stratum} & Number of Events & Treatment & Random Forest Coefficient & Lasso Coefficient & Random Forest--Lasso Difference & $p$-value & Significant & Confidence Interval Lower & Confidence Interval Upper & Outcome Standard Deviation \\
 \midrule
 \textit{10-Minute Logarithmic Return} & \textit{10-Minute Logarithmic Return} (winsorized) & Micro ($<$10M USD) & 289 & \textit{Hype Intensity} & 0.0034 & 0.0020 & 0.0015 & 0.2200 & False & -0.0033 & 0.0090 & 0.0649 \\
 \textit{10-Minute Logarithmic Return} & \textit{10-Minute Logarithmic Return} (winsorized) & Micro ($<$10M USD) & 289 & \textit{Urgency Index} & -0.0104 & 0.0171 & 0.0274 & 0.3600 & False & -0.0468 & 0.0269 & 0.0649 \\
 \textit{10-Minute Logarithmic Return} & \textit{10-Minute Logarithmic Return} (winsorized) & Micro ($<$10M USD) & 289 & \textit{Instruction Density} & 0.0002 & 0.0001 & 0.0001 & 0.1800 & False & -0.0002 & 0.0007 & 0.0649 \\
 \textit{10-Minute Logarithmic Return} & \textit{10-Minute Logarithmic Return} (winsorized) & Small (10M USD--100M USD) & 1182 & \textit{Hype Intensity} & 0.0028 & 0.0039 & 0.0011 & 0.0600 & False & -0.0011 & 0.0045 & 0.0777 \\
-\textit{10-Minute Logarithmic Return} & \textit{10-Minute Logarithmic Return} (winsorized) & Small (10M USD--100M USD) & 1182 & \textit{Urgency Index} & 0.0301 & 0.0276 & 0.0025 & 0.0000 & True & 0.0216 & 0.0412 & 0.0777 \\
+\textit{10-Minute Logarithmic Return} & \textit{10-Minute Logarithmic Return} (winsorized) & Small (10M USD--100M USD) & 1182 & \textit{Urgency Index} & 0.0301 & 0.0276 & 0.0025 & $<0.001$ & True & 0.0216 & 0.0412 & 0.0777 \\
 \textit{10-Minute Logarithmic Return} & \textit{10-Minute Logarithmic Return} (winsorized) & Small (10M USD--100M USD) & 1182 & \textit{Instruction Density} & 0.0002 & 0.0003 & 0.0002 & 0.0820 & False & -0.0001 & 0.0003 & 0.0777 \\
 \textit{10-Minute Logarithmic Return} & \textit{10-Minute Logarithmic Return} (winsorized) & Mid (100M USD--1B USD) & 967 & \textit{Hype Intensity} & -0.0007 & -0.0003 & 0.0003 & 0.1000 & False & -0.0013 & 0.0001 & 0.0218 \\
 \textit{10-Minute Logarithmic Return} & \textit{10-Minute Logarithmic Return} (winsorized) & Mid (100M USD--1B USD) & 967 & \textit{Urgency Index} & -0.0081 & -0.0103 & 0.0021 & 0.0140 & True & -0.0147 & -0.0019 & 0.0218 \\

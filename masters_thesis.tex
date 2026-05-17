@@ -116,7 +116,7 @@
 \makeatother
 \renewcommand{\thefigure}{\arabic{figure}}
 \renewcommand{\thetable}{\arabic{table}}
-\renewcommand{\theequation}{[\arabic{equation}]}
+\renewcommand{\theequation}{\arabic{equation}}
 \captionsetup{
   font={normalsize,stretch=1},
   labelfont=bf,
@@ -136,23 +136,41 @@
 \renewcommand{\midrule}{\hline}
 \renewcommand{\bottomrule}{\hline}
 
-% 5. Custom commands for source notes under figures/tables
-\newcommand{\source}[1]{%
+% 5. Custom commands for notes and sources under figures/tables
+\newcommand{\floatnote}[1]{%
   \par\vspace{0.5\baselineskip}%
-  {\singlespacing\noindent\footnotesize\textit{Source:} #1\par}%
+  {\singlespacing\noindent\footnotesize\raggedright\textit{Note.} #1\par}%
   \vspace{0.5\baselineskip}%
 }
-\newcommand{\datasetsource}{\source{Own elaboration based on the thesis dataset.}}
+\newcommand{\floatnotewithprob}[2]{%
+  \par\vspace{0.5\baselineskip}%
+  {\singlespacing\noindent\footnotesize\raggedright\textit{Note.} #1\par}%
+  {\singlespacing\noindent\footnotesize\raggedright #2\par}%
+  \vspace{0.5\baselineskip}%
+}
+\newcommand{\datasetsource}{\floatnote{Source: Own elaboration based on the thesis dataset.}}
+\newcommand{\ownsource}{\floatnote{Source: Own elaboration.}}
+\newcommand{\datasetnote}[1]{\floatnote{#1 Source: Own elaboration based on the thesis dataset.}}
+\newcommand{\ownnote}[1]{\floatnote{#1 Source: Own elaboration.}}
+\newcommand{\source}[1]{\floatnote{Source: #1}}
 
 \makeatletter
+\newcommand{\compactlistheading}[1]{%
+  \par\noindent{\normalfont\normalsize\bfseries #1}\par\nobreak
+  \vspace{0.25\baselineskip}%
+}
 \newcommand{\combinedlistoftablesandfigures}{%
   \chapter*{LIST OF TABLES AND FIGURES}%
   \addcontentsline{toc}{chapter}{LIST OF TABLES AND FIGURES}%
-  \section*{Tables}%
+  \begingroup
+  \singlespacing
+  \let\addvspace\@gobble
+  \compactlistheading{Tables}%
   \@starttoc{lot}%
-  \vspace{\baselineskip}%
-  \section*{Figures}%
+  \par\vspace{0.5\baselineskip}%
+  \compactlistheading{Figures}%
   \@starttoc{lof}%
+  \endgroup
 }
 \makeatother
 
@@ -255,18 +273,18 @@
 \begin{center}
   \textbf{Abstract}
 \end{center}
-\noindent This thesis studies Telegram-coordinated cryptocurrency pump-and-dump events. It links message features, high-frequency exchange data, and asset metadata to estimate how signal style affects 10-minute post-reveal returns. Using Double Machine Learning and heterogeneity checks, it shows that urgency matters mainly for small-cap assets, while effects weaken or turn negative in larger markets. A separate XGBoost model tests whether \textit{Success} can be predicted before the reveal. The results show that pump signals work as short-term coordination tools whose impact depends on market depth.
+\noindent This thesis studies Telegram-coordinated cryptocurrency pump-and-dump events. It links message features, high-frequency exchange data, and asset metadata to estimate how signal style affects the \textit{10-Minute Logarithmic Return}. Using DML (Double Machine Learning) and heterogeneity checks, it shows that \textit{Urgency Index} matters mainly for small-cap assets, while effects weaken or turn negative in larger markets. A separate XGBoost (Extreme Gradient Boosting) model tests whether \textit{Success} can be predicted up to the reveal. The results show that pump signals work as short-term coordination tools whose impact depends on market depth.
 
 \vspace{1cm}
 \begin{center}
   \textbf{Keywords}
 \end{center}
 \begin{center}
-  causal AI, cryptocurrency manipulation, pump-and-dump, Telegram signals, Double Machine Learning, market capitalization
+  causal AI (Artificial Intelligence), cryptocurrency manipulation, pump-and-dump, Telegram signals, DML (Double Machine Learning), market capitalization
 \end{center}
 
 \begin{center}
-  (\textbf{Słowa kluczowe:} przyczynowa AI, manipulacja kryptowalutami, pump-and-dump, sygnały Telegram, Double Machine Learning, kapitalizacja rynkowa)
+  (\textbf{Słowa kluczowe:} przyczynowa AI (sztuczna inteligencja), manipulacja kryptowalutami, pump-and-dump, sygnały Telegram, DML (Double Machine Learning), kapitalizacja rynkowa)
 \end{center}
 
 \vspace{1cm}
@@ -308,8 +326,8 @@
 \label{ch:results}
 \input{chapters/chapter_4/chapter_4_results}
 
-% --- PART 4: INTERPRETATION ---
-\chapter{INTERPRETATION}
+% --- PART 4: DISCUSSION ---
+\chapter{DISCUSSION}
 \label{ch:interpretation}
 \input{chapters/chapter_5/chapter_5_interpretation}
 
@@ -326,12 +344,15 @@
 \renewcommand{\bibname}{REFERENCES}
 \renewcommand{\refname}{REFERENCES}
 \setlength{\bibitemsep}{\baselineskip}
-\bibliographystyle{apacite}
+\bibliographystyle{apacite_et_al}
 \bibliography{references}
 }
 
 \combinedlistoftablesandfigures
 
+\begingroup
+\captionsetup{list=false}
 \input{chapters/appendix/appendix_A_synthetic_control}
+\endgroup
 
 \end{document}
