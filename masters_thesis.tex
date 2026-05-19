@@ -59,24 +59,24 @@
   \renewcommand{\refname}{REFERENCES}%
 }
 \titleformat{\chapter}[display]
-{\normalfont\normalsize\bfseries\centering}
+{\normalfont\normalsize\bfseries\centering\setstretch{1}}
 {CHAPTER \Roman{chapter}}
 {12pt}
 {\MakeUppercase}
 \titleformat{name=\chapter,numberless}[block]
-{\normalfont\normalsize\bfseries\centering}
+{\normalfont\normalsize\bfseries\centering\setstretch{1}}
 {}
 {0pt}
 {\MakeUppercase}
 \titlespacing*{\chapter}{0pt}{0pt}{1.5\baselineskip}
 
 \titleformat{\section}
-{\normalfont\normalsize\bfseries}
+{\normalfont\normalsize\bfseries\setstretch{1}}
 {\thesection.}
 {1em}
 {}
 \titleformat{\subsection}
-{\normalfont\normalsize\bfseries}
+{\normalfont\normalsize\bfseries\setstretch{1}}
 {\thesubsection.}
 {1em}
 {}
@@ -273,18 +273,18 @@
 \begin{center}
   \textbf{Abstract}
 \end{center}
-\noindent This thesis studies Telegram-coordinated cryptocurrency pump-and-dump events. It links message features, high-frequency exchange data, and asset metadata to estimate how signal style affects the \textit{10-Minute Logarithmic Return}. Using DML (Double Machine Learning) and heterogeneity checks, it shows that \textit{Urgency Index} matters mainly for small-cap assets, while effects weaken or turn negative in larger markets. A separate XGBoost (Extreme Gradient Boosting) model tests whether \textit{Success} can be predicted up to the reveal. The results show that pump signals work as short-term coordination tools whose impact depends on market depth.
+\noindent Telegram-coordinated cryptocurrency pump-and-dump events are analyzed by linking signal features, high-frequency exchange data, and asset metadata. The empirical design estimates how \textit{Hype Intensity}, \textit{Urgency Index}, and \textit{Instruction Density} relate to the \textit{10-Minute Logarithmic Return} using Double Machine Learning and heterogeneity checks. Estimated effects differ by market capitalization: \textit{Urgency Index} is most clearly positive among small-cap assets, while several effects weaken or turn negative in larger markets. An XGBoost model evaluates whether the binary \textit{Success}/\textit{Non-Success} outcome can be classified from information available before the reveal. The findings characterize pump signals as short-term coordination tools whose impact depends on market conditions.
 
 \vspace{1cm}
 \begin{center}
   \textbf{Keywords}
 \end{center}
 \begin{center}
-  causal AI (Artificial Intelligence), cryptocurrency manipulation, pump-and-dump, Telegram signals, DML (Double Machine Learning), market capitalization
+  causal ai, cryptocurrency, market manipulation, pump-and-dump, double machine learning
 \end{center}
 
 \begin{center}
-  (\textbf{Słowa kluczowe:} przyczynowa AI (sztuczna inteligencja), manipulacja kryptowalutami, pump-and-dump, sygnały Telegram, DML (Double Machine Learning), kapitalizacja rynkowa)
+  (przyczynowa sztuczna inteligencja, kryptowaluty, manipulacja rynkowa, pump-and-dump, uczenie maszynowe)
 \end{center}
 
 \vspace{1cm}
@@ -292,7 +292,7 @@
   \textbf{Tytuł pracy w języku polskim}
 \end{center}
 \begin{center}
-  Sztuczna inteligencja oparta na przyczynowości w wykrywaniu manipulacji na rynku kryptowalut
+  Przyczynowe SI w wykrywaniu manipulacji na rynkach kryptowalutowych
 \end{center}
 
 \newpage
