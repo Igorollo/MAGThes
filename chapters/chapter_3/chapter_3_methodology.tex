@@ -58,14 +58,14 @@ $\rho_0$ & Zero-return ratio (Equation~\eqref{eq:zero_ret}) \\
 
 Now that we have established the theoretical causal setup, it must be defined exactly what is measured as the outcome.
 
-Following the short-horizon logic developed in Section~\ref{sec:detection-to-causal-measurement}, the final specification uses the \textit{10-Minute Logarithmic Return} rather than CAR (Cumulative Abnormal Returns) based on synthetic controls \cite{abadie2010synthetic}. The appendix documents why the synthetic-control fits were too weak to support CAR as the primary outcome.
+Following the short-horizon logic developed in Section~\ref{sec:detection-to-causal-measurement}, the final specification uses the \textit{10-Minute Logarithmic Return} rather than CAR~\mbox{(Cumulative Abnormal Returns)} based on synthetic controls \cite{abadie2010synthetic}. The appendix documents why the synthetic-control fits were too weak to support CAR as the primary outcome.
 
 The final estimation outcome is therefore the \textit{10-Minute Logarithmic Return}, winsorized at the 1st and 99th percentiles, calculated over the strict window from $T_0$ to $T_0+10$. This choice preserves the observed event distribution in the most manipulation-prone asset segments while keeping the analysis focused on the immediate price response.
 \begin{equation}
 Y_{i} = \log\left(\frac{P_{i,T_0 + 10}}{P_{i,T_0}}\right)
 \label{eq:log-return}
 \end{equation}
-Here, $P_{i,t}$ is the price for event $i$ at minute $t$. Below, $Y_i$ refers to this realized 10-minute outcome.
+Here, $P_{i,T_0}$ denotes the price for event $i$ at the time of the coin reveal (${T}_0$), and $P_{i,T_0 + 10}$ denotes the price for event $i$ 10 minutes after the coin reveal. $Y_i$ refers to the event's realized 10-minute outcome.
 
 With the outcome fixed, broader pre-reveal market conditions are handled through the Double Machine Learning framework.
 
@@ -122,7 +122,7 @@ Figure~\ref{fig:dml-schematic} illustrates this two-stage DML workflow. Confound
 
 To reduce overfitting and regularization bias in nuisance estimation, the data is split into 5 folds ($K=5$) for cross-fitting. This ensures that residuals are always generated using models trained on out-of-sample data.
 
-The estimation follows the DML orthogonalization and inference framework of \cite{chernozhukov2018double}, implemented using the LinearDML estimator from the econml Python library \cite{econml}. The nuisance models utilize Random Forest \cite{breiman2001random} specifications whose complexity is scaled proportionally to the sample size of each estimator. To prevent overfitting in the smaller stratified subsamples, the model capacity is regularized using a shallower maximum tree depth of 8 and 100 estimators, whereas a deeper architecture (maximum depth of 15, 200 estimators) is utilized for the full-sample estimator to capture more intricate non-linear confounder interactions.
+The estimation follows the DML orthogonalization and inference framework introduced by \citeA{chernozhukov2018double} and implemented using the LinearDML estimator from the econml Python library \cite{econml}. The nuisance models utilize Random Forest \cite{breiman2001random} specifications whose complexity is scaled proportionally to the sample size of each estimator. To prevent overfitting in the smaller stratified subsamples, the model capacity is regularized using a shallower maximum tree depth of 8 and 100 estimators, whereas a deeper architecture (maximum depth of 15, 200 estimators) is utilized for the full-sample estimator to capture more intricate non-linear confounder interactions.
 
 The cross-validated $R^2$ scores of the nuisance models are used as a practical check of model behavior. If the treatment model achieved an extremely high $R^2$, it would suggest that the observed confounders almost fully determine treatment intensity, leaving little independent variation for effect estimation. Lower treatment predictability is therefore preferable in this setting.
 

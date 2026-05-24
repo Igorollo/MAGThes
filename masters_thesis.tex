@@ -34,6 +34,7 @@
 \usepackage[english]{babel}
 \usepackage{subcaption}
 \usepackage{url}           % Safe URL handling in apacite bibliography entries
+\usepackage{microtype}     % Safer line breaking and character protrusion
 \usepackage{apacite}
 \usepackage{multirow}
 \usepackage{listings}
@@ -44,6 +45,7 @@
 
 % 1. Line Spacing: 1.5 for main text
 \onehalfspacing
+\setlength{\emergencystretch}{2em}
 
 % 2. Paragraph Indentation: 1 cm
 \setlength{\parindent}{1cm}
@@ -142,17 +144,26 @@
   {\singlespacing\noindent\footnotesize\raggedright\textit{Note.} #1\par}%
   \vspace{0.5\baselineskip}%
 }
-\newcommand{\floatnotewithprob}[2]{%
+\newcommand{\floatsource}[1]{%
   \par\vspace{0.5\baselineskip}%
-  {\singlespacing\noindent\footnotesize\raggedright\textit{Note.} #1\par}%
-  {\singlespacing\noindent\footnotesize\raggedright #2\par}%
+  {\singlespacing\noindent\footnotesize\raggedright\textit{Source:} #1\par}%
   \vspace{0.5\baselineskip}%
 }
-\newcommand{\datasetsource}{\floatnote{Source: Own elaboration based on the thesis dataset.}}
-\newcommand{\ownsource}{\floatnote{Source: Own elaboration.}}
-\newcommand{\datasetnote}[1]{\floatnote{#1 Source: Own elaboration based on the thesis dataset.}}
-\newcommand{\ownnote}[1]{\floatnote{#1 Source: Own elaboration.}}
-\newcommand{\source}[1]{\floatnote{Source: #1}}
+\newcommand{\floatnotewithsource}[2]{%
+  \par\vspace{0.5\baselineskip}%
+  {\singlespacing\noindent\footnotesize\raggedright\textit{Note.} #1\\[-0.2\baselineskip]\textit{Source:} #2\par}%
+  \vspace{0.5\baselineskip}%
+}
+\newcommand{\floatnotewithprob}[2]{%
+  \par\vspace{0.5\baselineskip}%
+  {\singlespacing\noindent\footnotesize\raggedright\textit{Note.} #1\\[-0.2\baselineskip]#2\par}%
+  \vspace{0.5\baselineskip}%
+}
+\newcommand{\datasetsource}{\floatsource{Own elaboration based on the thesis dataset.}}
+\newcommand{\ownsource}{\floatsource{Own elaboration.}}
+\newcommand{\datasetnote}[1]{\floatnotewithsource{#1}{Own elaboration based on the thesis dataset.}}
+\newcommand{\ownnote}[1]{\floatnotewithsource{#1}{Own elaboration.}}
+\newcommand{\source}[1]{\floatsource{#1}}
 
 \makeatletter
 \newcommand{\compactlistheading}[1]{%
@@ -197,17 +208,17 @@
   \thispagestyle{empty}
   \setcounter{page}{0}
   \centering
-  {\normalsize University of Warsaw \par}
-  {\normalsize Faculty of Economic Sciences \par}
+  {\fontsize{18pt}{21.6pt}\selectfont University of Warsaw \par}
+  {\fontsize{18pt}{21.6pt}\selectfont Faculty of Economic Sciences \par}
 
   \vspace{2.5cm}
 
-  {\normalsize \thesisAuthor \par}
-  {\normalsize Student's book no.: \studentID \par}
+  {\fontsize{14pt}{16.8pt}\selectfont \thesisAuthor \par}
+  {\fontsize{14pt}{16.8pt}\selectfont Student's book no.: \studentID \par}
 
   \vspace{1.8cm}
 
-  {\normalsize\bfseries \thesisTitle \par}
+  {\bfseries\fontsize{20pt}{24pt}\selectfont \thesisTitle \par}
 
   \vspace{1.8cm}
 
@@ -235,33 +246,45 @@
 
 \noindent \textbf{Statement of the Supervisor on Submission of the Thesis}
 
-\vspace{0.5cm}
+\vspace{0.45cm}
 
 \noindent I hereby certify that the thesis submitted has been prepared under my supervision and I declare that it satisfies the requirements of submission in the proceedings for the award of a degree.
 
-\vspace{1.8cm}
+\vspace{1.25cm}
 
 \noindent Date \hfill Signature of the Supervisor
 
-\vspace{2.4cm}
+\vspace{1.45cm}
 
 \noindent \textbf{Statement of the Author on Submission of the Thesis}
 
-\vspace{0.5cm}
+\vspace{0.45cm}
 
 \noindent Aware of legal liability I certify that the thesis submitted has been prepared by myself and does not include information gathered contrary to the law.
 
-\vspace{0.5cm}
+\vspace{0.35cm}
 
 \noindent I also declare that the thesis submitted has not been the subject of proceedings resulting in the award of a university degree.
 
-\vspace{0.5cm}
+\vspace{0.35cm}
 
 \noindent Furthermore I certify that the submitted version of the thesis is identical with its attached electronic version.
 
-\vspace{1.8cm}
+\vspace{1.15cm}
 
 \noindent Date \hfill Signature of the Author of the thesis
+
+\vspace{1.2cm}
+
+\noindent \textbf{Declaration on the Use of Artificial Intelligence (AI) Systems in the Thesis}
+
+\vspace{0.45cm}
+
+\noindent During the preparation of this thesis, the author used ChatGPT and Grammarly to support proofreading and language editing, occasional sentence rephrasing, grammar and style checking, assistance with typesetting mathematical equations in LaTeX, and minor editorial and formatting improvements. The author reviewed and verified the content of the thesis and revised the text in accordance with its objectives. The thesis represents the author's own intellectual contribution, and the author takes full responsibility for its final form.
+
+\vspace{1.15cm}
+
+\noindent Date \hfill Signature of the Author
 
 \newpage
 
@@ -305,7 +328,7 @@
 
 \input{chapters/introduction}
 
-\chapter{LITERATURE REVIEW AND THEORETICAL FRAMEWORK}
+\chapter{LITERATURE REVIEW}
 \label{ch:literature-framework}
 
 \input{chapters/chapter_1}
@@ -326,9 +349,9 @@
 \label{ch:results}
 \input{chapters/chapter_4/chapter_4_results}
 
-% --- PART 4: DISCUSSION ---
-\chapter{DISCUSSION}
-\label{ch:interpretation}
+% --- SECTION 4.3: DISCUSSION ---
+\section{Discussion}
+\label{sec:discussion}
 \input{chapters/chapter_5/chapter_5_interpretation}
 
 % --- PART 5: CONCLUSIONS ---

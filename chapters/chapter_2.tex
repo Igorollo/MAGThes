@@ -14,10 +14,12 @@ Historical messages were extracted via the Telethon Python library \cite{teletho
 Filtering for inactive, non-English, or unrelated to crypto pump-and-dump schemes reduced this list to 81 active pump channels. Event distribution across these channels is highly concentrated, with a small number of large groups accounting for most events, while the remaining channels account for a smaller number of events (see Figure~\ref{fig:channel-distribution} and Table~\ref{tab:top-channels}). This concentration describes channel activity, not necessarily stronger or more successful pump outcomes.
 
 \begin{figure}[H]
+    \captionsetup{skip=0.5\baselineskip}
     \centering
     \caption{Distribution of pump events across 81 Telegram channels.}
     \label{fig:channel-distribution}
-    \includegraphics[width=0.80\textwidth]{channel_distribution.pdf}
+    \includegraphics[width=0.74\textwidth]{channel_distribution.pdf}
+    \vspace{-0.35\baselineskip}
     \datasetsource
 \end{figure}
 
@@ -115,7 +117,7 @@ The extraction window for each event spans from seven days prior to the signal u
 \end{table}
 
 
-On cryptocurrency exchanges, altcoins are typically quoted against a small set of liquid reference assets. In this dataset, the main quote currencies are BTC, ETH, BNB, and USDT (Tether). BTC and ETH represent crypto-denominated trading pairs, meaning that the target coin is priced against another volatile cryptocurrency. USDT, by contrast, is a stablecoin pegged to the US dollar, so USDT pairs make the \textit{10-Minute Logarithmic Return} easier to interpret in dollar terms and reduce exposure to BTC or ETH price movements during the event \cite{tether2026howitworks}. BNB appears in the sample because some observed Binance markets used Binance's native ecosystem token as the quote asset. Binance provides users with practical reasons to hold BNB, including cheaper trading \cite{binanceus2026bnbfees}, access to rewards, gas usage on the BNB Chain, as well as staking and governance rights \cite{binanceacademy2025bnb}. These utility features help explain why BNB appears as a quote currency in the extracted market data.
+On cryptocurrency exchanges, altcoins are typically quoted against a small set of liquid reference assets. In this dataset, the main quote currencies are BTC, ETH, BNB, and USDT~(Tether). BTC and ETH represent crypto-denominated trading pairs, meaning that the target coin is priced against another volatile cryptocurrency. USDT, by contrast, is a stablecoin pegged to the US dollar, so USDT pairs make the \textit{10-Minute Logarithmic Return} easier to interpret in dollar terms and reduce exposure to BTC or ETH price movements during the event \cite{tether2026howitworks}. BNB appears in the sample because some observed Binance markets used Binance's native ecosystem token as the quote asset. Binance provides users with practical reasons to hold BNB, including cheaper trading \cite{binanceus2026bnbfees}, access to rewards, gas usage on the BNB Chain, as well as staking and governance rights \cite{binanceacademy2025bnb}. These utility features help explain why BNB appears as a quote currency in the extracted market data.
 
 Figure~\ref{fig:quote-currency-temporal} shows how the composition of these quote currencies evolved within the thesis sample over the 2019 to 2021 period, which concentrates the majority of observed events. In early 2019, BTC-denominated pairs accounted for over 80\% of pump targets, showing that BTC was the dominant reference asset in the most event-concentrated periods of the sample. This historical dominance established the data extraction rule for ambiguous signals. When a message named only the target coin without specifying the quote currency (e.g., NAS instead of NAS/USDT or NAS/BTC), the BTC pair was assigned as the default to maintain consistency. By mid-2020, USDT pairs had become the dominant quote currency among observed events. This later shift may be related to USDT becoming more widely used as a liquid exchange trading pair \cite{tether2026exchanges}.
 
@@ -144,7 +146,7 @@ Two key variables used later as pre-reveal covariates are \textit{Coin Age} and 
     \caption{Pump targets by historical \textit{Market Capitalization} and total 24-hour trading volume.}
     \label{fig:market-cap-volume-scatter}
     \includegraphics[width=0.85\textwidth]{market_cap_volume_scatter.pdf}
-    \datasetnote{}
+    \datasetsource
 \end{figure}
 
 Many of these targeted crypto projects fail or are delisted, creating a data-availability problem for historical analysis. Restricting the analysis to currently active listings would therefore create survivorship risk in the final sample. To reduce this problem, the study uses historical exchange data so that tokens no longer actively listed can still be retained when data is available.
@@ -175,7 +177,7 @@ Telegram signal features quantify the scale and intensity of social coordination
 \ownsource
 \end{table}
 
-Pre-reveal market covariates capture the state of the market immediately before the public coin reveal at $T_0$. These metrics are computed over trailing intervals ending precisely at $T_0 - 1$ minute, ensuring they reflect strictly pre-reveal market conditions. Here, $T_0-k$ denotes $k$ minutes before the reveal. Depending on the metric's theoretical purpose, the observation window spans the preceding 30 minutes for localized microstructure dynamics, 60 minutes for immediate run-up and abnormal volume detection, or 24 hours for baseline structural properties.
+Pre-reveal market covariates capture the state of the market immediately before the public coin reveal at $T_0$. These metrics are computed over trailing intervals ending precisely at $T_0 - 1$~minute, ensuring they reflect strictly pre-reveal market conditions. Here, $T_0-k$ denotes $k$ minutes before the reveal. Depending on the metric's theoretical purpose, the observation window spans the preceding 30 minutes for localized microstructure dynamics, 60 minutes for immediate run-up and abnormal volume detection, or 24 hours for baseline structural properties.
 
 Pre-event volatility measures short-horizon price variability over the trailing 30 minutes and is computed only during intervals with active trading:
 \begin{equation}
@@ -191,7 +193,7 @@ The volume z-score captures abnormal trading volume at $T_0 - 1$, designed to de
 \end{equation}
 where $V_{T_0-1}$ is the trading volume one minute prior to the signal, $\bar{V}$ is the 60-minute rolling mean volume, and $\sigma_V$ is the corresponding rolling standard deviation over the same window. If the rolling standard deviation is zero, the z-score is set to 0.
 
-Baseline illiquidity is quantified via the median Amihud illiquidity ratio computed over the preceding 24 hours, establishing the baseline price impact of standard market activity \cite{amihud2002illiquidity}:
+Following \citeA{amihud2002illiquidity}, baseline illiquidity is quantified via the median Amihud illiquidity ratio computed over the preceding 24 hours, establishing the baseline price impact of standard market activity:
 \begin{equation}
     \label{eq:baseline_illiq}
     \lambda_{\text{base}} = \operatorname{median}_{t \in [T_0-24\text{h},\, T_0-1]} \left( \frac{|r_t|}{V_t \times P_t} \right)
@@ -381,4 +383,4 @@ Figure~\ref{fig:channel-returns-distribution} adds the channel-level perspective
 \datasetnote{Orange points denote channels with median return $\leq 0$; green points denote channels with median return $> 0$; $N$ denotes the number of observed events for a channel and determines point size.}
 \end{figure}
 
-Together, these records supply the treatment variables, confounders, and price data required for the causal analysis in Chapter~\ref{ch:methodology}, with \textit{Market Capitalization} also serving as the stratification key in Section~\ref{sec:stratified-estimation}.
+Together, these records supply the treatment variables, confounders, and price data required for the causal analysis presented in Chapter~\ref{ch:methodology}, with \textit{Market Capitalization} also serving as the stratification key in Section~\ref{sec:stratified-estimation}.
