@@ -36,10 +36,28 @@
 \usepackage{url}           % Safe URL handling in apacite bibliography entries
 \usepackage{microtype}     % Safer line breaking and character protrusion
 \usepackage{apacite}
+\usepackage{etoolbox}
 \usepackage{multirow}
 \usepackage{listings}
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta, positioning}
+
+\makeatletter
+\newcommand{\PatchAPACciteBreaks}{%
+  \renewcommand{\BBAY}{,\nobreakspace}%
+  \renewcommand{\BBYY}{,\nobreakspace}%
+  \patchcmd{\@ifauthorsunequalc@de}
+    {{\csname b@\@citeb\APAC@extra@b@citeb\endcsname}}
+    {\mbox{\csname b@\@citeb\APAC@extra@b@citeb\endcsname}}
+    {}{\PackageWarning{masters_thesis}{Could not patch apacite author citation breaks}}%
+  \renewenvironment{APACrefauthors}{%
+    \begingroup\APACrefauthstyle
+  }{%
+    \endgroup\nobreak
+  }%
+}
+\AtBeginDocument{\PatchAPACciteBreaks}
+\makeatother
 
 % --- CONFIGURATION ---
 
@@ -150,17 +168,14 @@
 \newcommand{\floatsource}[1]{%
   \par\vspace{0.5\baselineskip}%
   {\singlespacing\noindent\footnotesize\raggedright\textit{Source:} #1\par}%
-  \vspace{0.5\baselineskip}%
 }
 \newcommand{\floatnotewithsource}[2]{%
   \par\vspace{0.5\baselineskip}%
   {\singlespacing\noindent\footnotesize\raggedright\textit{Note.} #1\\[-0.2\baselineskip]\textit{Source:} #2\par}%
-  \vspace{0.5\baselineskip}%
 }
 \newcommand{\floatnotewithprob}[2]{%
   \par\vspace{0.5\baselineskip}%
   {\singlespacing\noindent\footnotesize\raggedright\textit{Note.} #1\\[-0.2\baselineskip]#2\par}%
-  \vspace{0.5\baselineskip}%
 }
 \newcommand{\datasetsource}{\floatsource{Own elaboration based on the thesis dataset.}}
 \newcommand{\ownsource}{\floatsource{Own elaboration.}}
@@ -283,7 +298,7 @@
 
 \vspace{0.45cm}
 
-\noindent During the preparation of this thesis, the author used ChatGPT, Grammarly, and Gemini to support proofreading and language editing, occasional sentence rephrasing, grammar and style checking, assistance with LaTeX formatting, limited coding-related consultation, and minor editorial improvements. Gemini was also used to support the annotation and contextual validation of Telegram pump-signal messages described in the empirical workflow. The author reviewed and verified the thesis content, code, and analytical outputs. The thesis represents the author's own intellectual contribution, and the author takes full responsibility for its final form.
+\noindent During the preparation of this thesis, the author used ChatGPT, Grammarly, and Gemini to support proofreading and language editing, sentence rephrasing, grammar and style checking, assistance with LaTeX formatting, and coding-related consultation. Gemini was also used to support the annotation and contextual validation of Telegram pump-signal messages described in the empirical workflow. The author reviewed and verified the thesis content, code, and analytical outputs. The thesis represents the author's own intellectual contribution, and the author takes full responsibility for its final form.
 
 \vspace{1.15cm}
 
@@ -299,7 +314,7 @@
 \begin{center}
   \textbf{Abstract}
 \end{center}
-\noindent Telegram-coordinated cryptocurrency pump-and-dump events are analyzed by linking signal features, high-frequency exchange data, and asset metadata. The empirical design estimates how \textit{Hype Intensity}, \textit{Urgency Index}, and \textit{Instruction Density} relate to the \textit{10-Minute Logarithmic Return} using Double Machine Learning and heterogeneity checks. Estimated effects differ by market capitalization. \textit{Urgency Index} is most clearly positive among small-cap assets, while several effects weaken or turn negative in larger markets. An XGBoost model evaluates whether the binary \textit{Success}/\textit{Non-Success} outcome can be classified from information available before the reveal. The findings characterize pump signals as short-term coordination tools whose impact depends on market conditions.
+\noindent Telegram-coordinated cryptocurrency pump-and-dump events are analyzed by linking signal features, high-frequency exchange data, and asset metadata. The empirical design estimates how \textit{Hype Intensity}, \textit{Urgency Index}, and \textit{Instruction Density} relate to the \textit{10-Minute Logarithmic~Return} using Double Machine Learning and heterogeneity checks. Estimated effects differ by market capitalization. \textit{Urgency Index} is most clearly positive among small-cap assets, while several effects weaken or turn negative in larger markets. An XGBoost model evaluates whether the binary \textit{Success}/\textit{Non-Success} outcome can be classified from information available before the reveal. The findings characterize pump signals as short-term coordination tools whose impact depends on market conditions.
 
 \vspace{1cm}
 \begin{center}

@@ -14,7 +14,7 @@ Table~\ref{tab:vif-candidate-results} reports the VIF diagnostics for the candid
 
 \begin{table}[htbp]
 \centering
-\caption{Variance Inflation Factors for Candidate Treatment Variables Before Excluding \textit{Hype Volume}}
+\caption{Variance Inflation Factors for Candidate Treatment Variables Before Excluding \textit{Hype~Volume}}
 \label{tab:vif-candidate-results}
 \begin{tabular}{|l|r|}
 \toprule
@@ -87,7 +87,7 @@ The stratified estimates show that evidence differs across the three signal-char
 
 The micro-cap stratum has no treatment coefficient that reaches conventional significance. This stratum also has the smallest number of observations, 289, while the small- and mid-cap strata contain 1,182 and 967 observations, respectively. In the small-cap stratum, \textit{Hype Intensity} and \textit{Instruction Density} have weaker positive estimates that are only marginal at the 10\% level, while \textit{Urgency Index} is the only signal feature with clear conventional support in the expected positive direction. In the large-cap stratum, all three treatment variables have negative statistically significant estimates.
 
-Heterogeneity by market capitalization can also be examined continuously. The Causal Forest results estimate how treatment effects vary with \textit{Market Capitalization} for the signal-characteristic variables. Following Section~\ref{sec:causal-forests}, the analysis uses the market-cap measure as the effect modifier. Table~\ref{tab:cate-summary} reports the distribution of CATE (Conditional Average Treatment Effect) estimates across the sample for each treatment variable.
+Heterogeneity by market capitalization can also be examined continuously. The Causal~Forest results estimate how treatment effects vary with \textit{Market Capitalization} for the signal-characteristic variables. Following Section~\ref{sec:causal-forests}, the analysis uses the market-cap measure as the effect modifier. Table~\ref{tab:cate-summary} reports the distribution of CATE (Conditional Average Treatment Effect) estimates across the sample for each treatment variable.
 
 \begin{table}[htbp]
 \centering
@@ -200,4 +200,4 @@ Table~\ref{tab:threshold-optimization} reports how decision-threshold choices ch
 
 The threshold results show the expected precision-recall trade-off. Higher thresholds improve precision at the cost of recall and overall prediction frequency. Raising the threshold to 0.90 increases precision to 88.7\%, meaning that almost 9 in 10 predicted positive events are positive-return events in the held-out dataset, while retaining 256 predicted positive events.
 
-The selected XGBoost model assigns aggregated relative importance across predictor groups. The leading groups include signal characteristics such as \textit{Hype Volume} and \textit{Instruction Density}, \textit{Coin Age}, realized-volatility measures, and market-thinness indicators such as Amihud illiquidity, zero-return ratios, and Roll spread estimates. This supports the predictive relevance of signal and pre-reveal market characteristics in the held-out classification task, but it does not imply that each predictor has a separate positive causal effect.
+The selected XGBoost model assigns aggregated relative importance across predictor groups. The leading groups include signal characteristics such as \textit{Hype Volume} and \textit{Instruction~Density}, \textit{Coin Age}, realized-volatility measures, and market-thinness indicators such as Amihud illiquidity, zero-return ratios, and Roll spread estimates. This supports the predictive relevance of signal and pre-reveal market characteristics in the held-out classification task, but it does not imply that each predictor has a separate positive causal effect.

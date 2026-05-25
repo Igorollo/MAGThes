@@ -157,7 +157,7 @@ The metadata also reveals severe trading sparsity among the lowest-cap observati
 
 Following data integration, features were engineered to support the causal and predictive analyses. To keep pre-reveal covariates separate from post-signal outcomes, all feature construction strictly respected the $T_0$ temporal threshold.
 
-Telegram signal features quantify the scale and intensity of social coordination (Table~\ref{tab:telegram-variables}). The engineered feature set includes \textit{Hype Volume}, \textit{Hype Intensity}, \textit{Urgency Index}, and \textit{Instruction Density}. Chapter~\ref{ch:methodology} defines which of these variables enter the causal treatment vector. \textit{Hype Volume} remains part of the engineered signal-feature set for predictive modeling, but is not used as a causal treatment.
+Telegram signal features quantify the scale and intensity of social coordination (Table~\ref{tab:telegram-variables}). The engineered feature set includes \textit{Hype Volume}, \textit{Hype Intensity}, \textit{Urgency Index}, and \textit{Instruction~Density}. Chapter~\ref{ch:methodology} defines which of these variables enter the causal treatment vector. \textit{Hype~Volume} remains part of the engineered signal-feature set for predictive modeling, but is not used as a causal treatment.
 
 \begin{table}[H]
 \centering
@@ -248,22 +248,22 @@ The zero return ratio captures the proportion of 1-minute intervals recording no
 \end{equation}
 where $I[\cdot]$ is the indicator function, evaluating to 1 when the return $r_t$ is exactly zero and 0 otherwise. Higher values indicate more frequent price staleness and are interpreted in the empirical framework as evidence of thinner trading conditions.
 
-Beyond market metrics, temporal scheduling was encoded via \textit{is\_weekend}. This binary variable equals 1 if $T_0$ falls on a Saturday or Sunday, and 0 otherwise. It is included to absorb weekend-specific differences in market conditions and trading behavior.
+Beyond market metrics, \textit{is\_weekend} equals 1 when $T_0$ falls on a Saturday or Sunday and 0 otherwise, absorbing weekend-specific differences in market conditions and trading behavior.
 
-Finally, the preliminary synthetic-control stage, discussed in the Appendix, produced two hold-out fit diagnostics per event. These were the coefficient of determination, reported as \textit{Hold-Out} $R^2$, and \textit{Root Mean Square Error}. These variables were originally used as quality checks to see how accurately the synthetic control matched the target coin's price path before the pump. However, they are also kept in the integrated dataset as extra features for the classification models. This helps test if pre-event price patterns contain information about post-signal pump \textit{Success}.
+Finally, the preliminary synthetic-control stage discussed in the Appendix produced two hold-out fit diagnostics per event: \textit{Hold-Out} $R^2$ and \textit{Root Mean Square Error}. These variables originally checked how accurately the synthetic control matched the target coin's pre-pump price path, and they are retained as classification features to test whether pre-event price patterns predict pump \textit{Success}.
 
 \section{Integrated Sample and Exploratory Patterns}
 \label{sec:data-integration-summary}
-
-The data compilation pipeline unifies unstructured Telegram chat logs, high-frequency OHLCV arrays, and historical CoinMarketCap metadata. The architectural workflow of this integration is mapped in Figure~\ref{fig:data-pipeline-overview}.
 
 \begin{figure}[H]
     \centering
     \caption{Data integration architecture for the event matrix}
     \label{fig:data-pipeline-overview}
     \begin{tikzpicture}[
-        node distance=1.5cm,
-        box/.style={rectangle, draw, rounded corners, minimum width=3cm, minimum height=1cm, align=center, font=\small},
+        scale=0.96,
+        transform shape,
+        node distance=1.1cm and 1.25cm,
+        box/.style={rectangle, draw, rounded corners, minimum width=2.85cm, minimum height=0.9cm, align=center, font=\small},
         arrow/.style={-{Stealth[length=3mm]}, thick}
     ]
         % Source nodes
@@ -277,7 +277,7 @@ The data compilation pipeline unifies unstructured Telegram chat logs, high-freq
         \node[box, fill=gray!20, below=of cmc] (enrich) {Metadata\\Enrichment};
         
         % Integration node
-        \node[box, fill=purple!20, below=2cm of align, minimum width=4cm] (integrate) {Integrated Event Matrix\\(2,917 events)};
+        \node[box, fill=purple!20, below=1.25cm of align, minimum width=4cm] (integrate) {Integrated Event Matrix\\(2,917 events)};
         
         % Arrows
         \draw[arrow] (telegram) -- (classify);
@@ -290,7 +290,7 @@ The data compilation pipeline unifies unstructured Telegram chat logs, high-freq
     \ownsource
 \end{figure}
 
-The workflow separates Telegram classification, OHLCV alignment, and metadata enrichment before merging them into the final event matrix.
+The data compilation workflow unifies unstructured Telegram chat logs, high-frequency OHLCV arrays, and historical CoinMarketCap metadata by separating Telegram classification, OHLCV alignment, and metadata enrichment before merging them into the final event matrix.
 
 The final analytical sample consists of 2,917 complete pump-event records. Observations were excluded if any pre-reveal covariates were missing, ensuring that each event had the baseline market conditions required for causal estimation. The \textit{10-Minute Logarithmic Return} was then winsorized at the 1st and 99th percentiles to limit the influence of extreme price outliers. Table~\ref{tab:sample-distribution} shows the breakdown of this final sample across the four \textit{Market Capitalization} strata used in the stratified estimation.
 
@@ -372,7 +372,7 @@ Figure~\ref{fig:outcome-distribution-mcap} further illustrates how the \textit{1
 \datasetnote{Figure shows the central 95\% of observations, within each panel, $\mu$ denotes the mean, $\sigma$ denotes the standard deviation, and $N$ denotes the number of observations in the stratum, \textdollar{} denotes USD, M denotes million, B denotes billion.}
 \end{figure}
 
-Figure~\ref{fig:channel-returns-distribution} adds the channel-level perspective. Channels are sorted by their median \textit{10-Minute Logarithmic Return}, vertical lines show the interquartile range, colors mark whether the median is positive, and point size reflects the number of observed events. The chart shows that median outcomes differ across channels, but many high-volume channels remain close to zero. This suggests that channels differ in their typical outcomes.
+Figure~\ref{fig:channel-returns-distribution} adds the channel-level perspective. Channels are sorted by their median \textit{10-Minute~Logarithmic Return}, vertical lines show the interquartile range, colors mark whether the median is positive, and point size reflects the number of observed events. The chart shows that median outcomes differ across channels, but many high-volume channels remain close to zero. This suggests that channels differ in their typical outcomes.
 
 \begin{figure}[H]
 \centering

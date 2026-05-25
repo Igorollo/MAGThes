@@ -136,7 +136,7 @@ Finally, because unmeasured confounding cannot be ruled out mechanically, estima
 
 To determine the average marginal effect of each signal characteristic, the model analyzes all three treatment variables simultaneously by regressing the outcome residuals directly onto the treatment residuals (Equation~\eqref{eq:final_causal_effect}). This simultaneous estimation estimates the association for each characteristic, such as \textit{Hype Intensity}, while adjusting for the other signal features included in the treatment vector.
 
-Because the implemented specification uses ensemble nuisance models, statistical uncertainty is summarized with bootstrap-based inference. Bootstrapping repeatedly draws random samples with replacement from the original dataset and refits the estimator on each resampled dataset. In the implemented specification, the DML procedure is paired with the BootstrapInference module from the econml Python library using 500 iterations. Confidence intervals are constructed from the empirical distribution of the bootstrap estimates and are used to summarize coefficient precision in the reported results.
+Because the implemented specification uses ensemble nuisance models, statistical uncertainty is summarized with bootstrap-based inference. Bootstrapping repeatedly draws random samples with replacement from the original dataset and refits the estimator on each resampled dataset. In the implemented specification, the DML procedure is paired with the \mbox{BootstrapInference} module from the econml Python library using 500 iterations. Confidence intervals are constructed from the empirical distribution of the bootstrap estimates and are used to summarize coefficient precision in the reported results.
 
 \section{Market-Cap Heterogeneity and Predictive Modeling}
 \label{sec:stratified-estimation}
@@ -162,7 +162,7 @@ As a computational and regularization tradeoff, the underlying nuisance models i
 
 The methodology then turns from causal estimation to a separate forecasting task.
 
-The final phase treats pump outcome prediction as a binary classification task. The target variable has two classes: \textit{Success} for events with a strictly positive \textit{10-Minute Logarithmic Return}, and \textit{Non-Success} for events with a zero or negative return:
+The final phase treats pump outcome prediction as a binary classification task. The target variable has two classes: \textit{Success} for events with a strictly positive \textit{10-Minute Logarithmic~Return}, and \textit{Non-Success} for events with a zero or negative return:
 \begin{equation}
 \mathrm{Success}_i =
 \begin{cases}
@@ -171,6 +171,6 @@ The final phase treats pump outcome prediction as a binary classification task. 
 \end{cases}
 \label{eq:success_definition}
 \end{equation}
-Here, $Y_i$ is the winsorized \textit{10-Minute Logarithmic Return} for pump event $i$ as defined in Equation~\eqref{eq:log-return}. A value of $1$ signifies a positive price response within the 10-minute post-reveal window, while $0$ represents a neutral or negative price movement.
+Here, $Y_i$ is the winsorized \textit{10-Minute Logarithmic~Return} for pump event $i$ as defined in Equation~\eqref{eq:log-return}. A value of $1$ signifies a positive price response within the 10-minute post-reveal window, while $0$ represents a neutral or negative price movement.
 
 The predictive modeling stage focuses on the relationship between observable pre-signal market variables and signal characteristics. Channel identity is excluded from this core analysis to reduce direct dependence on channel-specific histories and evaluate performance on previously unseen pump groups. XGBoost (Extreme Gradient Boosting), LightGBM, and Random Forest were tested as tree-based candidates, and Optuna (an automated tool for choosing suitable hyperparameters) was used to tune them inside the grouped training folds \cite{xgboost2016, lightgbm2017, breiman2001random, optuna2019}. Reported predictive performance is evaluated on a grouped 80/20 holdout split in which the test set contains only unseen channels. Chapter IV reports the selected \textit{Channel ID}-agnostic XGBoost model as the primary evidence, with secondary comparisons including \textit{Channel ID}. For the selected XGBoost model, feature importance is reported as a relative importance score. This score shows how strongly each variable helps the fitted model separate \textit{Success} from \textit{Non-Success} events. The values are useful for comparing predictors inside the same model, but they do not show causal effects.
