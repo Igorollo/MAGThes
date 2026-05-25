@@ -58,7 +58,7 @@ $\rho_0$ & Zero-return ratio (Equation~\eqref{eq:zero_ret}) \\
 
 Now that we have established the theoretical causal setup, it must be defined exactly what is measured as the outcome.
 
-Following the short-horizon logic developed in Section~\ref{sec:detection-to-causal-measurement}, the final specification uses the \textit{10-Minute Logarithmic Return} rather than CAR~\mbox{(Cumulative Abnormal Returns)} based on synthetic controls \cite{abadie2010synthetic}. The appendix documents why the synthetic-control fits were too weak to support CAR as the primary outcome.
+Following the short-horizon logic developed in Section~\ref{sec:detection-to-causal-measurement}, the final specification uses the \textit{10-Minute Logarithmic Return} rather than CAR~\mbox{(Cumulative Abnormal Returns)} based on synthetic controls \cite{abadie2010synthetic}. The Appendix documents why the synthetic-control fits were too weak to support CAR as the primary outcome.
 
 The final estimation outcome is therefore the \textit{10-Minute Logarithmic Return}, winsorized at the 1st and 99th percentiles, calculated over the strict window from $T_0$ to $T_0+10$. This choice preserves the observed event distribution in the most manipulation-prone asset segments while keeping the analysis focused on the immediate price response.
 \begin{equation}
@@ -114,7 +114,7 @@ Figure~\ref{fig:dml-schematic} illustrates this two-stage DML workflow. Confound
 
 \begin{figure}[htbp]
 \centering
-\caption{Double Machine Learning workflow.}
+\caption{Double Machine Learning workflow}
 \label{fig:dml-schematic}
 \makebox[\textwidth][c]{\includegraphics[width=1.04\textwidth]{figures/ch3/dml_schematic.png}}
 \ownsource

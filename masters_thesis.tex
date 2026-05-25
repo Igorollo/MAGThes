@@ -46,6 +46,9 @@
 % 1. Line Spacing: 1.5 for main text
 \onehalfspacing
 \setlength{\emergencystretch}{2em}
+\setlength{\intextsep}{\baselineskip}
+\setlength{\textfloatsep}{\baselineskip}
+\setlength{\floatsep}{\baselineskip}
 
 % 2. Paragraph Indentation: 1 cm
 \setlength{\parindent}{1cm}
@@ -280,7 +283,7 @@
 
 \vspace{0.45cm}
 
-\noindent During the preparation of this thesis, the author used ChatGPT and Grammarly to support proofreading and language editing, occasional sentence rephrasing, grammar and style checking, assistance with typesetting mathematical equations in LaTeX, and minor editorial and formatting improvements. The author reviewed and verified the content of the thesis and revised the text in accordance with its objectives. The thesis represents the author's own intellectual contribution, and the author takes full responsibility for its final form.
+\noindent During the preparation of this thesis, the author used ChatGPT, Grammarly, and Gemini to support proofreading and language editing, occasional sentence rephrasing, grammar and style checking, assistance with LaTeX formatting, limited coding-related consultation, and minor editorial improvements. Gemini was also used to support the annotation and contextual validation of Telegram pump-signal messages described in the empirical workflow. The author reviewed and verified the thesis content, code, and analytical outputs. The thesis represents the author's own intellectual contribution, and the author takes full responsibility for its final form.
 
 \vspace{1.15cm}
 
@@ -375,6 +378,12 @@
 
 \begingroup
 \captionsetup{list=false}
+\setcounter{table}{0}
+\setcounter{figure}{0}
+\setcounter{equation}{0}
+\renewcommand{\thetable}{A\arabic{table}}
+\renewcommand{\thefigure}{A\arabic{figure}}
+\renewcommand{\theequation}{A\arabic{equation}}
 \input{chapters/appendix/appendix_A_synthetic_control}
 \endgroup
 

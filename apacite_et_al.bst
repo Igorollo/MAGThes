@@ -2918,10 +2918,7 @@ FUNCTION {authors.reflist.apa6}
 { 'field  :=
   'dot    :=
   field  num.names$  'numnames :=
-  numnames  #7  >
-    { #7        'format.num.names := }
-    { numnames  'format.num.names := }
-  if$
+  numnames  'format.num.names :=
   "\begin{APACrefauthors}%"
   write$ newline$
   #1  'nameptr :=

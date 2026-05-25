@@ -14,9 +14,8 @@ Historical messages were extracted via the Telethon Python library \cite{teletho
 Filtering for inactive, non-English, or unrelated to crypto pump-and-dump schemes reduced this list to 81 active pump channels. Event distribution across these channels is highly concentrated, with a small number of large groups accounting for most events, while the remaining channels account for a smaller number of events (see Figure~\ref{fig:channel-distribution} and Table~\ref{tab:top-channels}). This concentration describes channel activity, not necessarily stronger or more successful pump outcomes.
 
 \begin{figure}[H]
-    \captionsetup{skip=0.5\baselineskip}
     \centering
-    \caption{Distribution of pump events across 81 Telegram channels.}
+    \caption{Distribution of pump events across 81 Telegram channels}
     \label{fig:channel-distribution}
     \includegraphics[width=0.74\textwidth]{channel_distribution.pdf}
     \vspace{-0.35\baselineskip}
@@ -123,7 +122,7 @@ Figure~\ref{fig:quote-currency-temporal} shows how the composition of these quot
 
 \begin{figure}[H]
     \centering
-    \caption{Quarterly share of pump events by quote currency (2019 to 2021).}
+    \caption{Quarterly share of pump events by quote currency (2019 to 2021)}
     \label{fig:quote-currency-temporal}
     \includegraphics[width=0.95\textwidth]{quote_currency_temporal_v2.pdf}
     \datasetnote{Figure limited to 2019--2021.}
@@ -135,7 +134,7 @@ Two key variables used later as pre-reveal covariates are \textit{Coin Age} and 
 
 \begin{figure}[H]
     \centering
-    \caption{Distribution of target \textit{Coin Age} at $T_0$.}
+    \caption{Distribution of target \textit{Coin Age} at $T_0$}
     \label{fig:coin-age-distribution}
     \includegraphics[width=0.80\textwidth]{coin_age_distribution.pdf}
     \datasetnote{The x-axis uses a log scale.}
@@ -143,7 +142,7 @@ Two key variables used later as pre-reveal covariates are \textit{Coin Age} and 
 
 \begin{figure}[H]
     \centering
-    \caption{Pump targets by historical \textit{Market Capitalization} and total 24-hour trading volume.}
+    \caption{Pump targets by historical \textit{Market Capitalization} and total 24-hour trading volume}
     \label{fig:market-cap-volume-scatter}
     \includegraphics[width=0.85\textwidth]{market_cap_volume_scatter.pdf}
     \datasetsource
@@ -251,7 +250,7 @@ where $I[\cdot]$ is the indicator function, evaluating to 1 when the return $r_t
 
 Beyond market metrics, temporal scheduling was encoded via \textit{is\_weekend}. This binary variable equals 1 if $T_0$ falls on a Saturday or Sunday, and 0 otherwise. It is included to absorb weekend-specific differences in market conditions and trading behavior.
 
-Finally, the preliminary synthetic-control stage, discussed in the appendix, produced two hold-out fit diagnostics per event. These were the coefficient of determination, reported as \textit{Hold-Out} $R^2$, and \textit{Root Mean Square Error}. These variables were originally used as quality checks to see how accurately the synthetic control matched the target coin's price path before the pump. However, they are also kept in the integrated dataset as extra features for the classification models. This helps test if pre-event price patterns contain information about post-signal pump \textit{Success}.
+Finally, the preliminary synthetic-control stage, discussed in the Appendix, produced two hold-out fit diagnostics per event. These were the coefficient of determination, reported as \textit{Hold-Out} $R^2$, and \textit{Root Mean Square Error}. These variables were originally used as quality checks to see how accurately the synthetic control matched the target coin's price path before the pump. However, they are also kept in the integrated dataset as extra features for the classification models. This helps test if pre-event price patterns contain information about post-signal pump \textit{Success}.
 
 \section{Integrated Sample and Exploratory Patterns}
 \label{sec:data-integration-summary}
@@ -260,7 +259,7 @@ The data compilation pipeline unifies unstructured Telegram chat logs, high-freq
 
 \begin{figure}[H]
     \centering
-    \caption{Data integration architecture for the event matrix.}
+    \caption{Data integration architecture for the event matrix}
     \label{fig:data-pipeline-overview}
     \begin{tikzpicture}[
         node distance=1.5cm,
@@ -311,12 +310,12 @@ Large ($>$1B USD) & 479 & 16.4\% \\
 Total & 2{,}917 & 100.0\% \\
 \bottomrule
 \end{tabular}
-\datasetsource
+\datasetnote{M denotes million, B denotes billion.}
 \end{table}
 
 The final sample is concentrated in small- and mid-cap assets, with the 10 million USD to 1 billion USD stratum forming the largest group.
 
-To illustrate what a single row in the integrated dataset looks like, Table~\ref{tab:sample-observations} presents four sampled observations from the integrated event matrix. Each coin represents a separate blockchain-based software project that has issued its own tradeable token. DOCK, for example, provides infrastructure for issuing and verifying digital credentials such as diplomas or professional certificates, reducing the need for direct contact with the issuing organization \cite{dock2026dids}. RLC (iExec) is linked to a network where the token is used to access computing resources and related digital assets \cite{iexec2025tokenomics}. TRB (Tellor) acts as a data relay because blockchain applications cannot access information from the outside world on their own. Tellor lets reporters submit external data and uses staking and dispute mechanisms to discourage false reporting \cite{tellor2026fundamentals, tellor2026disputes}. RVN (Ravencoin) allows users to create custom digital assets that can represent real-world or digital assets, such as security tokens, digital art, real estate, gem stones, wine futures, or in-game currency \cite{ravencoin2026assets}. More broadly, such token-based projects often issue tokens to finance platform development and to reward users or contributors who provide resources to the network \cite{cong2022tokenbased}. Each row in the table contains asset metadata, Telegram signal features, pre-reveal market covariates, the primary outcome, and synthetic control fit diagnostics. In the outcome row, $Y_{10}$ denotes the logarithmic return from $T_0$ to $T_0+10$ minutes.
+To illustrate what a single row in the integrated dataset looks like, Table~\ref{tab:sample-observations} presents four sampled observations from the integrated event matrix. Each coin represents a separate blockchain-based software project that has issued its own tradeable token. DOCK, for example, provides infrastructure for issuing and verifying digital credentials such as diplomas or professional certificates, reducing the need for direct contact with the issuing organization \cite{dock2026dids}. RLC (iExec) is linked to a network where the token is used to access computing resources and related digital assets \cite{iexec2025tokenomics}. TRB (Tellor) acts as a data relay because blockchain applications cannot access information from the outside world on their own. Tellor lets reporters submit external data and uses staking and dispute mechanisms to discourage false reporting \cite{tellor2026fundamentals, tellor2026disputes}. RVN (Ravencoin) is connected with Ravencoin's asset system, which lets users create user-defined on-chain assets for different digital or real-world uses \cite{ravencoin2026assets}. More broadly, such token-based projects often issue tokens to finance platform development and to reward users or contributors who provide resources to the network \cite{cong2022tokenbased}. Each row in the table contains asset metadata, Telegram signal features, pre-reveal market covariates, the primary outcome, and synthetic control fit diagnostics. In the outcome row, $Y_{10}$ denotes the logarithmic return from $T_0$ to $T_0+10$ minutes.
 
 \begin{table}[H]
 \centering
@@ -352,32 +351,32 @@ To illustrate what a single row in the integrated dataset looks like, Table~\ref
 \multicolumn{5}{|l|}{\textit{Outcome (Eq.~\eqref{eq:log-return})}} \\
 \quad $Y_{10}$ (\textit{10-Minute Logarithmic Return}) & 0.011 & $-$0.017 & 0.001 & $-$0.011 \\
 \midrule
-\multicolumn{5}{|l|}{\textit{Synthetic Control Diagnostics (appendix)}} \\
+\multicolumn{5}{|l|}{\textit{Synthetic Control Diagnostics (Appendix)}} \\
 \quad \textit{Hold-Out} $R^2$ & $-$0.001 & $-$0.066 & $-$0.024 & $-$0.048 \\
 \quad \textit{Root Mean Square Error} (hold-out) & 0.008 & 0.002 & 0.001 & 0.002 \\
 \bottomrule
 \end{tabular}
-\datasetsource
+\datasetnote{M denotes million, B denotes billion.}
 \end{table}
 
 Figure~\ref{fig:outcome-distribution-mcap} further illustrates how the \textit{10-Minute Logarithmic Return}, the primary outcome variable defined in Section~\ref{sec:outcome-variable}, is distributed across these strata. The figure shows the central 95\% of observations. Micro- and small-cap assets display greater variance than the larger strata, which is consistent with the thin-market constraints discussed above.
 
 \begin{figure}[H]
 \centering
-\caption{Distribution of \textit{10-Minute Logarithmic Return} by \textit{Market Capitalization Stratum}.}
+\caption{Distribution of \textit{10-Minute Logarithmic Return} by \textit{Market Capitalization Stratum}}
 \label{fig:outcome-distribution-mcap}
 \begin{tikzpicture}
     \node[inner sep=0] (img) {\includegraphics[width=\textwidth,trim=0 0 0 9mm,clip]{figures/ch4/outcome_distribution_by_mcap.png}};
     \fill[white] ([xshift=-2.9cm,yshift=0.02cm]img.north) rectangle ([xshift=2.9cm,yshift=-0.56cm]img.north);
 \end{tikzpicture}
-\datasetnote{Figure shows the central 95\% of observations; within each panel, $\mu$ denotes the mean, $\sigma$ denotes the standard deviation, and $N$ denotes the number of observations in the stratum; \textdollar{} denotes USD; M denotes million; B denotes billion.}
+\datasetnote{Figure shows the central 95\% of observations, within each panel, $\mu$ denotes the mean, $\sigma$ denotes the standard deviation, and $N$ denotes the number of observations in the stratum, \textdollar{} denotes USD, M denotes million, B denotes billion.}
 \end{figure}
 
 Figure~\ref{fig:channel-returns-distribution} adds the channel-level perspective. Channels are sorted by their median \textit{10-Minute Logarithmic Return}, vertical lines show the interquartile range, colors mark whether the median is positive, and point size reflects the number of observed events. The chart shows that median outcomes differ across channels, but many high-volume channels remain close to zero. This suggests that channels differ in their typical outcomes.
 
 \begin{figure}[H]
 \centering
-\caption{Channel-level \textit{10-Minute Logarithmic Return} distribution.}
+\caption{Channel-level \textit{10-Minute Logarithmic Return} distribution}
 \label{fig:channel-returns-distribution}
 \includegraphics[width=\textwidth]{channel_returns_distribution.png}
 \datasetnote{Orange points denote channels with median return $\leq 0$; green points denote channels with median return $> 0$; $N$ denotes the number of observed events for a channel and determines point size.}

@@ -80,7 +80,7 @@ Table~\ref{tab:stratified-ate-results} reports the stratified Average Treatment 
 \bottomrule
 \end{tabular}
 
-\floatnotewithprob{Winsorized outcomes at 1\% and 99\%.}{$^{***} p < 0.01$, $^{**} p < 0.05$, $^{*} p < 0.10$. Single-starred estimates are treated as marginal in the text.\\[-0.2\baselineskip]\textit{Source:} Own elaboration based on the thesis dataset.}
+\floatnotewithprob{Winsorized outcomes at 1\% and 99\%.}{$^{***}$, $^{**}$, and $^{*}$ indicate significance at the 1\%, 5\%, and 10\% levels, respectively. Single-starred estimates are treated as marginal in the text.\\[-0.2\baselineskip]M denotes million, B denotes billion.\\[-0.2\baselineskip]\textit{Source:} Own elaboration based on the thesis dataset.}
 \end{table}
 
 The stratified estimates show that evidence differs across the three signal-characteristic variables rather than supporting a uniform positive effect. The clearest positive coefficient appears for \textit{Urgency Index} in the small-cap stratum, where the estimate is 0.0301 and is statistically significant at the 1\% level ($p < 0.001$). The corresponding \textit{Urgency Index} estimate turns negative and remains statistically significant at the 5\% level in the mid-cap stratum ($-$0.0081, $p = 0.014$) and the large-cap stratum ($-$0.0024, $p = 0.016$).
@@ -111,13 +111,13 @@ Because \textit{Urgency Index} has the clearest heterogeneity pattern, Figure~\r
 
 \begin{figure}[htbp]
 \centering
-\caption[CATE estimates for \textit{Urgency Index} by \textit{Market Capitalization}.]{CATE estimates for \textit{Urgency Index} by \textit{Market Capitalization}.}
+\caption[CATE estimates for \textit{Urgency Index} by \textit{Market Capitalization}]{CATE estimates for \textit{Urgency Index} by \textit{Market Capitalization}}
 \label{fig:hte-market-cap}
 \begin{tikzpicture}
     \node[inner sep=0] (img) {\includegraphics[width=0.95\textwidth,trim=0 0 0 12.5mm,clip]{figures/ch4/hte_market_cap_urgency_index.png}};
     \draw[line width=0.45pt,black,line cap=rect] ([yshift=-0.25pt,xshift=0.097\textwidth]img.north west) -- ([yshift=-0.25pt,xshift=-0.150\textwidth]img.north east);
 \end{tikzpicture}
-\datasetnote{Points show event-level CATE estimates; the black line shows the locally smoothed trend. \textdollar{} denotes USD; M denotes million; B denotes billion.}
+\datasetnote{Points show event-level CATE estimates, and the black line shows the locally smoothed trend. \textdollar{} denotes USD, M denotes million, B denotes billion.}
 \end{figure}
 
 For \textit{Urgency Index}, this continuous pattern is consistent with the stratified estimates, with higher positive CATE values concentrated in the lower market-cap range.
@@ -139,7 +139,7 @@ Large ($>$1B USD) & \textit{Urgency Index} & 1.95 & 1.41 \\
 Large ($>$1B USD) & \textit{Instruction Density} & 1.08 & 1.01 \\
 \bottomrule
 \end{tabular}
-\datasetnote{CI E-value denotes the Confidence Interval E-value.}
+\datasetnote{CI E-value denotes the Confidence Interval E-value. M denotes million, B denotes billion.}
 \end{table}
 
 Approximate E-value diagnostics are reported as sensitivity checks for unmeasured confounding. Higher values suggest that a stronger unmeasured confounder would be needed to explain away the estimate, under the reported calculation. For the confidence-interval E-value, the value is set to 1 if the confidence interval crosses zero. Otherwise, the confidence bound closest to zero is used. Specifically, the E-value for the small-cap \textit{Urgency Index} effect (2.20) suggests that an unmeasured confounder would need a moderately strong association with both treatment and outcome to fully explain away the estimate. Conversely, the low E-values for large-cap \textit{Hype Intensity} and \textit{Instruction Density} indicate that those estimates are more sensitive to comparatively weak omitted confounding. Following \cite{vanderweele2017sensitivity}, this sensitivity result should be read as an approximate diagnostic rather than definitive proof of robustness.

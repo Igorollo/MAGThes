@@ -3,7 +3,7 @@
 \addcontentsline{toc}{chapter}{APPENDIX}
 \setcounter{secnumdepth}{0}
 
-This appendix documents the synthetic control construction methodology considered during the thesis design. This follows the synthetic-control method used in comparative case studies and later guidance on feasibility and data needs \cite{abadie2010synthetic, abadie2021synthetic}. It summarizes the control basket, weight construction, hold-out validation, and the reason CAR~\mbox{(Cumulative Abnormal Returns)} was not retained as the main outcome.
+This Appendix documents the synthetic control construction methodology considered during the thesis design. This follows the synthetic-control method used in comparative case studies and later guidance on feasibility and data needs \cite{abadie2010synthetic, abadie2021synthetic}. It summarizes the control basket, weight construction, hold-out validation, and the reason CAR~\mbox{(Cumulative Abnormal Returns)} was not retained as the main outcome.
 
 Table~\ref{tab:app-control-basket} lists the default macro-market control basket. It consisted of eight major cryptocurrency assets selected to represent broad market movements that were not tied to one specific micro-cap pump.
 
@@ -82,10 +82,10 @@ However, this method did not work well for our sample. As shown in Figure~\ref{f
 
 \begin{figure}[htbp]
 \centering
-\caption{Distribution of $R^2$ scores across \textit{Market Capitalization} strata.}
+\caption{Distribution of $R^2$ scores across \textit{Market Capitalization} strata}
 \label{fig:app-r2-distribution}
 \includegraphics[width=0.8\textwidth]{figures/ch4/r2_distribution_by_mcap.png}
-\datasetnote{\textdollar{} denotes USD; M denotes million; B denotes billion.}
+\datasetnote{\textdollar{} denotes USD, M denotes million, B denotes billion.}
 \end{figure}
 
 The synthetic controls failed to track the target coins, so using CAR actually made the results less reliable. Instead of removing market noise, subtracting an unrelated control variable just added more variance to the data.
